@@ -48,7 +48,7 @@
     			//alert('name' + name + 'line' + line);
 	    			$.ajax({
 	    				type: 'post',
-	    				url: '../MainCard',
+	    				url: '../MainCardServlet',
 	    				data: { name : name, line : line },
 	    				datatype: 'json',
 	    				success: function(data) {
@@ -143,7 +143,7 @@
     <main class="main-main">
         <div class="main-search">
 
-            <form action="../MainStatistics" method="get" id="search_form" style="z-index:11; position : relative;" autocomplete="off">
+            <form action="../MainStatisticsServlet" method="get" id="search_form" style="z-index:11; position : relative;" autocomplete="off">
                 <div class="main-searchbar">
                     <div style="width: 560px;">
                         <input type="text" name="name" placeholder="챔피언 이름을 입력하세요">

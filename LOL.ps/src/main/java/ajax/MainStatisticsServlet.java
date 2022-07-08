@@ -16,8 +16,8 @@ import com.yg_ac.dao.ChampionHighLineDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampionHighLineDto;
 
-@WebServlet("/MainStatistics")
-public class MainStatistics extends HttpServlet {
+@WebServlet("/MainStatisticsServlet")
+public class MainStatisticsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class MainStatistics extends HttpServlet {
 		if(line.getLine()!=null) {
 			response.sendRedirect("lol/statistics.jsp?name=" + URLEncoder.encode(champion_name, "utf-8") + "&line=" + URLEncoder.encode(line.getLine(), "utf-8"));
 		} else {
-			response.sendRedirect("lol/main.jsp");
+			response.sendRedirect("lol/main.jsp?searchedChampion=wrong");
 		}
 	}
 

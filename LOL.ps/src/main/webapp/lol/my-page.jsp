@@ -357,12 +357,12 @@ System.out.println(session.getAttribute("memberInfo"));
 	<!-- 위에 navbar 부분입니다 -->
     <header class="all-header-mainnav header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank/rank.html">챔피언 랭킹</a>
+                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
@@ -377,8 +377,13 @@ System.out.println(session.getAttribute("memberInfo"));
             		}
             		else {
             	%>
+<<<<<<< HEAD
             			<form class="signin" action= "MypageServlet" >마이페이지</form>
 		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
+=======
+            			<a class="signin" href="signin.jsp">마이페이지</a>
+		                <a class="login" href="login.jsp">로그아웃</a>     
+>>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
             	<%
             		}
             	%>
