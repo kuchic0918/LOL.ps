@@ -367,8 +367,21 @@ System.out.println(session.getAttribute("memberInfo"));
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
 			<div class="sign-login">
-				<a class="signin" href="community/my-page.jsp" id= "mypage">마이페이지</a>
-                <a class="login" href="member/login.jsp" id = "logout">로그아웃</a>
+				<%
+            		if(session.getAttribute("memberInfo") == null) {
+            			
+           	 	%>
+		                <a class="signin" href="member/signin.html">회원가입</a>
+		                <a class="login" href="member/login.html">로그인</a>           	 		
+           	 	<% 
+            		}
+            		else {
+            	%>
+            			<a class="signin" href="member/signin.html">마이페이지</a>
+		                <a class="login" href="member/login.html">로그아웃</a>     
+            	<%
+            		}
+            	%>
 			</div>
 		</div>
     </header>
