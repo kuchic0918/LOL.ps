@@ -7,11 +7,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="617468967353-01kodva3scdm890l5ahl1t02rm12b42h.apps.googleusercontent.com">
+<!--     <meta name="google-signin-client_id" content="617468967353-01kodva3scdm890l5ahl1t02rm12b42h.apps.googleusercontent.com"> -->
 	<script src="Js/jquery-3.6.0.min.js"></script>
 	<script src = https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js"  async defer></script>
+<!--     <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
 	<title>회원가입</title>
 	<link rel="stylesheet" href="Css/all.css">
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
@@ -70,12 +70,12 @@ $(function() {
 	<!-- 위에 navbar 부분입니다 -->
     <header class="header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank/rank.html">챔피언 랭킹</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
@@ -166,21 +166,21 @@ $(function() {
 	                                    <img class = "member-img_log" src="https://s3.lol.ps/file/lol-ps/static/img/icon_sns_google.png" alt="구글 로그인"  >
 <!-- 	                                     <script> -->
 	                                   
-// 										      function onSignIn(googleUser) {
-// 										        // Useful data for your client-side scripts:
-// 										        var profile = googleUser.getBasicProfile();
-// 										        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-// 										        console.log('Full Name: ' + profile.getName());
-// 										        console.log('Given Name: ' + profile.getGivenName());
-// 										        console.log('Family Name: ' + profile.getFamilyName());
-// 										        console.log("Image URL: " + profile.getImageUrl());
-// 										        console.log("Email: " + profile.getEmail());
+<!-- // 										      function onSignIn(googleUser) { -->
+<!-- // 										        // Useful data for your client-side scripts: -->
+<!-- // 										        var profile = googleUser.getBasicProfile(); -->
+<!-- // 										        console.log("ID: " + profile.getId()); // Don't send this directly to your server! -->
+<!-- // 										        console.log('Full Name: ' + profile.getName()); -->
+<!-- // 										        console.log('Given Name: ' + profile.getGivenName()); -->
+<!-- // 										        console.log('Family Name: ' + profile.getFamilyName()); -->
+<!-- // 										        console.log("Image URL: " + profile.getImageUrl()); -->
+<!-- // 										        console.log("Email: " + profile.getEmail()); -->
 										
-// 										        // The ID token you need to pass to your backend:
-// 										        var id_token = googleUser.getAuthResponse().id_token;
-// 										        console.log("ID Token: " + id_token);
-// 										      }
-<!--     									</script> -->
+<!-- // 										        // The ID token you need to pass to your backend: -->
+<!-- // 										        var id_token = googleUser.getAuthResponse().id_token; -->
+<!-- // 										        console.log("ID Token: " + id_token); -->
+<!-- // 										      } -->
+<!-- <!--     									</script> --> 
 	                                </a>
 	                            </li>
 	                            <li class="member-li"><a href="#" class="apple member-a">

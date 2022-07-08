@@ -47,18 +47,18 @@
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
             <div class="sign-login">
-            	<%
+            		<%
             		if(session.getAttribute("memberInfo") == null) {
             			
            	 	%>
-		                <a class="signin" href="member/signin.html">회원가입</a>
-		                <a class="login" href="member/login.html">로그인</a>           	 		
+		                <a class="signin" href="signin.jsp">회원가입</a>
+		                <a class="login" href="login.jsp">로그인</a>           	 		
            	 	<% 
             		}
             		else {
             	%>
-            			<a class="signin" href="member/signin.html">마이페이지</a>
-		                <a class="login" href="member/login.html">로그아웃</a>     
+            			<form class="signin" action= "MypageServlet" >마이페이지</form>
+		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
             	<%
             		}
             	%>

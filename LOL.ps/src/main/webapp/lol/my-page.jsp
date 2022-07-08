@@ -377,13 +377,10 @@ System.out.println(session.getAttribute("memberInfo"));
             		}
             		else {
             	%>
-<<<<<<< HEAD
             			<form class="signin" action= "MypageServlet" >마이페이지</form>
 		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
-=======
             			<a class="signin" href="signin.jsp">마이페이지</a>
 		                <a class="login" href="login.jsp">로그아웃</a>     
->>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
             	<%
             		}
             	%>
