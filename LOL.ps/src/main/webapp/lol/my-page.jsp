@@ -355,20 +355,28 @@ System.out.println(session.getAttribute("memberInfo"));
 	
 <div id="fake-body">
 	<!-- 위에 navbar 부분입니다 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	<!-- 김규식 바보 -->
+	
     <header class="all-header-mainnav header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank/rank.html">챔피언 랭킹</a>
+                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
 			<div class="sign-login">
-				<a class="signin" href="community/my-page.jsp" id= "mypage">마이페이지</a>
-                <a class="login" href="member/login.jsp" id = "logout">로그아웃</a>
+				<a class="signin" href="my-page.jsp" id= "mypage">마이페이지</a>
+                <a class="login" href="login.jsp" id = "logout">로그아웃</a>
 			</div>
 		</div>
     </header>
