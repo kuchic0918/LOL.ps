@@ -393,10 +393,10 @@ System.out.println(session.getAttribute("memberInfo"));
     <div class="all-main">
         <div class="first-title">마이페이지</div>
         <div class="second-title">
-        	<form action="../MainStatistics" method="get" id="search_form" autocomplete="off">
+			<form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
 				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 			</form>
-        </div>
+       	</div>
         <div style="clear: both;"></div>
     </div>
 	

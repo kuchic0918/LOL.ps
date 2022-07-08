@@ -659,7 +659,7 @@
 						</a>
 					</div>
 					<div class="input-box">
-						<form action="../MainStatistics" method="get" id="search_form" autocomplete="off">
+						<form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
 							<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 						</form>
 					</div>
