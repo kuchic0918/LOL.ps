@@ -12,7 +12,7 @@
 	PreparedStatement pstmt = null;
 	
 	ChampRankDao champRankDao = new ChampRankDao();
-	
+	session.getAttribute("memberInfo");
 	ArrayList<ChampRankDto> rankAll = champRankDao.getChampRankAll(conn, pstmt, rs);
 	ArrayList<ChampRankDto> rankTopLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "탑");
 	ArrayList<ChampRankDto> rankJungleLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "정글");
@@ -47,8 +47,15 @@
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
             <div class="sign-login">
-                <a class="signin" href="member/signin.html">회원가입</a>
-                <a class="login" href="member/login.html">로그인</a>
+            	<%
+            		if(session.getAttribute("memberInfo") == null) {
+            			
+           	 	%>
+		                <a class="signin" href="member/signin.html">회원가입</a>
+		                <a class="login" href="member/login.html">로그인</a>           	 		
+           	 	<% 
+            		}
+            	%>
             </div>
         </div>
     </header>

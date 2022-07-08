@@ -19,7 +19,8 @@
 	String champion_line = request.getParameter("line");
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
-	
+// 	session.getAttribute("memberInfo");
+// 	System.out.println(session.getAttribute("memberInfo"));
 	//요약
 	
 	//챔피언 해드 이미지, 이름
