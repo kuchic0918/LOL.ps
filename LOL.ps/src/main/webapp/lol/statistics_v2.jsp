@@ -241,10 +241,259 @@
     	$(function(){
     		//통계
 		   	$("#champ-nav1").on("click", function() {
-			   //$('#loadContents').load('statisticsAll.jsp #statistics');
-			   $('.champ-nav').find('.champ-nav-active').removeClass('champ-nav-active');
-			   $('#champ-nav1').addClass('champ-nav-active');
-			   
+		   		var champName = "<%=champion_name%>";
+		   		var champLine = "<%=champion_line%>";
+		   		var isGray = "";
+		   		var write = `<div id="statistics">
+		   					<div class="statistics-champ-match-container" id="counter">
+					            <div class="statistics-title">가렌 상대 챔피언</div>
+					            <div class="statistics-champ-match">
+						            <div id="match-hard" class="statistics-match-list">
+			                    	 	<h4>상대하기 어려움</h4>
+			                    	 </div>
+						            <div id="match-easy" class="statistics-match-list">
+			                    	 	<h4>상대하기 쉬움</h4>
+			                    	 </div>
+		                    	 </div>
+		                    </div>
+	                    	<div class="statistics-content-container" id="spell-startitem">
+		                   		<div class="statistics-spell-items" id="spell-startitem">
+		     						<div class="statistics-title">스펠, 아이템 선택</div>
+		     						<div class="statistics-spell-item-content">
+		     							<div class="statistics-spell-box">
+		     								<h4 style="padding: 5px">스펠</h4>
+		     								<div class="statistics-number">
+		     									<span class="statistics-number-items">승률</span> 
+		     									<span class="statistics-number-items">선택률</span> 
+		     									<span class="statistics-number-items">카운트수</span>
+		     								</div>
+		     								<ul class="statistics-spell-list" id="spellList">
+		     								</ul>
+		     							</div>
+		     							<div class="statistics-spell-box">
+											<h4 style="padding: 5px">스타트 아이템</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="startItemList">
+											</ul>
+										</div>
+										<div class="statistics-spell-box" style="border-right: none;">
+											<h4 style="padding: 5px">신발</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span>
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="shoesList">
+											</ul>
+										</div>
+		     						</div>
+		     					</div>
+		     				</div>
+							
+			     		</div>`;
+				$("#loadContents").html(write);
+		   		
+				$('.champ-nav').find('.champ-nav-active').removeClass('champ-nav-active');
+				$('#champ-nav1').addClass('champ-nav-active');
+				$.ajax({
+				   	type:"get",
+					url:"../MatchListServlet",
+					data:{"name":champName,"line":champLine,"counter":"hard"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<a class="statistics-hard-list \${isGray}" href="#"> 
+										<span style="width: 10%;"> 
+											<img src="Images/champion/head/\${data[i].image}" alt="img">
+										</span> 
+										<span style="width: 60%; padding: 10px 0px 0px 20px; text-align: left;">
+												<span>\${data[i].name}</span>
+										</span> 
+										<span style="width: 30%; padding-top: 10px;"> 
+											<span>\${data[i].count}</span> 
+										<span class="statistics-hard">\${data[i].winrate}%</span>
+										</span>
+									</a>`;
+							$("#match-hard").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+			   $.ajax({
+					type:"get",
+					url:"../MatchListServlet",
+					data:{"name":champName,"line":champLine,"counter":"easy"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<a class="statistics-hard-list \${isGray}" href="#"> 
+										<span style="width: 10%;"> 
+											<img src="Images/champion/head/\${data[i].image}" alt="img">
+										</span> 
+										<span style="width: 60%; padding: 10px 0px 0px 20px; text-align: left;">
+												<span>\${data[i].name}</span>
+										</span> 
+										<span style="width: 30%; padding-top: 10px;"> 
+											<span>\${data[i].count}</span> 
+										<span class="statistics-easy">\${data[i].winrate}%</span>
+										</span>
+									</a>`;
+							$("#match-easy").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+			   $.ajax({
+					type:"get",
+					url:"../StartItemServlet",
+					data:{"name":champName,"line":champLine,"select":"spell"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/spell/\${data[i].pick1} " alt="img" /> 
+												<span class='tooltiptext tooltip-right'>
+													<b style='color: #ffc107;'>\${data[i].name1}</b>
+													<br />
+													<br />\${data[i].function1}
+												</span>
+											</span> 
+											<span class='tooltip'> 
+												<img src="Images/spell/\${data[i].pick2} " alt="img" /> 
+												<span class='tooltiptext tooltip-right'>
+													<b style='color: #ffc107;'>\${data[i].name2}</b>
+													<br />
+													<br />\${data[i].function2}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#spellList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
+			   $.ajax({
+					type:"get",
+					url:"../StartItemServlet",
+					data:{"name":champName,"line":champLine,"select":"startItem"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+											<img src="Images/item/\${data[i].pick1}" alt="img" /> 
+												<span class='tooltiptext tooltip-right'>
+													<b style='color: #ffc107;'>\${data[i].name1}</b>
+													<br />
+													<br />\${data[i].function1}
+												</span>
+											</span>`;
+							if(data[i].name2==="없음"){
+								
+							}else{			
+								write +=`<span class='tooltip'> 
+											<img src="Images/item/\${data[i].pick2}" alt="img" /> 
+												<span class='tooltiptext tooltip-right'>
+													<b style='color: #ffc107;'>\${data[i].name2}</b>
+													<br />
+													<br />\${data[i].function2}
+												</span>
+											</span>`;
+							}				
+								write += `</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#startItemList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
+			   $.ajax({
+					type:"get",
+					url:"../StartItemServlet",
+					data:{"name":champName,"line":champLine,"select":"shoes"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].pick1}" alt="img" /> 
+												<span class='tooltiptext tooltip-right'>
+													<b style='color: #ffc107;'>\${data[i].name1}</b>
+													<br />
+													<br />\${data[i].function1}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#shoesList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
 			});
     		
 		   	//기본정보
@@ -1008,10 +1257,10 @@
 		<div style="width: 100%; height: 400px;"></div>
 
 		<div class="champ-nav">
-			<a id="champ-nav1" class="champ-nav-items champ-nav-active">챔피언
-				통계</a> <a id="champ-nav2" class="champ-nav-items">기본 정보</a> <a
-				id="champ-nav3" class="champ-nav-items">패치 히스토리</a> <a
-				id="champ-nav4" class="champ-nav-items">커뮤니티</a>
+			<a id="champ-nav1" class="champ-nav-items champ-nav-active">챔피언 통계</a> 
+			<a id="champ-nav2" class="champ-nav-items">기본 정보</a> 
+			<a id="champ-nav3" class="champ-nav-items">패치 히스토리</a> 
+			<a id="champ-nav4" class="champ-nav-items">커뮤니티</a>
 		</div>
 
 
