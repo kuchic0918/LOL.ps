@@ -246,7 +246,7 @@ public class MemberDAO {
 
 		return member;
 	}
-	/*주석확인*/
+	
 	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt, ResultSet rs ) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne.jpg',?,?)";
