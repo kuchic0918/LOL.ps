@@ -1,3 +1,4 @@
+
 package com.yg_ac.dao;
 
 import java.sql.Connection;
@@ -246,15 +247,15 @@ public class MemberDAO {
 
 		return member;
 	}
-
-	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt) {
+	
+	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt, ResultSet rs ) {
 		try {
-			String sql = "insert into member values(sq_member.nextval,?,?,?,'anne.jpg',?,?)";
+			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne.jpg',?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getEmail());
 			pstmt.setString(2, member.getPw()); 		
 			pstmt.setString(3, member.getNickname()); 	
-			pstmt.setString(4, member.getIntroduce());//한줄소개
+			pstmt.setString(4, member.getIntroduce()); //한줄소개
 			pstmt.setString(5, member.getAdmin()); //관리자여부
 			pstmt.executeUpdate();
 		}
@@ -262,6 +263,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		} finally {
 			try {
+				rs.close();
 				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -269,7 +271,7 @@ public class MemberDAO {
 		}
 	}
 
-	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt) {
+	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt , ResultSet rs) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval, ? , 'kakaoAdmin' , ? , 'anne.jpg', ? ,? )";
 			pstmt = conn.prepareStatement(sql);
@@ -277,12 +279,13 @@ public class MemberDAO {
 			pstmt.setString(2, member.getNickname());
 			pstmt.setString(3, member.getIntroduce());
 			pstmt.setString(4, member.getAdmin());
-			pstmt.executeUpdate();
+			pstmt.executeQuery();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
+				rs.close();
 				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
