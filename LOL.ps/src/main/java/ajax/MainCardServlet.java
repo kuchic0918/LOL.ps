@@ -19,8 +19,8 @@ import com.yg_ac.dao.MainCardDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.MainCardDto;
 
-@WebServlet("/MainCard")
-public class MainCard extends HttpServlet {
+@WebServlet("/MainCardServlet")
+public class MainCardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
