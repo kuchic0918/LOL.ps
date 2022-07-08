@@ -355,14 +355,6 @@ System.out.println(session.getAttribute("memberInfo"));
 	
 <div id="fake-body">
 	<!-- 위에 navbar 부분입니다 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	<!-- 김규식 바보 -->
-	
     <header class="all-header-mainnav header-mainnav">
         <div class="header-container">
             <a href="main.jsp">
@@ -375,8 +367,21 @@ System.out.println(session.getAttribute("memberInfo"));
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
 			<div class="sign-login">
-				<a class="signin" href="my-page.jsp" id= "mypage">마이페이지</a>
-                <a class="login" href="login.jsp" id = "logout">로그아웃</a>
+				<%
+            		if(session.getAttribute("memberInfo") == null) {
+            			
+           	 	%>
+		                <a class="signin" href="signin.jsp">회원가입</a>
+		                <a class="login" href="login.jsp">로그인</a>           	 		
+           	 	<% 
+            		}
+            		else {
+            	%>
+            			<a class="signin" href="signin.jsp">마이페이지</a>
+		                <a class="login" href="login.jsp">로그아웃</a>     
+            	<%
+            		}
+            	%>
 			</div>
 		</div>
     </header>

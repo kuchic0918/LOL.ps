@@ -55,6 +55,12 @@
 		                <a class="login" href="member/login.html">로그인</a>           	 		
            	 	<% 
             		}
+            		else {
+            	%>
+            			<a class="signin" href="member/signin.html">마이페이지</a>
+		                <a class="login" href="member/login.html">로그아웃</a>     
+            	<%
+            		}
             	%>
             </div>
         </div>

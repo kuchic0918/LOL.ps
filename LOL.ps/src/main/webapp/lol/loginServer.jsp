@@ -34,7 +34,7 @@
 		<script>
 			console.log('<%=member%>');
 			alert("환영합니다 !");
-			location.href = "../community/my-page.jsp";
+			location.href = "my-page.jsp";
 		</script>
 	<%
 		}
