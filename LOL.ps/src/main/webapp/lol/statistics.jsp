@@ -599,8 +599,12 @@
             		}
             		else {
             	%>
-            			<form class="signin" action= "MypageServlet" >마이페이지</form>
-		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
+            			<form action= "MypageServlet" >
+            				<input class="signin" type="submit" value="마이페이지"/>
+            			</form>
+		                <form action = "LogoutServlet" >
+		                	<input class="login" type="submit" value="로그아웃"/>
+	                	</form>  
             	<%
             		}
             	%>
@@ -655,7 +659,7 @@
 						</a>
 					</div>
 					<div class="input-box">
-						<form action="../MainStatistics" method="get" id="search_form" autocomplete="off">
+						<form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
 							<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 						</form>
 					</div>

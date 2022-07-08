@@ -44,6 +44,7 @@ if(goTop!==null) {
 /*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*/
 /*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*//*sign*/
 
+<<<<<<< HEAD
 //const signInForm = $('[name=signInForm]');
 //const submitBtn = $('#summit-button');
 //
@@ -106,6 +107,70 @@ if(goTop!==null) {
 //	    }
 //	});
 //}
+=======
+/*const signInForm = $('[name=signInForm]');
+const submitBtn = $('#summit-button');
+
+if(signInForm!==null) {
+	const emailInput = $('input[name=email]');
+	const passwordInput = $('input[name=password]');
+	const passwordConfirmInput = $('input[name=password-confirm]')
+
+	const emailPattern = new RegExp(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i);
+	const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/)
+
+	const emailPtag = $('#email-p');
+	const passwordPtag = $('#password-p');
+	const passwordConfirmPtag = $('#password-confirm-p');
+	
+	function validationTest(pattern, input) {	// pattern : RegExp(객체)의 파라미터, input : eamilInput, passwordInput, passwodrdConfirmInput
+	    if(pattern.test(input.value)) {		// test : RegExp가 제공하는 메소드
+	        return true;
+	    }else {
+	        return false;
+	    }
+	}
+
+	emailInput.change(function() {
+	    if(validationTest(emailPattern, emailInput)) {
+	        emailPtag.html("");
+	    }else{
+	        emailPtag.html('올바른 이메일 형식을 입력하세요!!')
+	        emailInput.focus();
+	        return;
+	    }
+	});
+
+	passwordInput.change(function() {
+	    if(validationTest(passwordPattern, passwordInput)) {
+	        passwordPtag.html("");
+	    }else{
+	        passwordPtag.html('숫자, 알파벳, 특수문자를 포함하셔야 합니다!!');
+	        passwordInput.focus();
+	        return;
+	    }
+	});
+
+	passwordConfirmInput.change(function() {
+	    if(passwordInput.val() === passwordConfirmInput.val()) {
+	        passwordConfirmPtag.html("");
+	    }else {
+	        passwordConfirmPtag.html("비밀번호와 일치하지 않습니다!!");
+	    }
+	});
+
+	submitBtn.click(function() {
+	    if(validationTest(emailPattern, emailInput) && validationTest(passwordPattern, passwordInput)) {
+	    	
+	    	  패턴 넘기면 서버에 데이터 넘기기.
+	    	  ★★★★★★★★★★★★★★★★★★★★★★★★★★★폼태그로 넘길것인지, 스크립트로 넘길것인지 생각★★★★★★★★★★★★★★★★★★★★★★★★★★★
+	    	
+	    }else {
+	        console.log('적절한 이메일, 비밀번호가 아닙니다.')
+	    }
+	});
+}*/
+>>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
 
 /*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*/
 /*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*//*statistics*/
