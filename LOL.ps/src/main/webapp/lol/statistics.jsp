@@ -599,8 +599,12 @@
             		}
             		else {
             	%>
-            			<form class="signin" action= "MypageServlet" >마이페이지</form>
-		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
+            			<form action= "MypageServlet" >
+            				<input class="signin" type="submit" value="마이페이지"/>
+            			</form>
+		                <form action = "LogoutServlet" >
+		                	<input class="login" type="submit" value="로그아웃"/>
+	                	</form>  
             	<%
             		}
             	%>
