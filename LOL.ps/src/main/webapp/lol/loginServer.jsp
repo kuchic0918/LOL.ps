@@ -28,7 +28,6 @@
 //		session.setAttribute("memberInfo", 123);
 		if(memberdao.loginvalid(email, password, conn, pstmt, rs)) {
 			session.setAttribute("memberInfo" ,  member);
-			System.out.println("member : " + member);
 			
 	%>
 		<script>

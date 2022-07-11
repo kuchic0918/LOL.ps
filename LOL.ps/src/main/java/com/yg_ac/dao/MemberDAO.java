@@ -80,7 +80,6 @@ public class MemberDAO {
 			}
 
 		}catch(SQLException e) {
-			System.out.println("1111");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -173,7 +172,6 @@ public class MemberDAO {
 
 
 		} catch (SQLException e) {
-			System.out.println("2222");
 			e.printStackTrace();
 		} finally {
 			try {

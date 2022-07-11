@@ -1,11 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="org.apache.catalina.tribes.membership.MemberImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "yg_ac_java.*"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.yg_ac.dao.*" %>
+<%@ page import="com.yg_ac.dto.*" %>
 <%
-// 	System.out.println(session.getAttribute("memberInfo"));
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	Y_DBmanager db = new Y_DBmanager();
+	Champion champion = new Champion();
+	Connection conn = db.getConnection();
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
 %>
 <!DOCTYPE html>
 <html>
+<%	
+	MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
+	MypageIntroduceDto mypageIntroduce = mypageIntroduceDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
+%>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,27 +40,11 @@
 
     		//프로필 설정
     		$(".change-img div.profile-settings").hover(function() {
-    			//$(this).find("img:first-child").css('display','none');
-    			//$(this).find("img").eq(2).css('display','block');
-    			//$(this).find("div").css('display','block');
-    			//$(this).find("img").eq(1).css('display','block');
-    			/* $(this).find("img:first-child").css('opacity','0');
-    			$(this).find("img").eq(1).css('opacity','1');
-    			$(this).find("div").css('opacity','1');
-    			$(this).find("img").eq(2).css('opacity','1'); */
     			$(this).find("img:first-child").animate({opacity:0},250);// ('opacity','0');
     			$(this).find("img").eq(1).animate({opacity:1},250); // .css('opacity','1');
     			$(this).find("div").animate({opacity:1},250); //css('opacity','1');
     			$(this).find("img").eq(2).animate({opacity:1},250);  //.css('opacity','1');
     		}, function() {
-    			//$(this).find("img:first-child").css('display','block');
-    			//$(this).find("img").eq(2).css('display','none');
-    			//$(this).find("div").css('display','none');
-    			//$(this).find("img").eq(1).css('display','none');
-    			/* $(this).find("img:first-child").css('opacity','1');
-    			$(this).find("img").eq(1).css('opacity','0');
-    			$(this).find("div").css('opacity','0');
-    			$(this).find("img").eq(2).css('opacity','0'); */
     			$(this).find("img:first-child").animate({opacity:1});  //.css('opacity','1');
     			$(this).find("img").eq(1).animate({opacity:0});  //.css('opacity','0');
     			$(this).find("div").animate({opacity:0});  //.css('opacity','0');
@@ -58,7 +55,6 @@
     	   		var text = $("#introduce-modal-insert-id").val();
     	    	$("#introduce-text").html(text);
     	    	alert("한줄소개가 변경되었습니다.");
-    	    	location.href = "my-page-action.jsp";
     	    });
     		
     		$("#btn-save-id3").click(function() {
@@ -186,7 +182,7 @@
     			const cnt = 0;
     			$('#btn-save-id2').click(function(e) {
     				if(e.target.id === 'btn-save-id2'  && $('#new-password').val() === $('#new-password-confirm').val() && cnt==0) {
-    					alert('비밀번호가 변경되었습니다!')
+    					alert('비밀번호가 변경되었습니다!');
     					clear();
     					
     					$('#fake-body').animate({opacity:1});
@@ -291,21 +287,20 @@
     </script>
 </head>
 <body class="community-body">
-	<%
-		session.getAttribute("memberInfo");
-	%>
 
 	<div class="background-gray modal-del" id="background-gray-id">
 		<div class="introduce-modal" id="introduce-modal-id">
 		
-			<div>한줄소개 변경<button class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
-			
-			<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id"></textarea>
-
-			<div style="float:right; margin-right:2px; width:120px; height:50px;">
-				<button style="margin-right:5px;" class = "btn-cancel">취소</button> 
-				<button class="btn-save" id="btn-save-id">저장</button>
-			</div>
+				<div>한줄소개 변경<button type="button" class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
+			<form action="../MypageIntroduceServlet" method="post">
+				
+				<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id" name="mypage-textarea"></textarea>
+	
+				<div style="float:right; margin-right:2px; width:120px; height:50px;">
+					<button type="button" style="margin-right:5px;" class = "btn-cancel">취소</button> 
+					<button type="submit" class="btn-save" id="btn-save-id">저장</button>
+				</div>
+			</form>
 			
 		</div>
 	</div>
@@ -413,8 +408,20 @@
       						한줄소개
       					</div>
       					<div class="introduce">
-      						<div id="introduce-text"></div>
-      					</div>
+							<%
+								if (mypageIntroduce.getIntroduce() == null) {
+							%>
+								<div id="introduce-text"></div>
+							<%
+								} else {
+							%>
+								<div id="introduce-text">
+									<%=mypageIntroduce.getIntroduce()%>
+								</div>
+							<%
+								}
+							%>
+						</div>
       					
       					<div>
       						<button id="introduce-btn" class="first-btn">한줄소개 변경</button>
