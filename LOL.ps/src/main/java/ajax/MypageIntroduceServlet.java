@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yg_ac.dao.MypageIntroduceDao;
+import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.MemberDTO;
 
 @WebServlet("/MypageIntroduceServlet")
@@ -21,12 +23,18 @@ public class MypageIntroduceServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MemberDTO member = (MemberDTO) request.getAttribute("memberInfo");
 		String introduce = request.getParameter("mypage-textarea");
+		System.out.println(introduce);
 		
-		Connection conn = null;
+		HttpSession session = request.getSession(false);
+		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+		System.out.println(member.getMemberkey());
+		
+		Y_DBmanager db = new Y_DBmanager();
+		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
 		MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
 		mypageIntroduceDao.updateMypageIntroduce(conn, pstmt, member.getMemberkey(), introduce);
+		response.sendRedirect("my-page.jsp");
 	}
 }

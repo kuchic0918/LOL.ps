@@ -276,7 +276,7 @@ public class MemberDAO {
 			pstmt.setString(2, member.getNickname());
 			pstmt.setString(3, member.getIntroduce());
 			pstmt.setString(4, member.getAdmin());
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
