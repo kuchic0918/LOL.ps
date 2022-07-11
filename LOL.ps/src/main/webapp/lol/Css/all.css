@@ -1369,15 +1369,15 @@ p {
     border-bottom: 1px solid #dbdde1;
 }
 
-.champ-community-board-list:hover {
-    background: rgba(126, 155, 255, .1);
-}
-
 .champ-community-board-item {
     display: flex;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.champ-community-board-item:hover {
+    background: rgba(126, 155, 255, .1);
 }
 
 .champ-community-post-img {
