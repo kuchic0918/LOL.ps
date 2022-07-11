@@ -58,6 +58,7 @@
     	   		var text = $("#introduce-modal-insert-id").val();
     	    	$("#introduce-text").html(text);
     	    	alert("한줄소개가 변경되었습니다.");
+    	    	location.href = "my-page-action.jsp";
     	    });
     		
     		$("#btn-save-id3").click(function() {
@@ -284,21 +285,15 @@
 				}
 			})
 			$('#logout').click(function(){
-<%-- 				<%session.removeAttribute("memberInfo");%> --%>
-				location.href = "community/login.jsp";
+				location.href = "login.jsp";
 			});
     	});
     </script>
 </head>
 <body class="community-body">
-<%
-session.getAttribute("memberInfo");
-System.out.println(session.getAttribute("memberInfo"));
-
-%>
-<script>
-<%-- console.log('<%=session.getAttribute("memberInfo")%>'); --%>
-</script>
+	<%
+		session.getAttribute("memberInfo");
+	%>
 
 	<div class="background-gray modal-del" id="background-gray-id">
 		<div class="introduce-modal" id="introduce-modal-id">
@@ -357,18 +352,35 @@ System.out.println(session.getAttribute("memberInfo"));
 	<!-- 위에 navbar 부분입니다 -->
     <header class="all-header-mainnav header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank/rank.html">챔피언 랭킹</a>
+                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
 			<div class="sign-login">
-				<a class="signin" href="community/my-page.jsp" id= "mypage">마이페이지</a>
-                <a class="login" href="member/login.jsp" id = "logout">로그아웃</a>
+				<%
+            		if(session.getAttribute("memberInfo") == null) {
+            			
+           	 	%>
+		                <a class="signin" href="signin.jsp">회원가입</a>
+		                <a class="login" href="login.jsp">로그인</a>           	 		
+           	 	<% 
+            		}
+            		else {
+            	%>
+            			<form action= "MypageServlet" >
+            				<input class="signin" type="submit" value="마이페이지"/>
+            			</form>
+		                <form action = "LogoutServlet" >
+		                	<input class="login" type="submit" value="로그아웃"/>
+	                	</form>     
+            	<%
+            		}
+            	%>
 			</div>
 		</div>
     </header>
@@ -376,10 +388,10 @@ System.out.println(session.getAttribute("memberInfo"));
     <div class="all-main">
         <div class="first-title">마이페이지</div>
         <div class="second-title">
-        	<form method="post">
-        		<input class="main-input" spellcheck="false" placeholder="챔피언이름을 입력하세요"/>
-        	</form>
-        </div>
+			<form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
+				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+			</form>
+       	</div>
         <div style="clear: both;"></div>
     </div>
 	

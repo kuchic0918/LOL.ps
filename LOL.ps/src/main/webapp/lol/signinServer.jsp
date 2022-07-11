@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "java.sql.*"%>
-<%@ page import="com.yg_ac.dao.*" %>
-<%@ page import="com.yg_ac.dto.*" %>
+	pageEncoding="UTF-8" import="java.sql.*"%>
+<%@ page import="com.yg_ac.dao.*"%>
+<%@ page import="com.yg_ac.dto.*"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="../Css/all.css">
-<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-<script src="../Js/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="Css/all.css">
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
+	rel='stylesheet' type='text/css'>
+<script src="Js/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body class="member-body" style="height:1200px;">
-<%
+<body class="member-body" style="height: 1200px;">
+	<%
+	request.setCharacterEncoding("UTF-8");
 	Y_DBmanager y_dbmanager = new Y_DBmanager();
  	Connection conn  = y_dbmanager.getConnection();
 	PreparedStatement pstmt = null;
@@ -32,7 +34,7 @@
 		alert("이미있는 아이디입니다.");
 		location.href = "signin.jsp";
 	</script>
-<% 	
+	<% 	
 	
 		}
 	}
@@ -48,7 +50,7 @@
 		alert("이미있는 닉네임 입니다!");
 		location.href = "signin.jsp";
 	</script>
-<% 		
+	<% 		
 		}
 	}
 	catch(Exception e) {
@@ -56,7 +58,7 @@
 	}
 	//email pw,  하고 닉네임이 중복되지 않으면 ...
 	if(memberdao.isVaildEmail(email, conn, pstmt, rs) == false && memberdao.NickNameIsOverlap(nickname, pstmt, conn, rs) == false) {
-		memberdao.signin(member, conn, pstmt, rs);
+		memberdao.signin(member, conn, pstmt);
 	%>
 	<script>
 		alert("가입성공 !");
@@ -66,7 +68,5 @@
 		}
 	%>
 
-
-   
 </body>
 </html>

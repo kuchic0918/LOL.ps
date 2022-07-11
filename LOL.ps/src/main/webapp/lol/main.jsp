@@ -48,7 +48,7 @@
     			//alert('name' + name + 'line' + line);
 	    			$.ajax({
 	    				type: 'post',
-	    				url: '../MainCard',
+	    				url: '../MainCardServlet',
 	    				data: { name : name, line : line },
 	    				datatype: 'json',
 	    				success: function(data) {
@@ -122,15 +122,32 @@
                 <a class="nav-items" href="../community/free.html">자유게시판</a>
             </div>
             <div class="sign-login">
-                <a class="signin" href="../member/signin.html">회원가입</a>
-                <a class="login" href="../member/login.html">로그인</a>
+                <%
+            		if(session.getAttribute("memberInfo") == null) {
+            			
+           	 	%>
+		                <a class="signin" href="signin.jsp">회원가입</a>
+		                <a class="login" href="login.jsp">로그인</a>           	 		
+           	 	<% 
+            		}
+            		else {
+            	%>
+            			<form action= "MypageServlet" >
+            				<input class="signin" type="submit" value="마이페이지"/>
+            			</form>
+		                <form action = "LogoutServlet" >
+		                	<input class="login" type="submit" value="로그아웃"/>
+	                	</form>
+            	<%
+            		}
+            	%>
             </div>
         </div>
     </header>
     <main class="main-main">
         <div class="main-search">
 
-            <form action="../MainStatistics" method="get" id="search_form" style="z-index:11; position : relative;" autocomplete="off">
+            <form action="../MainStatisticsServlet" method="get" id="search_form" style="z-index:11; position : relative;" autocomplete="off">
                 <div class="main-searchbar">
                     <div style="width: 560px;">
                         <input type="text" name="name" placeholder="챔피언 이름을 입력하세요">

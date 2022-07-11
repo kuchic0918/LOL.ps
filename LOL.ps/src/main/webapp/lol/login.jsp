@@ -43,18 +43,18 @@
    <!-- 위에 navbar 부분입니다 -->
     <header class="header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank/rank.html">챔피언 랭킹</a>
+                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
             <div class="sign-login">
-                <a class="signin" href="member/signin.html">회원가입</a>
-                <a class="login" href="member/login.html">로그인</a>
+                <a class="signin" href="signin.jsp">회원가입</a>
+                <a class="login" href="login.jsp">로그인</a>
             </div>
         </div>
     </header>
