@@ -24,17 +24,14 @@ public class MypageIntroduceServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String introduce = request.getParameter("mypage-textarea");
-		System.out.println(introduce);
-		
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		System.out.println(member.getMemberkey());
 		
 		Y_DBmanager db = new Y_DBmanager();
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
 		MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
 		mypageIntroduceDao.updateMypageIntroduce(conn, pstmt, member.getMemberkey(), introduce);
-		response.sendRedirect("my-page.jsp");
+		response.sendRedirect("/my-page.jsp");
 	}
 }
