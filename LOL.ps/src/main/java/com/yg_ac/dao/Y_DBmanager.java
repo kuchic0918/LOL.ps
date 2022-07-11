@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Y_DBmanager {
-	private static Connection conn = null;
-	public static Connection getConnection() {
+	private Connection conn = null;
+	public Connection getConnection() {
 		if(conn!=null) {	// 이미 접속한경우
 			return conn;
 		} else {	// 새롭게 접속을 해야하는 경우

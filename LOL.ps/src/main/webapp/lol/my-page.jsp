@@ -6,16 +6,29 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
-	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	//MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 	Y_DBmanager db = new Y_DBmanager();
 	Champion champion = new Champion();
 	Connection conn = db.getConnection();
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	
+	String email = "ghdgurdnjs@naver.com";
+	String password = "ghdgurdnjs";
+	MemberDAO memberdao = new MemberDAO();
+	MemberDTO member = memberdao.findByEmailPwMemberInfo(email, password, conn, pstmt, rs);
 %>
 <!DOCTYPE html>
 <html>
 <%	
+	if(request.getParameter("password")!=null) {
+		%>
+			<script>
+				alert('현재 비밀번호가 맞지 않습니다.')
+				location.href = 'my-page.jsp';
+			</script>
+		<%
+	}
 	MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
 	MypageIntroduceDto mypageIntroduce = mypageIntroduceDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
 %>
@@ -182,9 +195,6 @@
     			const cnt = 0;
     			$('#btn-save-id2').click(function(e) {
     				if(e.target.id === 'btn-save-id2'  && $('#new-password').val() === $('#new-password-confirm').val() && cnt==0) {
-    					alert('비밀번호가 변경되었습니다!');
-    					clear();
-    					
     					$('#fake-body').animate({opacity:1});
     					$('#change-pw-modal-id').animate({opacity:0},25);
     					$('.background-gray2').removeClass('modal-show');
@@ -273,13 +283,13 @@
     		});
 
 
-			$('#new-password-confirm').on('change', () => {
+			$('#new-password-confirm').on('change', function() {
 				if($('#new-password').val() === $('#new-password-confirm').val()) {
 					$('#password-confirm-tag').html('')
 				}else {
 					$('#password-confirm-tag').html('새로운 비밀번호와 일치하지 않습니다!!')
 				}
-			})
+			});
 			$('#logout').click(function(){
 				location.href = "login.jsp";
 			});
@@ -310,19 +320,21 @@
 		
 			<div>비밀번호 변경<button class="change-pw-modal-btn" id="change-pw-modal-btn-id">✖</button></div>
 			
-			<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
-				<p style="font-size:12px;">현재 비밀번호</p>
-				<input class="pw-input" id="now-password" type="password" />
-				<p style="font-size:12px;">새로운 비밀번호</p>
-				<input class="pw-input" id="new-password" type="password" />
-				<p style="font-size:12px;">새로운 비밀번호 확인</p>
-				<input class="pw-input" id="new-password-confirm" type="password" />
-				<p id="password-confirm-tag" style="color: #ff4040; margin-top: 5px; font-size: 14px;"></p>
-			</div>
-		
-			<div style="float:right; margin-right:2px; width:120px; height:50px;">
-				<button style="font-size:12px; margin-top: 30px;"  class="btn-save" id="btn-save-id2">비밀번호 재설정</button>
-			</div>
+			<form action="../MypagePasswordChangeServlet" method="post">
+				<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
+					<p style="font-size:12px;">현재 비밀번호</p>
+					<input class="pw-input" id="now-password" name="now_pw" type="password" />
+					<p style="font-size:12px;">새로운 비밀번호</p>
+					<input class="pw-input" id="new-password" name="new_pw" type="password" />
+					<p style="font-size:12px;">새로운 비밀번호 확인</p>
+					<input class="pw-input" id="new-password-confirm" type="password" />
+					<p id="password-confirm-tag" style="color: #ff4040; margin-top: 5px; font-size: 14px;"></p>
+				</div>
+			
+				<div style="float:right; margin-right:2px; width:120px; height:50px;">
+					<button type="submit" style="font-size:12px; margin-top: 30px;"  class="btn-save" id="btn-save-id2">비밀번호 재설정</button>
+				</div>
+			</form>
 			
 		</div>
 	</div>
@@ -352,7 +364,7 @@
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
