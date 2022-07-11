@@ -1544,9 +1544,80 @@
 		   	
 		   	//커뮤니티
 		   	$("#champ-nav4").on("click", function() {
-			   //$('#loadContents').load('statisticsAll.jsp #champ-community');
+		   		var champName = "<%=champion_name%>";
 			   $('.champ-nav').find('.champ-nav-active').removeClass('champ-nav-active');
 			   $('#champ-nav4').addClass('champ-nav-active');
+			   $.ajax({
+				   	type:"get",
+					url:"../PatchHistoryServlet",
+					data:{"name":champName},
+					datatype:"json",
+					success:function(data){
+						var write = `<div id="champ-community">
+									    <div class = "champ-community-community-container">
+									        <div class = "champ-community-first-row">
+									            <h2 class = "champ-community-champ-name">블라디미르 게시판</h2>
+									            <a class = "champ-community-board-btn" href="../community/write-post.html">
+									                <span class = "icno-font">
+									                    <i class="fa-regular champ-community-fa-pen"></i>
+									                </span>
+									                <span>게시물 쓰기</span>
+									            </a>
+									        </div>
+									        <div class = "champ-community-board-header">
+									            <span class ="champ-community-board-champion">챔피언</span>
+									            <span class ="champ-community-board-title">제목</span>
+									            <span class ="champ-community-board-writer">작성자</span>
+									            <span class ="champ-community-board-date">날짜</span>
+									            <span class ="champ-community-board-count">조회</span>
+									            <span class ="champ-community-board-recommand">추천</span>
+									        </div>
+									        <div class ="champ-community-board-list-container">
+									            <div class = "champ-community-board-list" id="champCommunity">
+									            </div>
+											</div>
+										</div>
+										<ul class = "champ-community-page-box">
+									        <li class="champ-community-page-back">
+									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
+									        </li>
+									        <li class = "champ-community-page-active">
+									            <span class = "champ-community-page-link2" aria-label="CurremtPage" title="Curremt Page"></span>
+									        </li>
+									        <li class = "champ-community-page-back">
+									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
+									        </li>
+									    </ul>
+									    <div class = "champ-community-board-btn2" >
+									        <a class = "champ-community-btn-write" href="../community/write-post.html">
+									            <i class="fa-regular fa-pen"></i>
+									            <span>게시물 쓰기</span>
+									        </a>
+									    </div>
+								    </div>`;
+						$("#loadContents").html(write);
+						for(var i = 0;i < data.length;i++){
+							write = `<a class = "champ-community-board-item" href="../community/community-post-build.html">
+					                    <span class = "champ-community-post-img">
+					                        <img src="img/icon.webp" style="width: 40px; height : 40px;"/>
+					                    </span>
+					                    <span class = "champ-community-board-detail-box">
+					                    	<span class ="champ-community-board-detail-title">[상남자의 라인, TOP] 이게 왜 좋은거지..? 화공탱 거드라 가렌
+					                    		<i class = "champ-community-board-detail-comment">[\${i}]</i>
+					                    	</span>
+					                    </span>
+					                    <span class = "champ-community-board-detail-writer">작성자 닉네임</span>
+					                    <span class = "champ-community-board-detail-date">2022-05-25</span>
+					                    <span class = "champ-community-board-detail-count">579</span>
+					                    <span class = "champ-community-board-detail-recommand">10</span>
+					                </a>`;
+							$("#champCommunity").append(write);
+						}
+					},
+					error: function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
 			});
 	 		
 		   	const csmrSize = <%=champion.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate).size()%>;
