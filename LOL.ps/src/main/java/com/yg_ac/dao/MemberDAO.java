@@ -248,7 +248,7 @@ public class MemberDAO {
 		return member;
 	}
 	
-	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt, ResultSet rs ) {
+	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne.jpg',?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -263,7 +263,6 @@ public class MemberDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				rs.close();
 				pstmt.close();
 			} catch (SQLException e) {
 				e.printStackTrace();

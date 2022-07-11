@@ -284,21 +284,15 @@
 				}
 			})
 			$('#logout').click(function(){
-<%-- 				<%session.removeAttribute("memberInfo");%> --%>
 				location.href = "login.jsp";
 			});
     	});
     </script>
 </head>
 <body class="community-body">
-<%
-session.getAttribute("memberInfo");
-System.out.println(session.getAttribute("memberInfo"));
-
-%>
-<script>
-<%-- console.log('<%=session.getAttribute("memberInfo")%>'); --%>
-</script>
+	<%
+		session.getAttribute("memberInfo");
+	%>
 
 	<div class="background-gray modal-del" id="background-gray-id">
 		<div class="introduce-modal" id="introduce-modal-id">
@@ -377,19 +371,12 @@ System.out.println(session.getAttribute("memberInfo"));
             		}
             		else {
             	%>
-<<<<<<< HEAD
-            			<form class="signin" action= "MypageServlet" >마이페이지</form>
-		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
-            			<a class="signin" href="signin.jsp">마이페이지</a>
-		                <a class="login" href="login.jsp">로그아웃</a>     
-=======
             			<form action= "MypageServlet" >
             				<input class="signin" type="submit" value="마이페이지"/>
             			</form>
 		                <form action = "LogoutServlet" >
 		                	<input class="login" type="submit" value="로그아웃"/>
 	                	</form>     
->>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
             	<%
             		}
             	%>
