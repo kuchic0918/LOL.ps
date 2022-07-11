@@ -2281,7 +2281,7 @@ p {
  	z-index: 1;
 }
 
-.change-img div.profile-settings > div {		/* "프로필로 설정" */
+.change-img div.profile-settings > button {		/* "프로필로 설정" */
 	/* display: none; */
 	opacity: 0;
 	position: absolute;
@@ -2298,9 +2298,10 @@ p {
 	background-color:#fff;
 	border-color:#fff;
 	z-index: 1;
+	border:0;
 }
 
-.change-img div.profile-settings > div:hover {
+.change-img div.profile-settings > button:hover {
 	position: absolute;
 	color: white;
 	background-color: rgb(61,105,255);

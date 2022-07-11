@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
-   	<script src = https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js></script>
+   	<script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
    	
     <script>
@@ -22,7 +22,7 @@
 					},
 					password : {
 						required :true,
-						minlength  : 3
+						minlength  : 1
 					},
 				},
 				messages : {
@@ -97,7 +97,7 @@
 	                        <ul class="member-ul">
 	                            <li class="member-li">
 	                                <a href="#" class="member-fbook member-a">
-	                                    <img class = "member-img_log" src="https://s3.lol.ps/file/lol-ps/static/img/icon_sns_fbook.png" alt="페이스북 로그인" >
+	                                    <img class = "member-img_log" src="Images/fbook_icon.webp" alt="페이스북 로그인" >
 	                                </a>
 	                                <script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
@@ -130,11 +130,11 @@
 	                            </li>
 	                            <li class="member-li">
 	                                <a href="#" class="google member-a">
-	                                    <img class = "member-img_log" src="https://s3.lol.ps/file/lol-ps/static/img/icon_sns_google.png" alt="구글 로그인"  >
+	                                    <img class = "member-img_log" src="Images/google_icon.webp" alt="구글 로그인"  >
 	                                </a>
 	                            </li>
 	                            <li class="member-li"><a href="#" class="apple member-a">
-	                                <img class = "member-img_log" src="https://s3.lol.ps/file/lol-ps/static/img/icon_sns_apple.png" alt="애플 로그인" >
+	                                <img class = "member-img_log" src="Images/apple_icon.webp" alt="애플 로그인" >
 	                            </a></li>
 	
 	                            </ul>

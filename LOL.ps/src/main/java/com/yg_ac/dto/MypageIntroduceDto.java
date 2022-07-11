@@ -2,7 +2,7 @@ package com.yg_ac.dto;
 
 public class MypageIntroduceDto {
 	private String introduce;
-
+	
 	public MypageIntroduceDto() { }
 	
 	public MypageIntroduceDto(String introduce) {

@@ -25,7 +25,7 @@
 		//회원가입 진행 
 	
 		if(memberdao.isVaildEmail(kakaoEmail, conn, pstmt, rs)==false) {
-			memberdao.snsSignIn(member, conn, pstmt, rs);
+			memberdao.snsSignIn(member, conn, pstmt);
 			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname, conn, pstmt, rs);
 			session.setAttribute("memberInfo", member);
 	%>

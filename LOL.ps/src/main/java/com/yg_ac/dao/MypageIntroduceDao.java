@@ -32,6 +32,30 @@ public class MypageIntroduceDao {
 		return get;
 	}
 	
+	public MypageIntroduceDto getMypageImage(Connection conn, PreparedStatement pstmt, ResultSet rs, int key) {
+		MypageIntroduceDto get = null;
+		String sql = "SELECT * from member where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				get = new MypageIntroduceDto(rs.getString("image"));
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
+
+	
 	public void updateMypageIntroduce(Connection conn, PreparedStatement pstmt, int key, String introduce) {
 		String sql = "update member set introduce = ? where memberkey = ?";
 		try {
@@ -49,4 +73,5 @@ public class MypageIntroduceDao {
 			}
 		}
 	}
+	
 }

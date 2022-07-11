@@ -28,13 +28,13 @@
 
 	try {
 		if(memberdao.emailisOverlap(email,pstmt, conn,rs)) {
-%>
-	<script>
-		$('#email-validate').css({display:'block'});
-		alert("이미있는 아이디입니다.");
-		location.href = "signin.jsp";
-	</script>
-	<% 	
+		%>
+		<script>
+			$('#email-validate').css({display:'block'});
+			alert("이미있는 아이디입니다.");
+			location.href = "signin.jsp";
+		</script>
+		<% 	
 	
 		}
 	}
@@ -44,13 +44,13 @@
 	
 	try {
 		if(memberdao.NickNameIsOverlap(nickname, pstmt,  conn, rs)) {
-%>
-	<script>
-		$('#nickname-validate').css({display:'block'});
-		alert("이미있는 닉네임 입니다!");
-		location.href = "signin.jsp";
-	</script>
-	<% 		
+		%>
+		<script>
+			$('#nickname-validate').css({display:'block'});
+			alert("이미있는 닉네임 입니다!");
+			location.href = "signin.jsp";
+		</script>
+		<% 		
 		}
 	}
 	catch(Exception e) {
@@ -59,12 +59,12 @@
 	//email pw,  하고 닉네임이 중복되지 않으면 ...
 	if(memberdao.isVaildEmail(email, conn, pstmt, rs) == false && memberdao.NickNameIsOverlap(nickname, pstmt, conn, rs) == false) {
 		memberdao.signin(member, conn, pstmt);
-	%>
-	<script>
-		alert("가입성공 !");
-		location.href = "login.jsp";
-	</script>
-	<%
+		%>
+		<script>
+			alert("가입성공 !");
+			location.href = "login.jsp";
+		</script>
+		<%
 		}
 	%>
 

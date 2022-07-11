@@ -9,13 +9,12 @@
 	<meta name="google-signin-scope" content="profile email">
 <!--     <meta name="google-signin-client_id" content="617468967353-01kodva3scdm890l5ahl1t02rm12b42h.apps.googleusercontent.com"> -->
 	<script src="Js/jquery-3.6.0.min.js"></script>
-	<script src = https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js></script>
+	<script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!--     <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
 	<title>회원가입</title>
 	<link rel="stylesheet" href="Css/all.css">
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-<!-- asdas -->
 	
 <script>
 $(function() {
