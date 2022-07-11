@@ -58,7 +58,7 @@
     	   		var text = $("#introduce-modal-insert-id").val();
     	    	$("#introduce-text").html(text);
     	    	alert("한줄소개가 변경되었습니다.");
-    	    	location.href = "my-page-action.jsp";
+    	    	location.href = "my-page-action.jsp?text="+text;
     	    });
     		
     		$("#btn-save-id3").click(function() {
