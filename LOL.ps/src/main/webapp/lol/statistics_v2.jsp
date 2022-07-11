@@ -293,6 +293,43 @@
 		     						</div>
 		     					</div>
 		     				</div>
+		     				<div class="statistics-content-container statistics-core-each" id="coreitem">
+								<div class="statistics-spell-items">
+									<div class="statistics-title">코어템 통계</div>
+									<div class="statistics-spell-item-content">
+										<div class="statistics-spell-box">
+											<h4 style="padding: 5px">1코어</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="first">
+											</ul>
+										</div>
+										<div class="statistics-spell-box">
+											<h4 style="padding: 5px">2코어</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="secend">
+											</ul>
+										</div>
+										<div class="statistics-spell-box" style="border-right: none;">
+											<h4 style="padding: 5px;">3코어</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="therd">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
 							
 			     		</div>`;
 				$("#loadContents").html(write);
@@ -494,6 +531,118 @@
 						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 				});
+			   $.ajax({
+					type:"get",
+					url:"../CoreEachServlet",
+					data:{"name":champName,"line":champLine,"select":"first"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick}</b>
+													<br />
+													<br />\${data[i].function1}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#first").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+			   $.ajax({
+					type:"get",
+					url:"../CoreEachServlet",
+					data:{"name":champName,"line":champLine,"select":"secend"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick}</b>
+													<br />
+													<br />\${data[i].function2}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#secend").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+			   $.ajax({
+					type:"get",
+					url:"../CoreEachServlet",
+					data:{"name":champName,"line":champLine,"select":"therd"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick}</b>
+													<br />
+													<br />\${data[i].function3}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span>
+											<span style="width: 23.3%;">\${data[i].pickrate}</span>
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#therd").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+			   
 			});
     		
 		   	//기본정보
