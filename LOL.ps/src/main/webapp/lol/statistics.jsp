@@ -15,10 +15,10 @@
 	ResultSet rs = null;
 	
 	//sql용 변수
-	String champion_name = "갱플랭크";
-	String champion_line = "탑";
-	/* String champion_name = request.getParameter("name");
-	String champion_line = request.getParameter("line"); */
+	// String champion_name = "갱플랭크";
+	// String champion_line = "탑";
+	String champion_name = request.getParameter("name");
+	String champion_line = request.getParameter("line");
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
 // 	session.getAttribute("memberInfo");
@@ -749,24 +749,29 @@
 					async: false,
 					success:function(data){
 						for(var i = 0; i < data.length; i++) {
-							if (i % 2 == 0) {
-								isGray = "statistics-gray";
+							if(data[0].name==null) {
+								write =	`<span></span>`;
+								$("#match-hard").append(write);
 							} else {
-								isGray = "";
+								if (i % 2 == 0) {
+									isGray = "statistics-gray";
+								} else {
+									isGray = "";
+								}
+								write = `<a class="statistics-hard-list \${isGray}" href="#"> 
+											<span style="width: 10%;"> 
+												<img src="Images/champion/head/\${data[i].image}" alt="img">
+											</span> 
+											<span style="width: 60%; padding: 10px 0px 0px 20px; text-align: left;">
+													<span>\${data[i].name}</span>
+											</span> 
+											<span style="width: 30%; padding-top: 10px;"> 
+												<span>\${data[i].count}</span> 
+											<span class="statistics-hard">\${data[i].winrate}%</span>
+											</span>
+										</a>`;
+								$("#match-hard").append(write);
 							}
-							write = `<a class="statistics-hard-list \${isGray}" href="#"> 
-										<span style="width: 10%;"> 
-											<img src="Images/champion/head/\${data[i].image}" alt="img">
-										</span> 
-										<span style="width: 60%; padding: 10px 0px 0px 20px; text-align: left;">
-												<span>\${data[i].name}</span>
-										</span> 
-										<span style="width: 30%; padding-top: 10px;"> 
-											<span>\${data[i].count}</span> 
-										<span class="statistics-hard">\${data[i].winrate}%</span>
-										</span>
-									</a>`;
-							$("#match-hard").append(write);
 						}
 					},
 					error:function(r,s,e){
