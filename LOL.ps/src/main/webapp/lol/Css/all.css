@@ -1369,15 +1369,15 @@ p {
     border-bottom: 1px solid #dbdde1;
 }
 
-.champ-community-board-list:hover {
-    background: rgba(126, 155, 255, .1);
-}
-
 .champ-community-board-item {
     display: flex;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.champ-community-board-item:hover {
+    background: rgba(126, 155, 255, .1);
 }
 
 .champ-community-post-img {
@@ -2281,7 +2281,7 @@ p {
  	z-index: 1;
 }
 
-.change-img div.profile-settings > div {		/* "프로필로 설정" */
+.change-img div.profile-settings > button {		/* "프로필로 설정" */
 	/* display: none; */
 	opacity: 0;
 	position: absolute;
@@ -2298,9 +2298,10 @@ p {
 	background-color:#fff;
 	border-color:#fff;
 	z-index: 1;
+	border:0;
 }
 
-.change-img div.profile-settings > div:hover {
+.change-img div.profile-settings > button:hover {
 	position: absolute;
 	color: white;
 	background-color: rgb(61,105,255);

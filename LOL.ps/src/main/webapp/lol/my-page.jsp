@@ -1,11 +1,47 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="org.apache.catalina.tribes.membership.MemberImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import = "yg_ac_java.*"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.yg_ac.dao.*" %>
+<%@ page import="com.yg_ac.dto.*" %>
 <%
-// 	System.out.println(session.getAttribute("memberInfo"));
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	Y_DBmanager db = new Y_DBmanager();
+	Champion champion = new Champion();
+	Connection conn = db.getConnection();
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
 %>
 <!DOCTYPE html>
 <html>
+<%	
+	if("wrong".equals(request.getParameter("password"))) {
+		%>
+			<script>
+				alert('현재 비밀번호가 맞지 않습니다.')
+				location.href = 'my-page.jsp';
+			</script>
+		<%
+	}else if("alright".equals(request.getParameter("password"))) {
+		%>
+			<script>
+				alert('비밀번호가 변경되었습니다.')
+				location.href = 'my-page.jsp';
+			</script>
+		<%
+	}else if("change".equals(request.getParameter("image_name"))) {
+		%>
+			<script>
+				alert('프로필사진이 변경되었습니다.')
+				location.href = 'my-page.jsp';
+			</script>
+		<%
+	}
+	MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
+	MypageIntroduceDto mypageIntroduce = mypageIntroduceDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
+	MypageIntroduceDto mypageImage = mypageIntroduceDao.getMypageImage(conn, pstmt, rs, member.getMemberkey());
+%>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +49,8 @@
     <title>마이페이지</title>
     <link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="Js/jquery-3.6.0.min.js"></script>
+    <script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script>
     	$(function() {
 			//인풋 비우기
@@ -27,30 +63,14 @@
 
     		//프로필 설정
     		$(".change-img div.profile-settings").hover(function() {
-    			//$(this).find("img:first-child").css('display','none');
-    			//$(this).find("img").eq(2).css('display','block');
-    			//$(this).find("div").css('display','block');
-    			//$(this).find("img").eq(1).css('display','block');
-    			/* $(this).find("img:first-child").css('opacity','0');
-    			$(this).find("img").eq(1).css('opacity','1');
-    			$(this).find("div").css('opacity','1');
-    			$(this).find("img").eq(2).css('opacity','1'); */
     			$(this).find("img:first-child").animate({opacity:0},250);// ('opacity','0');
     			$(this).find("img").eq(1).animate({opacity:1},250); // .css('opacity','1');
-    			$(this).find("div").animate({opacity:1},250); //css('opacity','1');
+    			$(this).find("button").animate({opacity:1},250); //css('opacity','1');
     			$(this).find("img").eq(2).animate({opacity:1},250);  //.css('opacity','1');
     		}, function() {
-    			//$(this).find("img:first-child").css('display','block');
-    			//$(this).find("img").eq(2).css('display','none');
-    			//$(this).find("div").css('display','none');
-    			//$(this).find("img").eq(1).css('display','none');
-    			/* $(this).find("img:first-child").css('opacity','1');
-    			$(this).find("img").eq(1).css('opacity','0');
-    			$(this).find("div").css('opacity','0');
-    			$(this).find("img").eq(2).css('opacity','0'); */
     			$(this).find("img:first-child").animate({opacity:1});  //.css('opacity','1');
     			$(this).find("img").eq(1).animate({opacity:0});  //.css('opacity','0');
-    			$(this).find("div").animate({opacity:0});  //.css('opacity','0');
+    			$(this).find("button").animate({opacity:0});  //.css('opacity','0');
     			$(this).find("img").eq(2).animate({opacity:0});  //.css('opacity','0');
     		});
     		//한줄소개변경
@@ -183,26 +203,6 @@
 					clear();
     			});
 				
-    			const cnt = 0;
-    			$('#btn-save-id2').click(function(e) {
-    				if(e.target.id === 'btn-save-id2'  && $('#new-password').val() === $('#new-password-confirm').val() && cnt==0) {
-    					alert('비밀번호가 변경되었습니다!')
-    					clear();
-    					
-    					$('#fake-body').animate({opacity:1});
-    					$('#change-pw-modal-id').animate({opacity:0},25);
-    					$('.background-gray2').removeClass('modal-show');
-    					$('.background-gray2').addClass('modal-del');
-    					
-    					$('html, body').removeClass('modal-body');
-    					$('#element').off('scroll touchmove mousewheel', function(event) {
-							event.preventDefault();
-    		    			event.stopPropagation();
-    		    			return false;
-    		    		});
-    				} cnt++;
-    			});
-    			
     			$('#element').on('scroll touchmove mousewheel', function(event) {
     			  event.preventDefault();
     			  event.stopPropagation();
@@ -277,13 +277,40 @@
     		});
 
 
-			$('#new-password-confirm').on('change', () => {
+			/* $('#new-password-confirm').on('change', function() {
 				if($('#new-password').val() === $('#new-password-confirm').val()) {
 					$('#password-confirm-tag').html('')
 				}else {
 					$('#password-confirm-tag').html('새로운 비밀번호와 일치하지 않습니다!!')
 				}
-			})
+			}); */
+			$('.password-form').validate({
+				rules: {
+					new_pw: {
+						required : true,
+						minlength  : 8
+					},
+					
+					new_pw2 : {
+						required : true,
+						minlength  : 8,
+						equalTo : '#new-password'
+					},
+				},
+				messages: {
+					new_pw : {
+						required : '암호를 입력하세요.',
+						minlength  : '8자 이상 입력하세요'
+					},
+					new_pw2 : {
+						required : '암호를 입력하세요.',
+						equalTo : '값이 다릅니다 다시 입력해주세요.',
+						minlength  : '8자 이상 입력하세요'
+					}
+				},
+			});
+			
+			
 			$('#logout').click(function(){
 				location.href = "login.jsp";
 			});
@@ -291,21 +318,20 @@
     </script>
 </head>
 <body class="community-body">
-	<%
-		session.getAttribute("memberInfo");
-	%>
 
 	<div class="background-gray modal-del" id="background-gray-id">
 		<div class="introduce-modal" id="introduce-modal-id">
 		
-			<div>한줄소개 변경<button class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
-			
-			<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id"></textarea>
-
-			<div style="float:right; margin-right:2px; width:120px; height:50px;">
-				<button style="margin-right:5px;" class = "btn-cancel">취소</button> 
-				<button class="btn-save" id="btn-save-id">저장</button>
-			</div>
+				<div>한줄소개 변경<button type="button" class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
+			<form action="../MypageIntroduceServlet" method="post">
+				
+				<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id" name="mypage-textarea"></textarea>
+	
+				<div style="float:right; margin-right:2px; width:120px; height:50px;">
+					<button type="button" style="margin-right:5px;" class = "btn-cancel">취소</button> 
+					<button type="submit" class="btn-save" id="btn-save-id">저장</button>
+				</div>
+			</form>
 			
 		</div>
 	</div>
@@ -315,19 +341,21 @@
 		
 			<div>비밀번호 변경<button class="change-pw-modal-btn" id="change-pw-modal-btn-id">✖</button></div>
 			
-			<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
-				<p style="font-size:12px;">현재 비밀번호</p>
-				<input class="pw-input" id="now-password" type="password" />
-				<p style="font-size:12px;">새로운 비밀번호</p>
-				<input class="pw-input" id="new-password" type="password" />
-				<p style="font-size:12px;">새로운 비밀번호 확인</p>
-				<input class="pw-input" id="new-password-confirm" type="password" />
-				<p id="password-confirm-tag" style="color: #ff4040; margin-top: 5px; font-size: 14px;"></p>
-			</div>
-		
-			<div style="float:right; margin-right:2px; width:120px; height:50px;">
-				<button style="font-size:12px; margin-top: 30px;"  class="btn-save" id="btn-save-id2">비밀번호 재설정</button>
-			</div>
+			<form action="../MypagePasswordChangeServlet" class="password-form" method="post" novalidate>
+				<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
+					<p style="font-size:12px;">현재 비밀번호</p>
+					<input class="pw-input" id="now-password" name="now_pw" type="password" />
+					<p style="font-size:12px;">새로운 비밀번호</p>
+					<input class="pw-input" id="new-password" name="new_pw" type="password" />
+					<p style="font-size:12px;">새로운 비밀번호 확인</p>
+					<input class="pw-input" id="new-password-confirm" name="new_pw2" type="password" />
+					<p id="password-confirm-tag" style="color: #ff4040; margin-top: 5px; font-size: 14px;"></p>
+				</div>
+			
+				<div style="float:right; margin-right:2px; width:120px; height:50px;">
+					<button type="submit" style="font-size:12px; margin-top: 30px;" class="btn-save">비밀번호 재설정</button>
+				</div>
+			</form>
 			
 		</div>
 	</div>
@@ -340,10 +368,11 @@
 			<div style="height:58px;">
 				<p class="member-secession-div">회원 탈퇴를 하게 되면 보유하신 프로필, 업적 등이 모두 사라지며, 작성한 글, 댓글 등이 모두 사라집니다. 동의하십니까?</p>
 			</div>
-
-			<div style="float:right; width:90px; height:50px;">
-				<button style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
-			</div>
+			<form action="../MypageMemberSecessionServlet" method="post">
+				<div style="float:right; width:90px; height:50px;">
+					<button type="submit" style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
+				</div>
+			</form>
 			
 		</div>
 	</div>
@@ -357,7 +386,7 @@
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
@@ -406,15 +435,27 @@
 				
 				<div class="my-page-writer">
       				<div>
-      					<img class="my-image" src="Images/profile/anne1.jpg"/>
+      					<img class="my-image" src="Images/profile/<%=mypageImage.getIntroduce()%>"/>
       				</div>
       				<div style="padding-left: 30px; width: 580px;">
       					<div style="padding-bottom: 10px; color: darkgray;">
       						한줄소개
       					</div>
       					<div class="introduce">
-      						<div id="introduce-text"></div>
-      					</div>
+							<%
+								if (mypageIntroduce.getIntroduce() == null) {
+							%>
+								<div id="introduce-text"></div>
+							<%
+								} else {
+							%>
+								<div id="introduce-text">
+									<%=mypageIntroduce.getIntroduce()%>
+								</div>
+							<%
+								}
+							%>
+						</div>
       					
       					<div>
       						<button id="introduce-btn" class="first-btn">한줄소개 변경</button>
@@ -440,152 +481,154 @@
     
         <div class="change-img">
         	<div style="height:150px;">
-        			<div class="profile-settings fl">
+				<form action="../MypageProfileChangeServlet" method="post">
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="anne1.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/anne2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button name="image_name" value="anne2.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/anne2.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/bro.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="bro.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/bro.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/dk.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button name="image_name" value="dk.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/dk.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/DRX.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="DRX.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/DRX.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/gen.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button name="image_name" value="gen.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/gen.jpg"/>
+	       			</div>
+	       			
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/hle.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="hle.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/hle.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jhin.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button value="jhin.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/jhin.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jinx1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="jinx1.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/jinx1.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jinx2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button name="image_name" value="jinx2.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/jinx2.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/kaisa.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="kaisa.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/kaisa.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/KDF.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
+	        			<button name="image_name" value="KDF.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/KDF.jpg"/>
+	       			</div>
+	       			
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/kt.jpg"/>
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="kt.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/kt.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/lsb.jpg"/>
+	        			<img src="Images/icon_search2.webp"/>
+	        			<button name="image_name" value="lsb.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/lsb.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/nasus.jpg"/>
-        			</div>
-        			
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="nasus.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/nasus.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/ns.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="ns.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/ns.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/t1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="t1.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/t1.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/yuumi1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="yuumi1.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/yuumi1.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/yuumi2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="yuumi2.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/yuumi2.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/blackcat.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="blackcat.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/blackcat.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/whitecat.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="whitecat.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/whitecat.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/sofi.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="sofi.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/sofi.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/rengoku.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
+	        			<button name="image_name" value="rengoku.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/rengoku.jpg"/>
+	       			</div>
+	       			<div class="profile-settings fl">
+	        			<img class="img" src="Images/profile/satoru.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
-        			<div class="profile-settings fl">
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-	        			<img src="Images/icon_search2.webp"/>
-	        			<div>프로필로<br/>설정</div>
-	        			<img class="img" src="Images/profile/anne1.jpg"/>
-        			</div>
+	        			<button name="image_name" value="satoru.jpg">프로필로<br/>설정</button>
+	        			<img class="img" src="Images/profile/satoru.jpg"/>
+	       			</div>
+        		</form>
         	</div>
         </div>
         

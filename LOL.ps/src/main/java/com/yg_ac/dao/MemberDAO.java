@@ -80,7 +80,6 @@ public class MemberDAO {
 			}
 
 		}catch(SQLException e) {
-			System.out.println("1111");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -173,7 +172,6 @@ public class MemberDAO {
 
 
 		} catch (SQLException e) {
-			System.out.println("2222");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -250,7 +248,7 @@ public class MemberDAO {
 	/*주석확인*/	
 	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt ) {
 		try {
-			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne.jpg',?,?)";
+			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne1.jpg',?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getEmail());
 			pstmt.setString(2, member.getPw()); 		
@@ -272,13 +270,13 @@ public class MemberDAO {
 
 	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt ) {
 		try {
-			String sql = "insert into member values(temp_seq.nextval, ? , 'kakaoAdmin' , ? , 'anne.jpg', ? ,? )";
+			String sql = "insert into member values(temp_seq.nextval, ? , 'kakaoAdmin' , ? , 'anne1.jpg', ? ,? )";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getEmail());
 			pstmt.setString(2, member.getNickname());
 			pstmt.setString(3, member.getIntroduce());
 			pstmt.setString(4, member.getAdmin());
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

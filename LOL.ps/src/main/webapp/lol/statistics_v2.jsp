@@ -221,20 +221,235 @@
    		 /* load() 전체 ajax숙지후 수정필요 */
    		 /* 3레벨, 6레벨 11레벨 */
    		 $(document).ready(function(){
+	   		var write = "";
+	   		var champName = "<%=champion_name%>";
+	   		var champLine = "<%=champion_line%>";
 		   	$(document).on("click","#seq3",function(){
-		   		$("#skill-seq").load('statisticsAll.jsp #skill-seq3-load');
+		   		write = `<ul class="statistics-spell-list2 statistics-display-block" id="skillSeqList"></ul>`;
+				$("#skillSeq").html(write);
 		   		$('.statistics-what-level-container').find('.statistics-what-level-active').removeClass('statistics-what-level-active');
-				$('#seq3').addClass('statistics-what-level-active'); 
+				$('#seq3').addClass('statistics-what-level-active');
+				$.ajax({
+					type:"get",
+					url:"../SkillSeqServlet",
+					data:{"name":champName,"line":champLine,"select":"3"},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i<data.length;i++){
+							write = `<li class="statistics-list-items statistics-border-bottom">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image1}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+													<br />\${data[i].function1}
+												</span>
+											</span> 
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image2}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+													<br />\${data[i].function2}
+												</span>
+											</span> 
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image3}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+													<br />\${data[i].function3}
+												</span>
+											</span> 
+										</div>
+										<div class="statistics-spell-percent" style="width: 40%;">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#skillSeqList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
 		   	});
 		    $(document).on("click","#seq6",function(){
-		   		$("#skill-seq").load('statisticsAll.jsp #skill-seq6-load'); 
+		    	write = `<ul class="statistics-spell-list2 statistics-display-block" id="skillSeqList"></ul>`;
+				$("#skillSeq").html(write);
 		   		$('.statistics-what-level-container').find('.statistics-what-level-active').removeClass('statistics-what-level-active');
 				$('#seq6').addClass('statistics-what-level-active');
+				$.ajax({
+					type:"get",
+					url:"../SkillSeqServlet",
+					data:{"name":champName,"line":champLine,"select":"6"},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i<data.length;i++){
+							write = `<li class="statistics-list-items statistics-border-bottom">
+								<div class="statistics-spell">
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image1}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+											<br />\${data[i].function1}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image2}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+											<br />\${data[i].function2}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image3}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+											<br />\${data[i].function3}
+										</span>
+									</span>
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image4}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick4}</b><br/>
+											<br />\${data[i].function4}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image5}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick5}</b><br/>
+											<br />\${data[i].function5}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image6}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick6}</b><br/>
+											<br />\${data[i].function6}
+										</span>
+									</span>
+								</div>
+								<div class="statistics-spell-percent" style="width: 40%;">
+									<span style="width: 23.3%;">\${data[i].winrate}</span> 
+									<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+									<span style="width: 23.3%;">\${data[i].count}</span>
+								</div>
+							</li>`;
+							$("#skillSeqList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
 		   	});
 		    $(document).on("click","#seq11",function(){
-		   		$("#skill-seq").load('statisticsAll.jsp #skill-seq11-load'); 
+		    	write = `<ul class="statistics-spell-list2 statistics-display-block" id="skillSeqList"></ul>`;
+				$("#skillSeq").html(write);
 		   		$('.statistics-what-level-container').find('.statistics-what-level-active').removeClass('statistics-what-level-active');
-				$('#seq11').addClass('statistics-what-level-active'); 
+				$('#seq11').addClass('statistics-what-level-active');
+				$.ajax({
+					type:"get",
+					url:"../SkillSeqServlet",
+					data:{"name":champName,"line":champLine,"select":"11"},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i<data.length;i++){
+							write = `<li class="statistics-list-items statistics-border-bottom">
+								<div class="statistics-spell">
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image1}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+											<br />\${data[i].function1}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image2}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+											<br />\${data[i].function2}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image3}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+											<br />\${data[i].function3}
+										</span>
+									</span>
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image4}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick4}</b><br/>
+											<br />\${data[i].function4}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image5}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick5}</b><br/>
+											<br />\${data[i].function5}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image6}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick6}</b><br/>
+											<br />\${data[i].function6}
+										</span>
+									</span>
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image7}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick7}</b><br/>
+											<br />\${data[i].function7}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image8}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick8}</b><br/>
+											<br />\${data[i].function8}
+										</span>
+									</span>
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image9}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick9}</b><br/>
+											<br />\${data[i].function9}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image10}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick10}</b><br/>
+											<br />\${data[i].function10}
+										</span>
+									</span> 
+									<span class='tooltip'> 
+										<img src="Images/skill/\${data[i].image11}" alt="img"/>
+										<span class='tooltiptext tooltip-right'> 
+											<b style='color: #ffc107;'>\${data[i].pick11}</b><br/>
+											<br />\${data[i].function11}
+										</span>
+									</span>
+								</div>
+								<div class="statistics-spell-percent" style="width: 40%;">
+									<span style="width: 23.3%;">\${data[i].winrate}</span> 
+									<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+									<span style="width: 23.3%;">\${data[i].count}</span>
+								</div>
+							</li>`;
+							$("#skillSeqList").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
 		   	});
    		 });
     	/* 통계, 기본정보,패치히스토리, 커뮤니티 선택이벤트 핸들러 */
@@ -330,7 +545,102 @@
 									</div>
 								</div>
 							</div>
-							
+							<div class="statistics-content-container statistics-core-combine">
+								<div class="statistics-spell-items">
+									<div class="statistics-title">코어템 조합 통계</div>
+									<div class="statistics-spell-item-content">
+										<div class="statistics-spell-box">
+											<h4 style="padding: 5px">2코어 조합</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="2CoreCombine">
+											</ul>
+										</div>
+										<div class="statistics-spell-box">
+											<h4 style="padding: 5px">3코어 조합</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="3CoreCombine">
+											</ul>
+										</div>
+										<div class="statistics-spell-box" style="border-right: none;">
+											<h4 style="padding: 5px;">4코어 조합</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="4CoreCombine">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="statistics-content-container statistics-skill" id="skills">
+								<div class="statistics-spell-items">
+									<div class="statistics-title">스킬</div>
+									<div class="statistics-spell-item-content">
+										<div class="statistics-spell-box" style="border-right: none; width: 35%;">
+											<h4 style="padding: 5px">마스터 순서</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<ul class="statistics-spell-list" id="skillMaster">
+											</ul>
+										</div>
+										<div class="statistics-spell-box" style="border-right: none; width: 65%; padding: 12px 12px;">
+											<div class="statistics-what-level-container">
+												<span class="statistics-what-level statistics-what-level-active" id="seq3">3레벨까지</span> 
+												<span class="statistics-what-level" id="seq6">6레벨 까지</span> 
+												<span class="statistics-what-level" id="seq11">11레벨 까지</span>
+											</div>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+												<span class="statistics-number-items">카운트수</span>
+											</div>
+											<div id="skillSeq">
+												<ul class="statistics-spell-list2 statistics-display-block" id="skillSeqList">
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="statistics-content-container statistics-rune" id="runes">
+								<div class="statistics-spell-items">
+									<div class="statistics-title">룬</div>
+									<div class="statistics-spell-item-content">
+										<div class="statistics-spell-box"
+											style="width: 60%; padding: 15px;">
+											<h4 style="padding: 5px">조합별 통계</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+											</div>
+											<ul class="statistics-spell-list" id="runeCombine">
+											</ul>
+										</div>
+										<div class="statistics-spell-box" style="border-right: none; width: 40%; padding: 15px;">
+											<h4 style="padding: 5px">파편 조합 통계</h4>
+											<div class="statistics-number">
+												<span class="statistics-number-items">승률</span> 
+												<span class="statistics-number-items">선택률</span> 
+											</div>
+											<ul class="statistics-spell-list" id="runeShard">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
 			     		</div>`;
 				$("#loadContents").html(write);
 		   		
@@ -642,7 +952,365 @@
 						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 			   });
-			   
+				$.ajax({
+					type:"get",
+					url:"../CoreCombineServlet",
+					data:{"name":champName,"line":champLine,"select":"2core"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image1}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br />
+													<br />\${data[i].function1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image2}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br />
+													<br />\${data[i].function2}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#2CoreCombine").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+				$.ajax({
+					type:"get",
+					url:"../CoreCombineServlet",
+					data:{"name":champName,"line":champLine,"select":"3core"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image1}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br />
+													<br />\${data[i].function1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image2}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br />
+													<br />\${data[i].function2}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image3}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br />
+													<br />\${data[i].function3}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#3CoreCombine").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+				$.ajax({
+					type:"get",
+					url:"../CoreCombineServlet",
+					data:{"name":champName,"line":champLine,"select":"4core"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image1}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br />
+													<br />\${data[i].function1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image2}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br />
+													<br />\${data[i].function2}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image3}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br />
+													<br />\${data[i].function3}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/item/\${data[i].image4}" alt="img" />
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick4}</b><br />
+													<br />\${data[i].function4}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#4CoreCombine").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+				$.ajax({
+					type:"get",
+					url:"../SkillMasterServlet",
+					data:{"name":champName,"line":champLine},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0;i<data.length;i++){
+							write = `<li class="statistics-list-items statistics-border-bottom">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image1}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+													<br />\${data[i].function1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image2}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+													<br />\${data[i].function2}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image3}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+													<br />\${data[i].function3}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#skillMaster").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
+				$.ajax({
+					type:"get",
+					url:"../SkillSeqServlet",
+					data:{"name":champName,"line":champLine,"select":"3"},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0;i<data.length;i++){
+							write = `<li class="statistics-list-items statistics-border-bottom">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image1}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+													<br />\${data[i].function1}
+												</span>
+											</span> 
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image2}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+													<br />\${data[i].function2}
+												</span>
+											</span> 
+											<span class='tooltip'> 
+												<img src="Images/skill/\${data[i].image3}" alt="img"/>
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+													<br />\${data[i].function3}
+												</span>
+											</span> 
+										</div>
+										<div class="statistics-spell-percent" style="width: 40%;">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+											<span style="width: 23.3%;">\${data[i].count}</span>
+										</div>
+									</li>`;
+							$("#skillSeq").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
+				$.ajax({
+					type:"get",
+					url:"../RuneCombineServlet",
+					data:{"name":champName,"line":champLine},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image1}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick1}</b><br/>
+													<br />\${data[i].function1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image2}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick2}</b><br/>
+													<br />\${data[i].function2}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image3}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick3}</b><br/>
+													<br />\${data[i].function3}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image4}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick4}</b><br/>
+													<br />\${data[i].function4}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image5}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick5}</b><br/>
+													<br />\${data[i].function5}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image6}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>\${data[i].pick6}</b><br/>
+													<br />\${data[i].function6}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent" style="width: 45%;">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+										</div>
+									</li>`;
+							$("#runeCombine").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
+				$.ajax({
+					type:"get",
+					url:"../RuneShardServlet",
+					data:{"name":champName,"line":champLine},
+					datatype:"json",
+					async: false,
+					success:function(data){
+						for(var i = 0; i < data.length; i++) {
+							if (i % 2 == 0) {
+								isGray = "statistics-gray";
+							} else {
+								isGray = "";
+							}
+							write = `<li class="statistics-list-items \${isGray}">
+										<div class="statistics-spell">
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image1}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>공격</b><br/>
+													<br />\${data[i].pick1}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image2}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>유연</b><br/>
+													<br />\${data[i].pick2}
+												</span>
+											</span>
+											<span class='tooltip'> 
+												<img src="Images/rune/\${data[i].image3}" alt="img"> 
+												<span class='tooltiptext tooltip-right'> 
+													<b style='color: #ffc107;'>방어</b><br/>
+													<br />\${data[i].pick3}
+												</span>
+											</span>
+										</div>
+										<div class="statistics-spell-percent">
+											<span style="width: 23.3%;">\${data[i].winrate}</span> 
+											<span style="width: 23.3%;">\${data[i].pickrate}</span> 
+										</div>
+									</li>`;
+							$("#runeShard").append(write);
+						}
+					},
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+				});
 			});
     		
 		   	//기본정보
@@ -876,9 +1544,80 @@
 		   	
 		   	//커뮤니티
 		   	$("#champ-nav4").on("click", function() {
-			   //$('#loadContents').load('statisticsAll.jsp #champ-community');
+		   		var champName = "<%=champion_name%>";
 			   $('.champ-nav').find('.champ-nav-active').removeClass('champ-nav-active');
 			   $('#champ-nav4').addClass('champ-nav-active');
+			   $.ajax({
+				   	type:"get",
+					url:"../PatchHistoryServlet",
+					data:{"name":champName},
+					datatype:"json",
+					success:function(data){
+						var write = `<div id="champ-community">
+									    <div class = "champ-community-community-container">
+									        <div class = "champ-community-first-row">
+									            <h2 class = "champ-community-champ-name">블라디미르 게시판</h2>
+									            <a class = "champ-community-board-btn" href="../community/write-post.html">
+									                <span class = "icno-font">
+									                    <i class="fa-regular champ-community-fa-pen"></i>
+									                </span>
+									                <span>게시물 쓰기</span>
+									            </a>
+									        </div>
+									        <div class = "champ-community-board-header">
+									            <span class ="champ-community-board-champion">챔피언</span>
+									            <span class ="champ-community-board-title">제목</span>
+									            <span class ="champ-community-board-writer">작성자</span>
+									            <span class ="champ-community-board-date">날짜</span>
+									            <span class ="champ-community-board-count">조회</span>
+									            <span class ="champ-community-board-recommand">추천</span>
+									        </div>
+									        <div class ="champ-community-board-list-container">
+									            <div class = "champ-community-board-list" id="champCommunity">
+									            </div>
+											</div>
+										</div>
+										<ul class = "champ-community-page-box">
+									        <li class="champ-community-page-back">
+									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
+									        </li>
+									        <li class = "champ-community-page-active">
+									            <span class = "champ-community-page-link2" aria-label="CurremtPage" title="Curremt Page"></span>
+									        </li>
+									        <li class = "champ-community-page-back">
+									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
+									        </li>
+									    </ul>
+									    <div class = "champ-community-board-btn2" >
+									        <a class = "champ-community-btn-write" href="../community/write-post.html">
+									            <i class="fa-regular fa-pen"></i>
+									            <span>게시물 쓰기</span>
+									        </a>
+									    </div>
+								    </div>`;
+						$("#loadContents").html(write);
+						for(var i = 0;i < data.length;i++){
+							write = `<a class = "champ-community-board-item" href="../community/community-post-build.html">
+					                    <span class = "champ-community-post-img">
+					                        <img src="img/icon.webp" style="width: 40px; height : 40px;"/>
+					                    </span>
+					                    <span class = "champ-community-board-detail-box">
+					                    	<span class ="champ-community-board-detail-title">[상남자의 라인, TOP] 이게 왜 좋은거지..? 화공탱 거드라 가렌
+					                    		<i class = "champ-community-board-detail-comment">[\${i}]</i>
+					                    	</span>
+					                    </span>
+					                    <span class = "champ-community-board-detail-writer">작성자 닉네임</span>
+					                    <span class = "champ-community-board-detail-date">2022-05-25</span>
+					                    <span class = "champ-community-board-detail-count">579</span>
+					                    <span class = "champ-community-board-detail-recommand">10</span>
+					                </a>`;
+							$("#champCommunity").append(write);
+						}
+					},
+					error: function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
 			});
 	 		
 		   	const csmrSize = <%=champion.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate).size()%>;
@@ -1976,8 +2715,7 @@
 								%>
 								</ul>
 							</div>
-							<div class="statistics-spell-box"
-								style="border-right: none; width: 65%; padding: 12px 12px;">
+							<div class="statistics-spell-box" style="border-right: none; width: 65%; padding: 12px 12px;">
 
 								<div class="statistics-what-level-container">
 									<span class="statistics-what-level statistics-what-level-active" id="seq3">3레벨까지</span> 
@@ -1986,13 +2724,13 @@
 								</div>
 								
 								<div class="statistics-number">
-									<span class="statistics-number-items">승률</span> <span
-										class="statistics-number-items">선택률</span> <span
-										class="statistics-number-items">카운트수</span>
+									<span class="statistics-number-items">승률</span> 
+									<span class="statistics-number-items">선택률</span> 
+									<span class="statistics-number-items">카운트수</span>
 								</div>
-								<!--  3레벨 -->
-								<div id="skill-seq">
-									<ul class="statistics-spell-list2 statistics-display-block" id="skill-seq3">
+								
+								<div id="skillSeq">
+									<ul class="statistics-spell-list2 statistics-display-block" id="skillSeqList">
 										<%
 										for(int i=0;i<skillSeq3.size();i++){
 										%>
@@ -2030,7 +2768,7 @@
 										}
 										%>
 									</ul>
-									</div>
+								</div>
 									
 							</div>
 						</div>
@@ -2187,12 +2925,12 @@
 	<footer class="footer">
 
 		<div class="footer-left">
-			<span class="footer-left-item">공지사항</span> <span
-				class="footer-left-item">버그리포팅</span> <span class="footer-left-item">파트너
-				신청</span></br>
+			<span class="footer-left-item">공지사항</span> 
+			<span class="footer-left-item">버그리포팅</span> 
+			<span class="footer-left-item">파트너신청</span></br>
 			<div style="margin-bottom: 10px;"></div>
-			<span class="footer-left-item">이용약관</span> <span
-				class="footer-left-item">개인정보처리방침</span>
+			<span class="footer-left-item">이용약관</span> 
+			<span class="footer-left-item">개인정보처리방침</span>
 		</div>
 	
 		<div class="footer-right">
