@@ -48,7 +48,7 @@
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-                <a class="nav-items" href="rank.jsp">챔피언 랭킹</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
             </div>
