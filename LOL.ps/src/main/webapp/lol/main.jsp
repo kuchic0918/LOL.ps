@@ -132,10 +132,10 @@
             		}
             		else {
             	%>
-            			<form action= "MypageServlet" >
+            			<form action= "my-page.jsp" >
             				<input class="signin" type="submit" value="마이페이지"/>
             			</form>
-		                <form action = "LogoutServlet" >
+		                <form action = "login.jsp" >
 		                	<input class="login" type="submit" value="로그아웃"/>
 	                	</form>
             	<%

@@ -41,7 +41,6 @@
             </a>
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
-            	
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community/build.html">빌드게시판</a>
                 <a class="nav-items" href="community/free.html">자유게시판</a>
@@ -57,8 +56,12 @@
             		}
             		else {
             	%>
-            			<form class="signin" action= "MypageServlet" >마이페이지</form>
-		                <form class="login" action = "LogoutServlet" >로그아웃</form>     
+            			<form action= "my-page.jsp" >
+            				<input class="signin" type="submit" value="마이페이지"/>
+            			</form>
+		                <form action = "login.jsp" >
+		                	<input class="login" type="submit" value="로그아웃"/>
+	                	</form>    
             	<%
             		}
             	%>
@@ -70,7 +73,9 @@
         <div class="rank-main-content">
             <p>챔피언 랭킹</p>
             <span class="rank-main-content-item rank-main-content-active">라인별 챔피언 티어</span>
-            <input class="rank-main-input" type="text" placeholder="챔피언 이름을 입력하세요">
+            <form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
+				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+			</form>
             <div style="clear: both;"></div>
         </div>
     </div>
