@@ -1091,7 +1091,7 @@
 							$("#2CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('1');
+					error:function(r,s,e){ alert('1');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 			   });
@@ -1141,7 +1141,7 @@
 							$("#3CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('2');
+					error:function(r,s,e){ alert('2');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 			   });
@@ -1198,7 +1198,7 @@
 							$("#4CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('3');
+					error:function(r,s,e){ alert('3');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 			   });
@@ -1243,7 +1243,7 @@
 							$("#skillMaster").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('4');
+					error:function(r,s,e){ alert('4');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 				});
@@ -1288,7 +1288,7 @@
 							$("#skillSeq").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('5');
+					error:function(r,s,e){ alert('5');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 				});
@@ -1358,7 +1358,7 @@
 							$("#runeCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('6');
+					error:function(r,s,e){ alert('6');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 				});
@@ -1407,7 +1407,7 @@
 							$("#runeShard").append(write);
 						}
 					},
-					error:function(r,s,e){ //alert('7');
+					error:function(r,s,e){ alert('7');
 						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
 					}
 				});
