@@ -43,6 +43,7 @@ public class SkillMasterDao {
 				double winRate = rs.getDouble("w");
 				double pickRate = rs.getDouble("p");
 				String count = rs.getString("c");
+				
 				getSkillMaster.add(new SkillMasterDto(pick1, image1, key1, function1, pick2, image2, key2, function2, pick3, image3, key3, function3, winRate, pickRate, count));
 			}
 		}catch(SQLException e) {

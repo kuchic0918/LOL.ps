@@ -3,6 +3,7 @@ package com.yg_ac.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.yg_ac.dto.ChampMatchListDto;
@@ -46,6 +47,13 @@ public class SkillSeqDao {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return getSkillSeq3;
 	}
@@ -98,6 +106,13 @@ public class SkillSeqDao {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return getSkillSeq6;
 	}
@@ -176,6 +191,13 @@ public class SkillSeqDao {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return getSkillSeq11;
 	}

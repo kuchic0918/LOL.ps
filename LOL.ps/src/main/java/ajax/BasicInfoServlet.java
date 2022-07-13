@@ -21,9 +21,6 @@ import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampBasicStatDto;
 import com.yg_ac.dto.ChampMatchListDto;
 
-/**
- * Servlet implementation class BasicInfoServlet
- */
 @WebServlet("/BasicInfoServlet")
 public class BasicInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
