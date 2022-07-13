@@ -194,9 +194,6 @@ public class Champion {
 				championSummaryWinPickBan_rate.add(pick_rate);
 				championSummaryWinPickBan_rate.add(ban_rate);
 				championSummaryWinPickBan_rate.add(count2);
-				//System.out.println(win_rate);
-				//System.out.println(pick_rate);
-				//System.out.println(ban_rate);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

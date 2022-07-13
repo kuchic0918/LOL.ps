@@ -108,8 +108,6 @@
 </head>
 <body class="main-body">
 
-<div class="loader"></div>
-
     <header class="header-mainnav">
         <div class="header-container">
             <a href="main.jsp">
