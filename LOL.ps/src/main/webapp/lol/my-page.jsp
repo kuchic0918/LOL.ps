@@ -38,8 +38,8 @@
 		<%
 	}
 	MemberDAO mDao = new MemberDAO();
-	MypageIntroduceDto mypageIntroduce = mDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
-	MypageIntroduceDto mypageImage = mDao.getMypageImage(conn, pstmt, rs, member.getMemberkey());
+	MypageIntroduceDto mypageIntroduce = mDao.getMypageIntroduce(member.getMemberkey());
+	MypageIntroduceDto mypageImage = mDao.getMypageImage(member.getMemberkey());
 %>
 <head>
 	<meta charset="UTF-8">

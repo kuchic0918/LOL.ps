@@ -25,10 +25,10 @@
 		//회원가입 진행 
 	
 
-		if(memberdao.isVaildEmail(kakaoEmail, conn, pstmt , rs)==false) {
+		if(memberdao.isVaildEmail(kakaoEmail)==false) {
 
-			memberdao.snsSignIn(member, conn, pstmt);
-			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname, conn, pstmt, rs);
+			memberdao.snsSignIn(member);
+			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname);
 			session.setAttribute("memberInfo", member);
 	%>
 		<script>
@@ -38,7 +38,7 @@
 	<% 		
 		//이미 가입이 되어있으면 로그인 진행
 		}else {
-			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname, conn, pstmt, rs);
+			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname);
 			session.setAttribute("memberInfo", member);
 	%>	
 			<script>

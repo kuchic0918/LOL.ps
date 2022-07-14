@@ -38,7 +38,7 @@ public class MainCardServlet extends HttpServlet {
 		
 		MainCardDao mainCardDao = new MainCardDao();
 		try {
-			card = mainCardDao.getMainCard(conn, pstmt, rs, champion_name, champion_line);
+			card = mainCardDao.getMainCard(champion_name, champion_line);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

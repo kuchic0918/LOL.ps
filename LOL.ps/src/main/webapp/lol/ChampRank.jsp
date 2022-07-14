@@ -13,12 +13,12 @@
 	
 	ChampRankDao champRankDao = new ChampRankDao();
 	session.getAttribute("memberInfo");
-	ArrayList<ChampRankDto> rankAll = champRankDao.getChampRankAll(conn, pstmt, rs);
-	ArrayList<ChampRankDto> rankTopLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "탑");
-	ArrayList<ChampRankDto> rankJungleLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "정글");
-	ArrayList<ChampRankDto> rankMidLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "미드");
-	ArrayList<ChampRankDto> rankBotLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "원딜");
-	ArrayList<ChampRankDto> rankSupLine = champRankDao.getChampRankByLine(conn, pstmt, rs, "서폿");
+	ArrayList<ChampRankDto> rankAll = champRankDao.getChampRankAll();
+	ArrayList<ChampRankDto> rankTopLine = champRankDao.getChampRankByLine("탑");
+	ArrayList<ChampRankDto> rankJungleLine = champRankDao.getChampRankByLine("정글");
+	ArrayList<ChampRankDto> rankMidLine = champRankDao.getChampRankByLine("미드");
+	ArrayList<ChampRankDto> rankBotLine = champRankDao.getChampRankByLine("원딜");
+	ArrayList<ChampRankDto> rankSupLine = champRankDao.getChampRankByLine("서폿");
 	
 %>
 <!DOCTYPE html>

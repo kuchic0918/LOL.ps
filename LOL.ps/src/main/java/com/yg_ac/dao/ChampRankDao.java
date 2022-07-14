@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import com.yg_ac.dto.ChampRankDto;
 
 public class ChampRankDao {
-	
+	Y_DBmanager db = new Y_DBmanager();
+	Connection conn = db.getConnection();
 	//챔피언 랭킹 라인별
-	public ArrayList<ChampRankDto> getChampRankByLine(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_line) {
+	public ArrayList<ChampRankDto> getChampRankByLine(String champion_line) {
 		ArrayList<ChampRankDto> getChampRankByLine = new ArrayList<ChampRankDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "SELECT tier.*, image.IMAGE_HEAD"
 					+ "            FROM c_champ_tier tier, champ_skill image"
@@ -52,8 +55,10 @@ public class ChampRankDao {
 	
 	
 	// 챔피언 랭킨 전체
-	public ArrayList<ChampRankDto> getChampRankAll(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+	public ArrayList<ChampRankDto> getChampRankAll() {
 		ArrayList<ChampRankDto> getChampRankAll = new ArrayList<ChampRankDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "SELECT tier.*, image.IMAGE_HEAD\r\n"
 					+ "            FROM c_champ_tier tier, champ_skill image\r\n"

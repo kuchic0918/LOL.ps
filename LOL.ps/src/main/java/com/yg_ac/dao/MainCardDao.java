@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import com.yg_ac.dto.*;
 
 public class MainCardDao {
-	public ArrayList<MainCardDto> getMainCard(Connection conn, PreparedStatement pstmt,ResultSet rs) throws SQLException {
+	Y_DBmanager db = new Y_DBmanager();
+	Connection conn = db.getConnection();
+	public ArrayList<MainCardDto> getMainCard() throws SQLException {
 		ArrayList<MainCardDto> mainCard = new ArrayList<MainCardDto>();
-		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select t.* , image.IMAGE_FULL image"
 					+ "      from ("
@@ -77,8 +80,10 @@ public class MainCardDao {
 	}
 	
 	
-	public MainCardDto getMainCard(Connection conn, PreparedStatement pstmt,ResultSet rs, String champion_name, String champion_line) throws SQLException {
+	public MainCardDto getMainCard(String champion_name, String champion_line) throws SQLException {
 		MainCardDto mainCard = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select t.* , image.IMAGE_FULL" + 
 						" from ( select tier.name, tier.line, tier.win_rate w, tier_before.win_rate w_before, (tier_before.win_rate - tier.win_rate) win_vari," + 

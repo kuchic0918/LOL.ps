@@ -13,7 +13,7 @@
 	
 	MainCardDao mainCardDao = new MainCardDao();
 	
-	ArrayList<MainCardDto> mainCardList =  mainCardDao.getMainCard(conn, pstmt, rs);
+	ArrayList<MainCardDto> mainCardList =  mainCardDao.getMainCard();
 %>
 <!DOCTYPE html>
 <html>

@@ -24,10 +24,10 @@
 </head>
 <body>
 <% 
-if(memberdao.isVaildEmail(email, conn, pstmt , rs)==false) {
+if(memberdao.isVaildEmail(email)==false) {
 
-		memberdao.snsSignIn(member, conn, pstmt);
-		member = memberdao.findByEmailNicknameMemberInfo(email, nickname, conn, pstmt, rs);
+		memberdao.snsSignIn(member);
+		member = memberdao.findByEmailNicknameMemberInfo(email, nickname);
 		session.setAttribute("memberInfo", member);
 %>
 		<script>
@@ -39,7 +39,7 @@ if(memberdao.isVaildEmail(email, conn, pstmt , rs)==false) {
 	}
 	else
 	{
-		member = memberdao.findByEmailNicknameMemberInfo(email, nickname, conn, pstmt, rs);
+		member = memberdao.findByEmailNicknameMemberInfo(email, nickname);
 		session.setAttribute("memberInfo", member);
 %>	
 		<script>

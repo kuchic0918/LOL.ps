@@ -20,13 +20,13 @@
 		MemberDAO memberdao = new MemberDAO();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		MemberDTO member = memberdao.findByEmailPwMemberInfo(email, password, conn, pstmt, rs);	 	
+		MemberDTO member = memberdao.findByEmailPwMemberInfo(email, password);	 	
 
 		//멤버키 가져오기
 		//memberdao.issueMemberkey(email, password, conn, pstmt, rs);
 		//		session.setAttribute("yg" ,  123);
 		//		session.setAttribute("memberInfo", 123);
-		if (memberdao.loginvalid(email, password, conn, pstmt, rs)) {
+		if (memberdao.loginvalid(email, password)) {
 			session.setAttribute("memberInfo", member);
 			%>
 			<script>
@@ -35,22 +35,22 @@
 					location.href = "my-page.jsp";
 			</script>
 			<%
-		} else if (memberdao.isVaildEmail(email, conn, pstmt, rs) == false
-				&& memberdao.isVaildPW(password, conn, pstmt, rs) == false) {
+		} else if (memberdao.isVaildEmail(email) == false
+				&& memberdao.isVaildPW(password) == false) {
 			%>
 			<script>
 				alert("존재하지 않는 정보입니다");
 				location.href = "login.jsp";
 			</script>
 			<%
-		} else if (memberdao.isVaildPW(password, conn, pstmt, rs) == false) {
+		} else if (memberdao.isVaildPW(password) == false) {
 			%>
 			<script>
 				alert("비밀번호를 다시 확인해주시길 바랍니다.");
 				location.href = "login.jsp";
 			</script>
 			<%
-		} else if (memberdao.isVaildEmail(email, conn, pstmt, rs) == false) {
+		} else if (memberdao.isVaildEmail(email) == false) {
 			%>
 			<script>
 					alert("아이디를 다시확인해주시길 바랍니다.");
