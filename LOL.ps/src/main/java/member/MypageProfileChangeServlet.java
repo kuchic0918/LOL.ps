@@ -1,4 +1,4 @@
-package ajax;
+package member;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,38 +11,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.yg_ac.dao.MypagePasswordChangeDao;
+import com.yg_ac.dao.MemberDAO;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.MemberDTO;
 
-@WebServlet("/MypagePasswordChangeServlet")
-public class MypagePasswordChangeServlet extends HttpServlet {
+@WebServlet("/MypageProfileChangeServlet")
+public class MypageProfileChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String nowPW = request.getParameter("now_pw");
-		System.out.println(nowPW + 1);
-		String newPW= request.getParameter("new_pw");
-		System.out.println(newPW + 2);
+		String image = request.getParameter("image_name");
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		System.out.println(member.getPw() + 3);
 		
 		Y_DBmanager db = new Y_DBmanager();
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
 		
-		MypagePasswordChangeDao mypagePasswordChangeDao = new MypagePasswordChangeDao();
-		if(nowPW.equals(member.getPw())) {
-			mypagePasswordChangeDao.getMypagePasswordChangeDao(conn, pstmt, member.getMemberkey(), newPW);
-			response.sendRedirect("lol/my-page.jsp?password=alright");
-		}else {
-			response.sendRedirect("lol/my-page.jsp?password=wrong");
-		}
+		MemberDAO mypageProfileChangeDao = new MemberDAO();
+		mypageProfileChangeDao.getmypageProfileChange(conn, pstmt, member.getMemberkey(), image);
+		response.sendRedirect("lol/my-page.jsp?image_name=change");
 	}
-
 }

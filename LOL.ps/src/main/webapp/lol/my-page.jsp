@@ -8,7 +8,6 @@
 <%
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 	Y_DBmanager db = new Y_DBmanager();
-	Champion champion = new Champion();
 	Connection conn = db.getConnection();
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;

@@ -11,8 +11,7 @@
     <script src="Js/jquery-3.6.0.min.js"></script>
    	<script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-   	
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script>
     	$(function() {    		
 			$(".member-form").validate({

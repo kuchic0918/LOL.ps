@@ -1,4 +1,4 @@
-package ajax;
+package member;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.yg_ac.dao.MypageMemberSecessionDao;
+import com.yg_ac.dao.MemberDAO;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.MemberDTO;
 
-@WebServlet("/MypageMemberSecessionServlet")
-public class MypageMemberSecessionServlet extends HttpServlet {
+@WebServlet("/MypageIntroduceServlet")
+public class MypageIntroduceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		String introduce = request.getParameter("mypage-textarea");
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		
@@ -31,9 +32,8 @@ public class MypageMemberSecessionServlet extends HttpServlet {
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
 		
-		MypageMemberSecessionDao mypageMemberSecessionDao = new MypageMemberSecessionDao();
-		mypageMemberSecessionDao.getMypageMemberSecession(conn, pstmt, member.getMemberkey());
-		response.sendRedirect("lol/login.jsp");
+		MemberDAO mypageIntroduceDao = new MemberDAO();
+		mypageIntroduceDao.updateMypageIntroduce(conn, pstmt, member.getMemberkey(), introduce);
+		response.sendRedirect("lol/my-page.jsp");
 	}
-
 }

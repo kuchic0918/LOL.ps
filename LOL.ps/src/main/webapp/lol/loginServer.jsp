@@ -14,7 +14,7 @@
 <body>
 	<%
 		Y_DBmanager y_dbmanager = new Y_DBmanager();
-			 	Connection conn  = y_dbmanager.getConnection();
+	 	Connection conn  = y_dbmanager.getConnection();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		MemberDAO memberdao = new MemberDAO();

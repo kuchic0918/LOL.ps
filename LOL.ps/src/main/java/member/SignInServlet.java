@@ -1,4 +1,4 @@
-package ajax;
+package member;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -38,7 +38,7 @@ public class SignInServlet extends HttpServlet {
 		MemberDTO member = new MemberDTO(0 , email ,password , nickname , null, null, null);
 		try {
 			if(memberdao.emailisOverlap(email,pstmt, conn,rs)) {
-				response.sendRedirect("/signin.jsp");
+				response.sendRedirect("lol/signin.jsp");
 		
 			}
 		}
@@ -48,7 +48,7 @@ public class SignInServlet extends HttpServlet {
 		
 		try {
 			if(memberdao.NickNameIsOverlap(nickname, pstmt,  conn, rs)) {
-				response.sendRedirect("signin.jsp");
+				response.sendRedirect("lol/signin.jsp");
 			}
 		}
 		catch(Exception e) {
@@ -57,7 +57,7 @@ public class SignInServlet extends HttpServlet {
 		//email pw,  하고 닉네임이 중복되지 않으면 ...
 		if(memberdao.isVaildEmail(email, conn, pstmt, rs) == false && memberdao.NickNameIsOverlap(nickname, pstmt, conn, rs) == false) {
 			memberdao.signin(member, conn, pstmt);
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("lol/login.jsp");
 			}
 	}
 

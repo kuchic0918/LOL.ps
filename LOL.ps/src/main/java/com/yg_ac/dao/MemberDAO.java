@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.yg_ac.dto.MemberDTO;
+import com.yg_ac.dto.MypageIntroduceDto;
+import com.yg_ac.dto.MypageProfileChangeDto;
 
 public class MemberDAO {
 	//이메일 중복체크 
@@ -214,7 +216,7 @@ public class MemberDAO {
 			}
 		}
 	}
-	// 네이버, 카톡 
+	// 네이버, 카톡 회원가입
 	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt ) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval, ? , 'snsAdmin' , ? , 'anne1.jpg', ? ,? )";
@@ -235,7 +237,7 @@ public class MemberDAO {
 			}
 		}
 	}
-	
+	// 네이버, 카톡은 이메일과 닉네임 밖에 못가져옴.
 	public MemberDTO findByEmailNicknameMemberInfo(String email,String nickname ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		String sql = "select * from member where email = ? and nickname = ?";
 		MemberDTO member = null;
@@ -267,5 +269,125 @@ public class MemberDAO {
 			}
 		}
 		return member;
+	}
+	// 마이페이지 소개
+	public MypageIntroduceDto getMypageIntroduce(Connection conn, PreparedStatement pstmt, ResultSet rs, int key) {
+		MypageIntroduceDto get = null;
+		String sql = "SELECT * from member where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				get = new MypageIntroduceDto(rs.getString("introduce"));
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
+	// 마이페이지 이미지
+	public MypageIntroduceDto getMypageImage(Connection conn, PreparedStatement pstmt, ResultSet rs, int key) {
+		MypageIntroduceDto get = null;
+		String sql = "SELECT * from member where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				get = new MypageIntroduceDto(rs.getString("image"));
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
+	// 마이페이지 소개글 업데이트
+	public void updateMypageIntroduce(Connection conn, PreparedStatement pstmt, int key, String introduce) {
+		String sql = "update member set introduce = ? where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, introduce);
+			pstmt.setInt(2, key);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	// 마이페이지 로그인 되있으면 세션으로 멤버키 찾기
+	public void getMypageMemberSecession(Connection conn, PreparedStatement pstmt, int key) {
+		String sql = "DELETE FROM member WHERE memberkey=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, key);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	// 마이페이지 비밀번호 변경
+	public void getMypagePasswordChangeDao(Connection conn, PreparedStatement pstmt, int key, String password) {
+		String sql = "update member set pw = ? where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, password);
+			pstmt.setInt(2, key);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}  finally {
+			try {
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	// 마이페이지 프로필 사진 변경
+	public MypageProfileChangeDto getmypageProfileChange(Connection conn, PreparedStatement pstmt, int key, String image) {
+		MypageProfileChangeDto get = null;
+		String sql = "update member set image = ? where memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, image);
+			pstmt.setInt(2, key);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
 	}
 }
