@@ -270,7 +270,7 @@ public class MemberDAO {
 
 	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt ) {
 		try {
-			String sql = "insert into member values(temp_seq.nextval, ? , 'kakaoAdmin' , ? , 'anne1.jpg', ? ,? )";
+			String sql = "insert into member values(temp_seq.nextval, ? , 'snsAdmin' , ? , 'anne1.jpg', ? ,? )";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getEmail());
 			pstmt.setString(2, member.getNickname());

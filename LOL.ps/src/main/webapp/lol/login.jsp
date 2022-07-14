@@ -11,6 +11,7 @@
     <script src="Js/jquery-3.6.0.min.js"></script>
    	<script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
    	
     <script>
     	$(function() {    		
@@ -96,9 +97,7 @@
 	                        <h3 class="member-h3">소셜계정으로 로그인</h3>
 	                        <ul class="member-ul">
 	                            <li class="member-li">
-	                                <a href="#" class="member-fbook member-a">
-	                                    <img class = "member-img_log" src="Images/fbook_icon.webp" alt="페이스북 로그인" >
-	                                </a>
+	                            <a href="javascript:kakaoLogin();"><img src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
 	                                <script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
 								 		
@@ -129,13 +128,19 @@
 								 	</script>
 	                            </li>
 	                            <li class="member-li">
-	                                <a href="#" class="google member-a">
-	                                    <img class = "member-img_log" src="Images/google_icon.webp" alt="구글 로그인"  >
-	                                </a>
+	                               <a id = "naver_id_login">
+	                             		 <script type="text/javascript">
+											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/lol/naverCallback.jsp");
+											  	var state = naver_id_login.getUniqState();
+											  	naver_id_login.setButton("white", 2,40);
+											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/lol/login.jsp");
+											  	naver_id_login.setState(state);
+// 											  	naver_id_login.setPopup();
+											  	naver_id_login.init_naver_id_login();
+  										</script>
+									</a>
 	                            </li>
-	                            <li class="member-li"><a href="#" class="apple member-a">
-	                                <img class = "member-img_log" src="Images/apple_icon.webp" alt="애플 로그인" >
-	                            </a></li>
+	                           
 	
 	                            </ul>
 	                        </div>
