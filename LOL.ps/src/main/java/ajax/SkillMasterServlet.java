@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.SkillMasterDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.SkillMasterDto;
-
+	
 @WebServlet("/SkillMasterServlet")
 public class SkillMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class SkillMasterServlet extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
-		SkillMasterDao selectData = new SkillMasterDao();
+		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<SkillMasterDto> masterList = new ArrayList<SkillMasterDto>();
 		masterList = selectData.getSkillMaster(conn, pstmt, rs, champion_name, champion_line);
 		

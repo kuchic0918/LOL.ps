@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.RuneShardDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.RuneShardDto;
 
@@ -41,7 +41,7 @@ public class RuneShardServlet extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
-		RuneShardDao selectData = new RuneShardDao();
+		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<RuneShardDto> runeShardList = new ArrayList<RuneShardDto>();
 		runeShardList = selectData.getRuneShard(conn, pstmt, rs, champion_name, champion_line);
 		

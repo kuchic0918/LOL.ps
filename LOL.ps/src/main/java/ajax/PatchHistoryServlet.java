@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampPatchHistoryDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampPatchHistoryDto;
-import com.yg_ac.dto.ChampRoleDto;
 
 /**
  * Servlet implementation class PatchHistoryServlet
@@ -40,7 +39,7 @@ public class PatchHistoryServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ChampPatchHistoryDao patchHistory = new ChampPatchHistoryDao();
+		StatisticsDao patchHistory = new StatisticsDao();
 		ArrayList<ChampPatchHistoryDto> patchHistoryList = new ArrayList<ChampPatchHistoryDto>();
 		patchHistoryList = patchHistory.getChampPatchHistory(conn, pstmt, rs, champion_name);
 		

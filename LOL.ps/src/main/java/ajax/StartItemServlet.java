@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampStartItemDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampStartItemDto;
 
@@ -42,7 +42,7 @@ public class StartItemServlet extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
-		ChampStartItemDao selectData = new ChampStartItemDao();
+		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("spell")) {
 			ArrayList<ChampStartItemDto> spellList = new ArrayList<ChampStartItemDto>();
 			spellList = selectData.getSpell(conn, pstmt, rs, champion_name, champion_line);

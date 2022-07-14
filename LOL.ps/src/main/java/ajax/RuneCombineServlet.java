@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.RuneCombineDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.RuneCombineDto;
 
@@ -41,7 +41,7 @@ public class RuneCombineServlet extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
-		RuneCombineDao selectData = new RuneCombineDao();
+		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<RuneCombineDto> runeCombineList = new ArrayList<RuneCombineDto>();
 		runeCombineList = selectData.getRuneCombine(conn, pstmt, rs, champion_name, champion_line);
 		

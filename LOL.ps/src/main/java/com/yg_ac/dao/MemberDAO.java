@@ -38,30 +38,6 @@ public class MemberDAO {
 
 		return false;
 	}
-
-	//	멤버키 중복 시퀀스로 대체
-	//	public boolean MemberkeyIsOverlap (int Memberkey, PreparedStatement pstmt, Connection conn, ResultSet rs) {
-	//		try  {
-	//			String sql = "select count(*) cnt from member where memberkey = ?";
-	//			pstmt = conn.prepareStatement(sql); // sql 문 저장
-	//			pstmt.setInt(1, Memberkey);
-	//			rs = pstmt.executeQuery();
-	//			
-	//			if(rs.next()) {
-	//				int cnt = rs.getInt("cnt");
-	//				
-	//				if (cnt > 0) {
-	//					return true;
-	//					
-	//				}
-	//			}
-	//		}catch(SQLException e) {
-	//			e.printStackTrace();
-	//		}
-	//		
-	//		return false;
-	//	}
-
 	//	닉네임 중복
 	public boolean NickNameIsOverlap(String NickName, PreparedStatement pstmt, Connection conn, ResultSet rs) {
 		String sql = "select count(*) cnt from member where nickname = ?";
@@ -92,35 +68,7 @@ public class MemberDAO {
 
 		return true;
 	}
-
-	public int issueMemberkey(String email,String pw,Connection conn, PreparedStatement pstmt, ResultSet rs  ) throws SQLException {
-
-		String sql = "select memberkey mk from member where email = ? and Pw = ?";
-		int memberkey = 0;
-
-		try {
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, email);
-			pstmt.setString(2, pw);
-			rs = pstmt.executeQuery();
-
-			if(rs.next()) {
-				memberkey = rs.getInt("mk");
-			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		return memberkey;
-	} 
-
+	// 로그인 진행
 	public boolean loginvalid (String email, String pw, Connection conn, PreparedStatement pstmt, ResultSet rs ) { 
 		try {
 			String sql = "select count(*) cnt from member where email = ? and Pw = ?";
@@ -150,9 +98,6 @@ public class MemberDAO {
 		}
 		return true;
 	}
-
-
-
 	// email 중복
 	public boolean isVaildEmail(String email ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		String sql = "select count(*) cnt from member where email = ?";
@@ -184,6 +129,7 @@ public class MemberDAO {
 
 		return true;
 	}
+	// 비밀번호 유효 검사
 	public boolean isVaildPW(String pw ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		String sql = "select count(*) cnt from member where pw = ?";
 
@@ -212,6 +158,7 @@ public class MemberDAO {
 
 		return true;
 	}
+	// 세션 받아오기
 	public MemberDTO findByEmailPwMemberInfo(String email,String pw ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
 		String sql = "select * from member where email = ? and pw = ?";
 		MemberDTO member = null;
@@ -245,7 +192,7 @@ public class MemberDAO {
 
 		return member;
 	}
-	/*주석확인*/	
+	// 회원가입 완료	
 	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt ) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne1.jpg',?,?)";
@@ -267,7 +214,7 @@ public class MemberDAO {
 			}
 		}
 	}
-
+	// 네이버, 카톡 
 	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt ) {
 		try {
 			String sql = "insert into member values(temp_seq.nextval, ? , 'kakaoAdmin' , ? , 'anne1.jpg', ? ,? )";

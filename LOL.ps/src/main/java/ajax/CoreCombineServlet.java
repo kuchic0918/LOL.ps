@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.CoreCombineDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.CoreCombineDto;
 
@@ -42,7 +42,7 @@ public class CoreCombineServlet extends HttpServlet {
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 		
-		CoreCombineDao selectData = new CoreCombineDao();
+		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("2core")) {
 			ArrayList<CoreCombineDto> coreList = new ArrayList<CoreCombineDto>();
 			coreList = selectData.get2CoreCombine(conn, pstmt, rs, champion_name, champion_line);

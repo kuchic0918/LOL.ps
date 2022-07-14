@@ -1,13 +1,13 @@
 package com.yg_ac.dto;
 
-public class ChampionSummaryMainRuneDto {
+public class ChampionRuneDto2 {
 	private String name;
 	private String image;
 	private String function;
 	
-	public ChampionSummaryMainRuneDto() { }
+	public ChampionRuneDto2() { }
 	
-	public ChampionSummaryMainRuneDto(String name, String image, String function) {
+	public ChampionRuneDto2(String name, String image, String function) {
 		this.name = name;
 		this.image = image;
 		this.function = function;

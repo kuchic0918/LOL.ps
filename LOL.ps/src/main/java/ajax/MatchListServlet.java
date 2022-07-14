@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampMatchListDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampMatchListDto;
-import com.yg_ac.dto.ChampPatchHistoryDto;
 
 @WebServlet("/MatchListServlet")
 public class MatchListServlet extends HttpServlet {
@@ -39,7 +38,7 @@ public class MatchListServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ChampMatchListDao match = new ChampMatchListDao();
+		StatisticsDao match = new StatisticsDao();
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");

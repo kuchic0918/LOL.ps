@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampRoleDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampRoleDto;
 
@@ -36,7 +36,7 @@ public class ChampRoleServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ChampRoleDao champRole = new ChampRoleDao();
+		StatisticsDao champRole = new StatisticsDao();
 		ArrayList<ChampRoleDto> champRoleList = new ArrayList<ChampRoleDto>();
 		champRoleList = champRole.getChampRole(conn, pstmt, rs, champion_name);
 		

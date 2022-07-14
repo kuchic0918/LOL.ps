@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampBasicSkillDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampBasicSkillDto;
-import com.yg_ac.dto.ChampBasicStatDto;
 
 @WebServlet("/BasicSkillServlet")
 public class BasicSkillServlet extends HttpServlet {
@@ -37,7 +36,7 @@ public class BasicSkillServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ChampBasicSkillDao basicSkill = new ChampBasicSkillDao();
+		StatisticsDao basicSkill = new StatisticsDao();
 		ArrayList<ChampBasicSkillDto> basicSkillList = new ArrayList<ChampBasicSkillDto>();
 		basicSkillList = basicSkill.getChampBasicSkill(conn, pstmt, rs, champion_name);
 		

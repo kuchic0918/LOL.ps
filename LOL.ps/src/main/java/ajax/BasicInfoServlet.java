@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,10 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.yg_ac.dao.ChampBasicStatDao;
+import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampBasicStatDto;
-import com.yg_ac.dto.ChampMatchListDto;
 
 @WebServlet("/BasicInfoServlet")
 public class BasicInfoServlet extends HttpServlet {
@@ -37,7 +36,7 @@ public class BasicInfoServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ChampBasicStatDao basicStat = new ChampBasicStatDao();
+		StatisticsDao basicStat = new StatisticsDao();
 		ArrayList<ChampBasicStatDto> basicStatList = new ArrayList<ChampBasicStatDto>();
 		basicStatList = basicStat.getChampBasicStat(conn, pstmt, rs, champion_name);
 		

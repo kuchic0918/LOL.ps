@@ -9,7 +9,6 @@
 <%
 	//JDBC
 	Y_DBmanager db = new Y_DBmanager();
-	Champion champion = new Champion();
 	Connection conn = db.getConnection();
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
@@ -43,115 +42,21 @@
 	// 승률 픽률 밴율 카운트
 	ChampionSummaryWinPickBanRateDto champWinPickBanRate = sDao.championSummaryWinPickBanRate(conn, pstmt, rs, champion_name, champion_line);
 	// 챔피언 메인룬
-	ArrayList<ChampionSummaryMainRuneDto> champMainRune = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionSummaryMainRuneDto> champMainRune2 = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champMainRune = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champMainRune2 = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
 	// 챔피언 보조룬
-	String[] championSummaryAssisRune = new String[35];
-	int csar = 0;
-	if (champion.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate)
-			.size() != 0) {
-		for (String str : champion.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate)) {
-			championSummaryAssisRune[csar] = str;
-			csar++;
-		}
-	}
-	String[] championSummaryAssisRune2 = new String[35];
-	int csar2 = 0;
-	if (champion.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2)
-			.size() != 0) {
-		for (String str : champion.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate2)) {
-			championSummaryAssisRune2[csar2] = str;
-			csar2++;
-		}
-	}
-
+	ArrayList<ChampionRuneDto> champAssisRune = sDao.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champAssisRune2 = sDao.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
 	// 챔피언 서브룬
-	String[] championSummarySubRune = new String[18];
-	int cssr = 0;
-	if (champion.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate)
-			.size() != 0) {
-		for (String str : champion.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate)) {
-			championSummarySubRune[cssr] = str;
-			cssr++;
-		}
-	}
-	String[] championSummarySubRune2 = new String[18];
-	int cssr2 = 0;
-	if (champion.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2)
-			.size() != 0) {
-		for (String str : champion.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate2)) {
-			championSummarySubRune2[cssr2] = str;
-			cssr2++;
-		}
-	}
-
+	ArrayList<ChampionRuneDto> champSubRune = sDao.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champSubRune2 = sDao.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
 	// 챔피언 1~3 코어 아이템
-	String[] championSummaryItemEach1 = new String[9];
-	int csie = 0;
-	if (champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate)) {
-			championSummaryItemEach1[csie] = str;
-			csie++;
-		}
-	}
-	String[] championSummaryItemEach12 = new String[9];
-	int csie2 = 0;
-	if (champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate2)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate2)) {
-			championSummaryItemEach12[csie2] = str;
-			csie2++;
-		}
-	}
-
-	String[] championSummaryItemEach2 = new String[9];
-	csie = 0;
-	if (champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate)) {
-			championSummaryItemEach2[csie] = str;
-			csie++;
-		}
-	}
-	String[] championSummaryItemEach22 = new String[9];
-	csie2 = 0;
-	if (champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate2)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate2)) {
-			championSummaryItemEach22[csie2] = str;
-			csie2++;
-		}
-	}
-
-	String[] championSummaryItemEach3 = new String[9];
-	csie = 0;
-	if (champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate)) {
-			championSummaryItemEach3[csie] = str;
-			csie++;
-		}
-	}
-	String[] championSummaryItemEach32 = new String[9];
-	csie2 = 0;
-	if (champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate2)
-			.size() != 0) {
-		for (String str : champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line,
-				champion_rate2)) {
-			championSummaryItemEach32[csie2] = str;
-			csie2++;
-		}
-	}
+	ArrayList<ChampionRuneDto> champ1CoreItem = sDao.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ1CoreItem2 = sDao.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champ2CoreItem = sDao.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ2CoreItem2 = sDao.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champ3CoreItem = sDao.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ3CoreItem2 = sDao.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
 	// 챔피언 스킬 마스터 추천 순서
 	ArrayList<GetSkillMasterDto> gsmlist = sDao.getSkillMaster(conn, pstmt, rs, champion_name, champion_line,champion_rate);
 	ArrayList<GetSkillMasterDto> gsmlist2 = sDao.getSkillMaster(conn, pstmt, rs, champion_name, champion_line,champion_rate2);
@@ -170,62 +75,33 @@
 	ArrayList<ChampionSummary11Dto> csylist = sDao.championSummary11(conn, pstmt, rs, champion_name,champion_line, champion_rate);
 	ArrayList<ChampionSummary11Dto> csylist2 = sDao.championSummary11(conn, pstmt, rs, champion_name,champion_line, champion_rate2);
 	// 요약
-
+	
 	//statistics
-
 	//상대하기 쉬움, 어려움
-	ChampMatchListDao champMatchListDao = new ChampMatchListDao();
-	ArrayList<ChampMatchListDto> matchHard = champMatchListDao.getChampMatchListHard(conn, pstmt, rs,
-			champion_name, champion_line);
-	ArrayList<ChampMatchListDto> matchEasy = champMatchListDao.getChampMatchListEasy(conn, pstmt, rs,
-			champion_name, champion_line);
-
+	ArrayList<ChampMatchListDto> matchHard = sDao.getChampMatchListHard(conn, pstmt, rs,champion_name, champion_line);
+	ArrayList<ChampMatchListDto> matchEasy = sDao.getChampMatchListEasy(conn, pstmt, rs,champion_name, champion_line);
 	//스펠, 스타트아이템, 신발
-	ChampStartItemDao champStartItemDao = new ChampStartItemDao();
-	ArrayList<ChampStartItemDto> selectSpell = champStartItemDao.getSpell(conn, pstmt, rs, champion_name,
-			champion_line);
-	ArrayList<ChampStartItemDto> selectStartItem = champStartItemDao.getStartItem(conn, pstmt, rs,
-			champion_name, champion_line);
-	ArrayList<ChampStartItemDto> selectShoes = champStartItemDao.getShoes(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<ChampStartItemDto> selectSpell = sDao.getSpell(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<ChampStartItemDto> selectStartItem = sDao.getStartItem(conn, pstmt, rs,champion_name, champion_line);
+	ArrayList<ChampStartItemDto> selectShoes = sDao.getShoes(conn, pstmt, rs, champion_name,champion_line);
 	//1,2,3 코어
-	CoreEachDao coreEachDao = new CoreEachDao();
-	ArrayList<CoreEachDto> core1 = coreEachDao.getCore1(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<CoreEachDto> core2 = coreEachDao.getCore2(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<CoreEachDto> core3 = coreEachDao.getCore3(conn, pstmt, rs, champion_name, champion_line);
-
+	ArrayList<CoreEachDto> core1 = sDao.getCore1(conn, pstmt, rs, champion_name, champion_line);
+	ArrayList<CoreEachDto> core2 = sDao.getCore2(conn, pstmt, rs, champion_name, champion_line);
+	ArrayList<CoreEachDto> core3 = sDao.getCore3(conn, pstmt, rs, champion_name, champion_line);
 	//2,3,4 코어조합
-	CoreCombineDao CoreCombineDao = new CoreCombineDao();
-	ArrayList<CoreCombineDto> coreCombine2 = CoreCombineDao.get2CoreCombine(conn, pstmt, rs, champion_name,
-			champion_line);
-	ArrayList<CoreCombineDto> coreCombine3 = CoreCombineDao.get3CoreCombine(conn, pstmt, rs, champion_name,
-			champion_line);
-	ArrayList<CoreCombineDto> coreCombine4 = CoreCombineDao.get4CoreCombine(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<CoreCombineDto> coreCombine2 = sDao.get2CoreCombine(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<CoreCombineDto> coreCombine3 = sDao.get3CoreCombine(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<CoreCombineDto> coreCombine4 = sDao.get4CoreCombine(conn, pstmt, rs, champion_name,champion_line);
 	//스킬 마스터 순서
-	SkillMasterDao SkillMasterDao = new SkillMasterDao();
-	ArrayList<SkillMasterDto> skillMaster = SkillMasterDao.getSkillMaster(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<SkillMasterDto> skillMaster = sDao.getSkillMaster(conn, pstmt, rs, champion_name,champion_line);
 	//스킬 순서
-	SkillSeqDao SkillSeqDao = new SkillSeqDao();
-	ArrayList<SkillSeqDto> skillSeq3 = SkillSeqDao.getSkillSeq3(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<SkillSeqDto> skillSeq6 = SkillSeqDao.getSkillSeq6(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<SkillSeqDto> skillSeq11 = SkillSeqDao.getSkillSeq11(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<SkillSeqDto> skillSeq3 = sDao.getSkillSeq3(conn, pstmt, rs, champion_name, champion_line);
+	ArrayList<SkillSeqDto> skillSeq6 = sDao.getSkillSeq6(conn, pstmt, rs, champion_name, champion_line);
+	ArrayList<SkillSeqDto> skillSeq11 = sDao.getSkillSeq11(conn, pstmt, rs, champion_name,champion_line);
 	//룬조합
-	RuneCombineDao RuneCombineDao = new RuneCombineDao();
-	ArrayList<RuneCombineDto> runeCombine = RuneCombineDao.getRuneCombine(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<RuneCombineDto> runeCombine = sDao.getRuneCombine(conn, pstmt, rs, champion_name,champion_line);
 	//룬파편조합
-	RuneShardDao RuneShardDao = new RuneShardDao();
-	ArrayList<RuneShardDto> runeShard = RuneShardDao.getRuneShard(conn, pstmt, rs, champion_name,
-			champion_line);
-
+	ArrayList<RuneShardDto> runeShard = sDao.getRuneShard(conn, pstmt, rs, champion_name,champion_line);
 	//statistics
 %>
 <html class="statistics-main-html" lang="en">
@@ -727,7 +603,7 @@
 								} else {
 									isGray = "";
 								}
-								write = `<a class="statistics-hard-list \${isGray}" href="#"> 
+								write = `<a class="statistics-hard-list \${isGray}" href="statistics.jsp?name=\${data[i].name}&line=\${data[i].line}"> 
 											<span style="width: 10%;"> 
 												<img src="Images/champion/head/\${data[i].image}" alt="img">
 											</span> 
@@ -1688,77 +1564,7 @@
 					}
 			   });
 			});
-	 		
-    		/*pick*/
-    		const csieSize1 = <%=champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate).size()%>;
-    		const csieSize2 = <%=champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate).size()%>;
-    		const csieSize3 = <%=champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate).size()%>;
-    		if(csieSize1==3){
-    			const csie11 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[0]%></b></br></br><%=championSummaryItemEach1[2]%></span></span>";
-    			$('#item-core-summary1').html(csie11);
-    		}else if(csieSize1==6) {
-    			const csie12 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[0]%></b></br></br><%=championSummaryItemEach1[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[3]%></b></br></br><%=championSummaryItemEach1[5]%></span></span>";
-    			$('#itme-core-summary1').html(csie12);
-    		}else if(csieSize1==9) {
-    			const csie13 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[0]%></b></br></br><%=championSummaryItemEach1[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[3]%></b></br></br><%=championSummaryItemEach1[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach1[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach1[6]%></b></br></br><%=championSummaryItemEach1[8]%></span></span>";
-    			$('#itme-core-summary1').html(csie13);
-    		}
-    		if(csieSize2==3){
-    			const csie21 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[0]%></b></br></br><%=championSummaryItemEach2[2]%></span></span>";
-    			$('#item-core-summary2').html(csie21);
-    		}else if(csieSize2==6) {
-    			const csie22 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[0]%></b></br></br><%=championSummaryItemEach2[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[3]%></b></br></br><%=championSummaryItemEach2[5]%></span></span>";
-    			$('#itme-core-summary2').html(csie22);
-    		}else if(csieSize2==9) {
-    			const csie23 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[0]%></b></br></br><%=championSummaryItemEach2[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[3]%></b></br></br><%=championSummaryItemEach2[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach2[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach2[6]%></b></br></br><%=championSummaryItemEach2[8]%></span></span>";
-    			$('#itme-core-summary2').html(csie23);
-    		}
-    		if(csieSize3==3){
-    			const csie31 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[0]%></b></br></br><%=championSummaryItemEach3[2]%></span></span>";
-    			$('#item-core-summary3').html(csie31);
-    		}else if(csieSize3==6) {
-    			const csie32 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[0]%></b></br></br><%=championSummaryItemEach3[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[3]%></b></br></br><%=championSummaryItemEach3[5]%></span></span>";
-    			$('#itme-core-summary3').html(csie32);
-    		}else if(csieSize3==9) {
-    			const csie33 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[0]%></b></br></br><%=championSummaryItemEach3[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[3]%></b></br></br><%=championSummaryItemEach3[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach3[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach3[6]%></b></br></br><%=championSummaryItemEach3[8]%></span></span>";
-    			$('#itme-core-summary3').html(csie33);
-    		}
-    		/*pick end*/
-    		/*win*/
-    		const csieSize12 = <%=champion.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate2).size()%>;
-    		const csieSize22 = <%=champion.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate2).size()%>;
-    		const csieSize32 = <%=champion.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate2).size()%>;
-    		if(csieSize12==3){
-    			const csie11 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[0]%></b></br></br><%=championSummaryItemEach12[2]%></span></span>";
-    			$('#item-core-summary12').html(csie11);
-    		}else if(csieSize12==6) {
-    			const csie12 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[0]%></b></br></br><%=championSummaryItemEach12[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[3]%></b></br></br><%=championSummaryItemEach12[5]%></span></span>";
-    			$('#itme-core-summary12').html(csie12);
-    		}else if(csieSize12==9) {
-    			const csie13 = "1코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[0]%></b></br></br><%=championSummaryItemEach12[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[3]%></b></br></br><%=championSummaryItemEach12[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach12[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach12[6]%></b></br></br><%=championSummaryItemEach12[8]%></span></span>";
-    			$('#itme-core-summary12').html(csie13);
-    		}
-    		if(csieSize22==3){
-    			const csie21 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[0]%></b></br></br><%=championSummaryItemEach22[2]%></span></span>";
-    			$('#item-core-summary22').html(csie21);
-    		}else if(csieSize22==6) {
-    			const csie22 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[0]%></b></br></br><%=championSummaryItemEach22[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[3]%></b></br></br><%=championSummaryItemEach22[5]%></span></span>";
-    			$('#itme-core-summary22').html(csie22);
-    		}else if(csieSize22==9) {
-    			const csie23 = "2코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[0]%></b></br></br><%=championSummaryItemEach22[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[3]%></b></br></br><%=championSummaryItemEach22[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach22[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach22[6]%></b></br></br><%=championSummaryItemEach22[8]%></span></span>";
-    			$('#itme-core-summary22').html(csie23);
-    		}
-    		if(csieSize32==3){
-    			const csie31 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[0]%></b></br></br><%=championSummaryItemEach32[2]%></span></span>";
-    			$('#item-core-summary32').html(csie31);
-    		}else if(csieSize32==6) {
-    			const csie32 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[0]%></b></br></br><%=championSummaryItemEach32[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[3]%></b></br></br><%=championSummaryItemEach32[5]%></span></span>";
-    			$('#itme-core-summary32').html(csie32);
-    		}else if(csieSize32==9) {
-    			const csie33 = "3코어 <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[1]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[0]%></b></br></br><%=championSummaryItemEach32[2]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[4]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[3]%></b></br></br><%=championSummaryItemEach32[5]%></span></span> or <span class='tooltip'><img src='Images/item/<%=championSummaryItemEach32[7]%>' alt='img'><span class='tooltiptext tooltip-right'><b style='color:#ffc107;'><%=championSummaryItemEach32[6]%></b></br></br><%=championSummaryItemEach32[8]%></span></span>";
-    			$('#itme-core-summary32').html(csie33);
-    		}
-    		/*win end*/
+    		
     		/*pick*/
     		<%
             for(int i=0; i<csylist.size(); i++) {
@@ -2119,92 +1925,77 @@
 							<h4 style="margin: 0; color: #ae9056">보조 룬</h4>
 							
 							<div class="rune-select" style="margin-top: 5px;">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[1]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[0]%></b><br />
-									<br /><%=championSummaryAssisRune[2]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[4]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[3]%></b><br />
-									<br /><%=championSummaryAssisRune[5]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[7]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[6]%></b><br />
-									<br /><%=championSummaryAssisRune[8]%> </span>
-								</div>
+								<%
+									for(int i=0; i<3; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 							
 							<div class="rune-select">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[10]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[9]%></b><br />
-									<br /><%=championSummaryAssisRune[11]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[13]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[12]%></b><br />
-									<br /><%=championSummaryAssisRune[14]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[16]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[15]%></b><br />
-									<br /><%=championSummaryAssisRune[17]%> </span>
-								</div>
+								<%
+									for(int i=3; i<6; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 							
 							<div class="rune-select">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[19]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[18]%></b><br />
-									<br /><%=championSummaryAssisRune[20]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[22]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[21]%></b><br />
-									<br /><%=championSummaryAssisRune[23]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune[25]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune[24]%></b><br />
-									<br /><%=championSummaryAssisRune[26]%> </span>
-								</div>
+								<%
+									for(int i=6; i<9; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 
 							<div style="padding-top: 30px;">
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[1]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[3]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[5]%>" alt="img" />
+									<%
+										for(int i=0; i<3; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[7]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[9]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[11]%>" alt="img" />
+									<%
+										for(int i=3; i<6; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[13]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[15]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune[17]%>" alt="img" />
+									<%
+										for(int i=6; i<9; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 							</div>
 							
@@ -2213,12 +2004,132 @@
 
 					<div class="item-skill-summary">
 						<div class="item-core-summary">
-							<div id="itme-core-summary1" class="item-core-summary-items">
-								1코어</div>
-							<div id="itme-core-summary2" class="item-core-summary-items">
-								2코어</div>
-							<div id="itme-core-summary3" class="item-core-summary-items">
-								3코어</div>
+							<div id="itme-core-summary1" class="item-core-summary-items">1코어
+								<%
+									if(champ1CoreItem.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ1CoreItem.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ1CoreItem.get(0).getName()%></b><br/><br/><%=champ1CoreItem.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ1CoreItem.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ1CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ1CoreItem.get(i).getName()%></b><br/><br/><%=champ1CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ1CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ1CoreItem.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ1CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ1CoreItem.get(i).getName()%></b><br/><br/><%=champ1CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ1CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
+							<div id="itme-core-summary2" class="item-core-summary-items">2코어
+								<%
+									if(champ2CoreItem.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ2CoreItem.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ2CoreItem.get(0).getName()%></b><br/><br/><%=champ2CoreItem.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ2CoreItem.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ2CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ2CoreItem.get(i).getName()%></b><br/><br/><%=champ2CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ2CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ2CoreItem.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ2CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ2CoreItem.get(i).getName()%></b><br/><br/><%=champ2CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ2CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
+							<div id="itme-core-summary3" class="item-core-summary-items">3코어
+								<%
+									if(champ3CoreItem.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ3CoreItem.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ3CoreItem.get(0).getName()%></b><br/><br/><%=champ3CoreItem.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ3CoreItem.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ3CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ3CoreItem.get(i).getName()%></b><br/><br/><%=champ3CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ3CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ3CoreItem.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ3CoreItem.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ3CoreItem.get(i).getName()%></b><br/><br/><%=champ3CoreItem.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ3CoreItem.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
 						</div>
 
 						<div class="skill-summary-container">
@@ -2521,92 +2432,77 @@
 							<h4 style="margin: 0; color: #ae9056">보조 룬</h4>
 							
 							<div class="rune-select" style="margin-top: 5px;">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[1]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[0]%></b><br />
-									<br /><%=championSummaryAssisRune2[2]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[4]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[3]%></b><br />
-									<br /><%=championSummaryAssisRune2[5]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[7]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[6]%></b><br />
-									<br /><%=championSummaryAssisRune2[8]%> </span>
-								</div>
+								<%
+									for(int i=0; i<3; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune2.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune2.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune2.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 							
 							<div class="rune-select">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[10]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[9]%></b><br />
-									<br /><%=championSummaryAssisRune2[11]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[13]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[12]%></b><br />
-									<br /><%=championSummaryAssisRune2[14]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[16]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[15]%></b><br />
-									<br /><%=championSummaryAssisRune2[17]%> </span>
-								</div>
+								<%
+									for(int i=3; i<6; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune2.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune2.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune2.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 							
 							<div class="rune-select">
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[19]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[18]%></b><br />
-									<br /><%=championSummaryAssisRune2[20]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[22]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[21]%></b><br />
-									<br /><%=championSummaryAssisRune2[23]%> </span>
-								</div>
-								<div class='tooltip'>
-									<img src="Images/rune/<%=championSummaryAssisRune2[25]%>"
-										alt="img" /> <span class='tooltiptext tooltip-right'><b
-										style='color: #ffc107;'> <%=championSummaryAssisRune2[24]%></b><br />
-									<br /><%=championSummaryAssisRune2[26]%> </span>
-								</div>
+								<%
+									for(int i=6; i<9; i++) {
+										%>
+										<div class='tooltip'>
+											<img src="Images/rune/<%=champAssisRune2.get(i).getImage()%>"
+												alt="img" /> <span class='tooltiptext tooltip-right'><b
+												style='color: #ffc107;'> <%=champAssisRune2.get(i).getName()%></b><br/>
+											<br /><%=champAssisRune2.get(i).getFunction()%></span>
+										</div>	
+										<%
+									}
+								%>
 							</div>
 
 							<div style="padding-top: 30px;">
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[1]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[3]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[5]%>" alt="img" />
+									<%
+										for(int i=0; i<3; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune2.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[7]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[9]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[11]%>" alt="img" />
+									<%
+										for(int i=3; i<6; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune2.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 								<div class="rune-select">
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[13]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[15]%>" alt="img" />
-									<img style="width: 25px; height: 25px"
-										src="Images/rune/<%=championSummarySubRune2[17]%>" alt="img" />
+									<%
+										for(int i=6; i<9; i++) {
+											%>
+											<img style="width: 25px; height: 25px" src="Images/rune/<%=champSubRune2.get(i).getImage()%>" alt="img" />
+											<%
+										}
+									%>
 								</div>
 							</div>
 							
@@ -2615,12 +2511,132 @@
 
 					<div class="item-skill-summary">
 						<div class="item-core-summary">
-							<div id="itme-core-summary12" class="item-core-summary-items">
-								1코어</div>
-							<div id="itme-core-summary22" class="item-core-summary-items">
-								2코어</div>
-							<div id="itme-core-summary32" class="item-core-summary-items">
-								3코어</div>
+							<div class="item-core-summary-items">1코어
+								<%
+									if(champ1CoreItem2.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ1CoreItem2.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ1CoreItem2.get(0).getName()%></b><br/><br/><%=champ1CoreItem2.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ1CoreItem2.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ1CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ1CoreItem2.get(i).getName()%></b><br/><br/><%=champ1CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ1CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ1CoreItem2.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ1CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ1CoreItem2.get(i).getName()%></b><br/><br/><%=champ1CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ1CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
+							<div class="item-core-summary-items">2코어
+								<%
+									if(champ2CoreItem2.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ2CoreItem2.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ2CoreItem2.get(0).getName()%></b><br/><br/><%=champ2CoreItem2.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ2CoreItem2.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ2CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ2CoreItem2.get(i).getName()%></b><br/><br/><%=champ2CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ2CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ2CoreItem2.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ2CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ2CoreItem2.get(i).getName()%></b><br/><br/><%=champ2CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ2CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
+							<div class="item-core-summary-items">3코어
+								<%
+									if(champ3CoreItem2.size()==1) {
+										%>
+											<span class='tooltip'>
+												<img src='Images/item/<%=champ3CoreItem2.get(0).getImage()%>' alt='img'>
+												<span class='tooltiptext tooltip-right'>
+													<b style='color:#ffc107;'><%=champ3CoreItem2.get(0).getName()%></b><br/><br/><%=champ3CoreItem2.get(0).getFunction()%>
+												</span>
+											</span>
+										<%
+									} else if(champ3CoreItem2.size()==2) {
+										for(int i=0; i<2; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ3CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ3CoreItem2.get(i).getName()%></b><br/><br/><%=champ3CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ3CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									} else if(champ3CoreItem2.size()==3) {
+										for(int i=0; i<3; i++) {
+											%>
+												<span class='tooltip'>
+													<img src='Images/item/<%=champ3CoreItem2.get(i).getImage()%>' alt='img'>
+													<span class='tooltiptext tooltip-right'>
+														<b style='color:#ffc107;'><%=champ3CoreItem2.get(i).getName()%></b><br/><br/><%=champ3CoreItem2.get(i).getFunction()%>
+													</span>
+												</span>
+											<%
+											if(i!=champ3CoreItem2.size()-1){
+												%>or<%
+											}
+										}
+									}
+								%>
+							</div>
 						</div>
 
 						<div class="skill-summary-container">
