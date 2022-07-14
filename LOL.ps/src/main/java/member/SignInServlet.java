@@ -26,6 +26,10 @@ public class SignInServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		Y_DBmanager y_dbmanager = new Y_DBmanager();
 	 	Connection conn  = y_dbmanager.getConnection();
@@ -60,10 +64,6 @@ public class SignInServlet extends HttpServlet {
 			response.sendRedirect("lol/login.jsp");
 			}
 	}
-
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 
 }

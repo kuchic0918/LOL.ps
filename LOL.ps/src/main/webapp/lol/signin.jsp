@@ -62,6 +62,12 @@ $(function() {
 			
 			
 	});
+	naverLogin.init(); //initialize Naver Login Button
+	 
+	$(document).on("click", "#naver_id_login", function(){ 
+		var btnNaverLogin = document.getElementById("naverIdLogin").firstChild;
+		btnNaverLogin.click();
+	});
 });
 </script>	
 </head>
@@ -99,7 +105,7 @@ $(function() {
 	                <div class = "member-row">
 	                    <div class = "member-email_login_box"> 
 	                        <h3 class="member-h3">이메일 회원 가입</h3>
-	                        <form action = "signinServer.jsp" class="member-form" name="signInForm" method = "POST" novalidate>
+	                        <form action = "../SignInServlet" class="member-form" name="signInForm" method = "POST" novalidate>
 	                            <div class = "member-form-group">
 	                                <label class="member-laber">이메일 주소</label>
 	                                <input type="email" name="email" class="member-form-control" placeholder="gamer@lol.ps" >
@@ -130,7 +136,7 @@ $(function() {
 	                        <h3 class="member-h3">소셜계정으로 가입</h3>
 	                        <ul class="member-ul">
 	                            <li class="member-li">
-	                                <a href="javascript:kakaoLogin();"><img src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
+	                                <a href="javascript:kakaoLogin();"><img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 50px;"/></a>
 								 	<script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
 								 		
@@ -160,11 +166,11 @@ $(function() {
 								 	</script>
 	                            </li>
 	                            <li class="member-li">
-	                             	<a id = "naver_id_login">
+	                             	<a id = "naver_id_login" class = "sns_btn" >
 	                             		 <script type="text/javascript">
 											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/lol/naverCallback.jsp");
 											  	var state = naver_id_login.getUniqState();
-											  	naver_id_login.setButton("white", 2,40);
+											  	naver_id_login.setButton("green", 2,30);
 											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/lol/signin.jsp");
 											  	naver_id_login.setState(state);
 // 											  	naver_id_login.setPopup();
@@ -185,7 +191,7 @@ $(function() {
     <div class="footer-left">
         <span class="footer-left-item">공지사항</span>
         <span class="footer-left-item">버그리포팅</span>
-        <span class="footer-left-item">파트너 신청</span></br>
+        <span class="footer-left-item">파트너 신청</span><br/>
         <div style="margin-bottom: 10px;"></div>
         <span class="footer-left-item">이용약관</span>
         <span class="footer-left-item">개인정보처리방침</span>
