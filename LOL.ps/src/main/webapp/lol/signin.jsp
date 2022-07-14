@@ -10,6 +10,7 @@
 <!--     <meta name="google-signin-client_id" content="617468967353-01kodva3scdm890l5ahl1t02rm12b42h.apps.googleusercontent.com"> -->
 	<script src="Js/jquery-3.6.0.min.js"></script>
 	<script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
+	 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!--     <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
 	<title>회원가입</title>
@@ -129,9 +130,7 @@ $(function() {
 	                        <h3 class="member-h3">소셜계정으로 가입</h3>
 	                        <ul class="member-ul">
 	                            <li class="member-li">
-	                                <a href="javascript:kakaoLogin();" class="member-fbook member-a">
-	                                    <img class = "member-img_log" src="https://s3.lol.ps/file/lol-ps/static/img/icon_sns_fbook.png" alt="페이스북 로그인" >
-	                                </a>
+	                                <a href="javascript:kakaoLogin();"><img src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
 								 	<script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
 								 		
@@ -161,7 +160,17 @@ $(function() {
 								 	</script>
 	                            </li>
 	                            <li class="member-li">
-	                             
+	                             	<a id = "naver_id_login">
+	                             		 <script type="text/javascript">
+											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/lol/naverCallback.jsp");
+											  	var state = naver_id_login.getUniqState();
+											  	naver_id_login.setButton("white", 2,40);
+											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/lol/signin.jsp");
+											  	naver_id_login.setState(state);
+// 											  	naver_id_login.setPopup();
+											  	naver_id_login.init_naver_id_login();
+  										</script>
+	                             	</a>
 	                            </li>
 	                            
 	                            </ul>

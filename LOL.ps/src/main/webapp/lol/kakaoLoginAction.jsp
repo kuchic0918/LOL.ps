@@ -18,8 +18,8 @@
 		MemberDAO memberdao = new MemberDAO();
 			
 		String kakaoEmail = "kakao/" + request.getParameter("kakaoEmail") ;
-		String kakaoNickname = "kakao/" + request.getParameter("kakaoNickname") ;
-		MemberDTO member = new MemberDTO(0 , kakaoEmail , "kakaoPw" , kakaoNickname , null, null, null);
+		String kakaoNickname =request.getParameter("kakaoNickname") ;
+		MemberDTO member = new MemberDTO(0 , kakaoEmail , "snsAdmin" , kakaoNickname , null, null, null);
 		System.out.println("email : " + kakaoEmail  + "  nickname :   " + kakaoNickname);
 		// 이메일이 가입된 적이 없으면  . . .
 		//회원가입 진행 
@@ -33,7 +33,7 @@
 	%>
 		<script>
 			alert("환영합니다");
-			location.href = "../community/my-page.jsp";
+			location.href = "my-page.jsp";
 		</script>
 	<% 		
 		//이미 가입이 되어있으면 로그인 진행
@@ -43,7 +43,7 @@
 	%>	
 			<script>
 				alert("환영합니다");
-				location.href = "../community/my-page.jsp";
+				location.href = "my-page.jsp";
 			</script>
 	<% 		
 		}
