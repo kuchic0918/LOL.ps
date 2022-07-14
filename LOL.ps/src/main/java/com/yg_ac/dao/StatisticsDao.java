@@ -29,9 +29,14 @@ import com.yg_ac.dto.SkillMasterDto;
 import com.yg_ac.dto.SkillSeqDto;
 
 public class StatisticsDao {
+	Y_DBmanager db = new Y_DBmanager();
+	Connection conn = db.getConnection();
+	
 	// 스킬 마스터 추천 순서
-	public ArrayList<GetSkillMasterDto> getSkillMaster(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+	public ArrayList<GetSkillMasterDto> getSkillMaster(String champion_name, String champion_line, String champion_rate) {
 		ArrayList<GetSkillMasterDto> getSkillMaster = new ArrayList<GetSkillMasterDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select cs.pick1 p1, s1.image h1, s1.function f1, cs.pick2 p2, s2.image h2, s2.function f2, cs.pick3 p3, s3.image h3, s3.function f3, cs.win_rate w, cs.pick_rate p, cs.count c "
 					+ " from c_skill_master cs, skill_info s1, skill_info s2, skill_info s3 "
@@ -81,8 +86,10 @@ public class StatisticsDao {
 	}
 	
 	// 추천 스펠
-	public ArrayList<RecommendedSpellsDto> recommendedSpells(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+	public ArrayList<RecommendedSpellsDto> recommendedSpells(String champion_name, String champion_line, String champion_rate) {
 		ArrayList<RecommendedSpellsDto> recommendedSpells = new ArrayList<RecommendedSpellsDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			for(int i=1; i<=2; i++) {
 				String sql = "select cs.pick"+i+" name,"+
@@ -123,8 +130,10 @@ public class StatisticsDao {
 	}
 	
 	// 시작 아이템
-	public ArrayList<RecommendedSpellsDto> startItem(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+	public ArrayList<RecommendedSpellsDto> startItem(String champion_name, String champion_line, String champion_rate) {
 		ArrayList<RecommendedSpellsDto> startItem = new ArrayList<RecommendedSpellsDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			for(int i=1; i<=2; i++) {
 				String sql = "select cs.pick"+i+" name,"+
@@ -164,8 +173,10 @@ public class StatisticsDao {
 		return startItem;
 	}
 	// 신발
-	public ArrayList<RecommendedSpellsDto> shoes(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+	public ArrayList<RecommendedSpellsDto> shoes(String champion_name, String champion_line, String champion_rate) {
 		ArrayList<RecommendedSpellsDto> shoes = new ArrayList<RecommendedSpellsDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select cs.pick1 name,"+
 					" ii.image image,"+
@@ -203,9 +214,11 @@ public class StatisticsDao {
 		return shoes;
 	}
 	// qwer 이미지
-	public ArrayList<ChampionQWERDto> championSkillImageQWER(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+	public ArrayList<ChampionQWERDto> championSkillImageQWER(String champion_name) {
 		ArrayList<ChampionQWERDto> championSkillImageQWER = new ArrayList<ChampionQWERDto>();
-			try {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
 				String sql = "select siq.image q, siw.image w, sie.image e, sir.image r from champ_skill cs, skill_info siq, skill_info siw, skill_info sie, skill_info sir" +
 							" where cs.name = ?"+
 							" and cs.p = siq.name"+
@@ -235,8 +248,10 @@ public class StatisticsDao {
 		return championSkillImageQWER;
 	}
 	// 검색한 챔피언 스킬 11 (순서)
-	public ArrayList<ChampionSummary11Dto> championSummary11 (Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+	public ArrayList<ChampionSummary11Dto> championSummary11 (String champion_name, String champion_line, String champion_rate) {
 		ArrayList<ChampionSummary11Dto> championSummary11 = new ArrayList<ChampionSummary11Dto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			for(int i=1; i<=11; i++) {
 				String sql = "select si.skill_key k, si.image h" +
@@ -268,9 +283,11 @@ public class StatisticsDao {
 		return championSummary11;
 	}
 	// 챔피언 해드 이미지, 이름
-	public ChampionSummaryHeadDto championSummaryHead(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+	public ChampionSummaryHeadDto championSummaryHead(String champion_name) {
 		ChampionSummaryHeadDto championSummaryHead = null;
 		String sql = "SELECT * FROM champ_skill cs WHERE cs.name = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, champion_name);
@@ -294,8 +311,10 @@ public class StatisticsDao {
 		return championSummaryHead;
 	}
 	// 높은 포지션 라인이름, 퍼센트
-	public ArrayList<ChampionSummaryHighPositionDto> championSummaryHighPosition(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+	public ArrayList<ChampionSummaryHighPositionDto> championSummaryHighPosition( String champion_name) {
 		ArrayList<ChampionSummaryHighPositionDto> championSummarySelectPosition = new ArrayList<ChampionSummaryHighPositionDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select rownum rnum, b2.* from (select * from c_high_pick b where name = ? order by pickrate desc) b2 where rownum < 4";
 			pstmt = conn.prepareStatement(sql);
@@ -319,8 +338,10 @@ public class StatisticsDao {
 		return championSummarySelectPosition;
 	}
 	// 선택한 포지션 퍼센트
-	public ArrayList<ChampionSummarySelectPositionDto> championSummarySelectPosition(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+	public ArrayList<ChampionSummarySelectPositionDto> championSummarySelectPosition( String champion_name) {
 		ArrayList<ChampionSummarySelectPositionDto> championSummarySelectPosition = new ArrayList<ChampionSummarySelectPositionDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select * from c_high_pick where name = ?";
 			pstmt = conn.prepareStatement(sql);
@@ -343,8 +364,10 @@ public class StatisticsDao {
 		return championSummarySelectPosition;
 	}
 	// ps스코어 전
-		public String championSummaryPsRankBefore(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public String championSummaryPsRankBefore( String champion_name, String champion_line) {
 			String get = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select ps_score from c_champ_tier_before where c_champ_tier_before.name = ? and line = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -369,8 +392,10 @@ public class StatisticsDao {
 			return get;
 		}
 	// ps스코어 현
-		public String championSummaryPsRankNow(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public String championSummaryPsRankNow( String champion_name, String champion_line) {
 			String get = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select ps_score from c_champ_tier where c_champ_tier.name = ? and line = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -395,8 +420,10 @@ public class StatisticsDao {
 			return get;
 		}
 	// 챔피언순위 전
-		public String championSummaryRankingBefore(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public String championSummaryRankingBefore( String champion_name, String champion_line) {
 			String get = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select rnum from (select rownum rnum, b2.* from(select * from c_champ_tier_before b order by ps_score desc) b2) where name = ? and line = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -421,8 +448,10 @@ public class StatisticsDao {
 			return get;
 		}
 	// 챔피언순위 현재
-		public String championSummaryRankingNow(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public String championSummaryRankingNow( String champion_name, String champion_line) {
 			String get = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select rnum from (select rownum rnum, b2.* from(select * from c_champ_tier b order by ps_score desc) b2) where name = ? and line = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -447,8 +476,10 @@ public class StatisticsDao {
 			return get;
 		}
 	// 챔피언 승률 픽률 밴율
-		public ChampionSummaryWinPickBanRateDto championSummaryWinPickBanRate(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ChampionSummaryWinPickBanRateDto championSummaryWinPickBanRate( String champion_name, String champion_line) {
 			ChampionSummaryWinPickBanRateDto get = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select * from c_champ_tier where c_champ_tier.name = ? and line = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -477,8 +508,10 @@ public class StatisticsDao {
 		}
 	//메인 룬
 		//포함된 모든 룬
-		private ArrayList<String> championRuneInfoMain(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		private ArrayList<String> championRuneInfoMain( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<String> championRuneInfoMain = new ArrayList<String>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = " select name from rune_info where" + 
 							 " (select build from rune_info where" + 
@@ -508,8 +541,10 @@ public class StatisticsDao {
 			return championRuneInfoMain;
 		}
 		//사용하는 룬
-		private ArrayList<String> selectRuneMain(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		private ArrayList<String> selectRuneMain( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<String> selectRuneMain = new ArrayList<String>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				for(int i=1; i<7; i++) {
 					String sql = "SELECT max(crc.pick" + i + ") keep(dense_rank last ORDER BY crc." + champion_rate + "_rate) AS name FROM c_rune_combine crc WHERE crc.name = ? AND crc.line = ? AND crc.pick_rate > 5";
@@ -535,12 +570,14 @@ public class StatisticsDao {
 			return selectRuneMain;
 		}
 		//통합
-		public ArrayList<ChampionRuneDto> championSummaryMainRune(Connection conn, PreparedStatement pstmt, ResultSet rs,  String champion_name, String champion_line, String champion_rate) {
-			ArrayList<String> championRuneInfoMain = championRuneInfoMain(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-			ArrayList<String> selectRuneMain = selectRuneMain(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+		public ArrayList<ChampionRuneDto> championSummaryMainRune(  String champion_name, String champion_line, String champion_rate) {
+			ArrayList<String> championRuneInfoMain = championRuneInfoMain(champion_name, champion_line, champion_rate);
+			ArrayList<String> selectRuneMain = selectRuneMain(champion_name, champion_line, champion_rate);
 
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				// 룬 이름과 설명
 				String sql = "SELECT rui.name, rui.image, rui.image_d, rui.function FROM rune_info rui WHERE rui.name = ?";
@@ -579,7 +616,7 @@ public class StatisticsDao {
 		}
 	// 보조룬
 		// 포함된 보조룬
-		private ArrayList<String> championRuneInfoAssist(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		private ArrayList<String> championRuneInfoAssist( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<String> championRuneInfoAssist = new ArrayList<String>();
 			String sql = " select name from rune_info_assist where"
 					+ " (select build from rune_info_assist where"
@@ -587,6 +624,8 @@ public class StatisticsDao {
 					+ " (select max(c_rune_combine." + champion_rate + "_rate)"
 					+ " from c_rune_combine where name = ? and line = ? AND c_rune_combine.pick_rate > 5)"
 					+ " = c_rune_combine." + champion_rate + "_rate) = name) = build";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -610,13 +649,15 @@ public class StatisticsDao {
 			return championRuneInfoAssist;
 		}
 		// 통합
-		public ArrayList<ChampionRuneDto> championSummaryAssisRune(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
-			ArrayList<String> championRuneInfoAssist = championRuneInfoAssist(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-			ArrayList<String> selectRuneMain = selectRuneMain(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+		public ArrayList<ChampionRuneDto> championSummaryAssisRune( String champion_name, String champion_line, String champion_rate) {
+			ArrayList<String> championRuneInfoAssist = championRuneInfoAssist(champion_name, champion_line, champion_rate);
+			ArrayList<String> selectRuneMain = selectRuneMain(champion_name, champion_line, champion_rate);
 			
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 			
 			String sql = "SELECT rui.name, rui.image, rui.image_d, rui.function FROM rune_info rui WHERE rui.name = ?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				
@@ -656,9 +697,10 @@ public class StatisticsDao {
 		}
 	// 서브룬
 		// 선택한 서브룬
-		public ArrayList<String> selectRuneSub(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		public ArrayList<String> selectRuneSub( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<String> selectRuneSub = new ArrayList<String>();
-
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				for(int i=1; i<4; i++) {
 					String sql = "SELECT max(crs.pick" + i + ") keep(dense_rank last ORDER BY crs." + champion_rate + "_rate) AS name FROM c_rune_shard crs WHERE crs.name = ? AND crs.line = ? AND crs.pick_rate > 5";
@@ -685,14 +727,15 @@ public class StatisticsDao {
 			return selectRuneSub;
 		}
 		//통합
-		public ArrayList<ChampionRuneDto> championSummarySubRune(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
-			ArrayList<String> selectRuneSub = selectRuneSub(conn, pstmt, rs, champion_name, champion_line, champion_rate);
+		public ArrayList<ChampionRuneDto> championSummarySubRune( String champion_name, String champion_line, String champion_rate) {
+			ArrayList<String> selectRuneSub = selectRuneSub(champion_name, champion_line, champion_rate);
 			String[] runeSubArr = {"적응형 능력치 +9","공격속도 +10%","스킬 가속 +8","적응형 능력치 +9","방어력 +6","마법저항력 +8","체력 +15~140 (레벨에 비례)","방어력 +6","마법저항력 +8"};
 			
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 			
 			String sql = "SELECT * FROM rune_info rui WHERE rui.name = ?";
-			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				for(int i=0; i<3; i++) {
@@ -752,12 +795,14 @@ public class StatisticsDao {
 			return get;
 		}
 	// 1코어
-		public ArrayList<ChampionRuneDto> championSummaryItemEach1(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		public ArrayList<ChampionRuneDto> championSummaryItemEach1( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 			String andPick_rate = null;
 			if(champion_rate.equals("win")) {
 				andPick_rate = " and cc.pick_rate >=5 ";
 			} else andPick_rate = " ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.name, cc.rank, cc.pick item_name, info.image item_image, cc.win_rate, cc.pick_rate, info.function from c_core_each cc, item_info info where cc.rank = '1코어' and cc.name = ? and cc.line = ? and cc.pick = info.name" + andPick_rate + "order by cc.win_rate desc";
 				pstmt = conn.prepareStatement(sql);
@@ -787,12 +832,14 @@ public class StatisticsDao {
 			return get;
 		}	
 	// 2코어
-		public ArrayList<ChampionRuneDto> championSummaryItemEach2(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		public ArrayList<ChampionRuneDto> championSummaryItemEach2( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 			String andPick_rate = null;
 			if(champion_rate.equals("win")) {
 				andPick_rate = " and cc.pick_rate >=5 ";
 			} else andPick_rate = " ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.name, cc.rank, cc.pick item_name, info.image item_image, cc.win_rate, cc.pick_rate, info.function from c_core_each cc, item_info info where cc.rank = '2코어' and cc.name = ? and cc.line = ? and cc.pick = info.name" + andPick_rate + "order by cc.win_rate desc";
 				pstmt = conn.prepareStatement(sql);
@@ -822,12 +869,14 @@ public class StatisticsDao {
 			return get;
 		}
 	// 3코어
-		public ArrayList<ChampionRuneDto> championSummaryItemEach3(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line, String champion_rate) {
+		public ArrayList<ChampionRuneDto> championSummaryItemEach3( String champion_name, String champion_line, String champion_rate) {
 			ArrayList<ChampionRuneDto> get = new ArrayList<ChampionRuneDto>();
 			String andPick_rate = null;
 			if(champion_rate.equals("win")) {
 				andPick_rate = " and cc.pick_rate >=5 ";
 			} else andPick_rate = " ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.name, cc.rank, cc.pick item_name, info.image item_image, cc.win_rate, cc.pick_rate, info.function from c_core_each cc, item_info info where cc.rank = '3코어' and cc.name = ? and cc.line = ? and cc.pick = info.name" + andPick_rate + "order by cc.win_rate desc";
 				pstmt = conn.prepareStatement(sql);
@@ -857,8 +906,10 @@ public class StatisticsDao {
 			return get;
 		}
 	// 상대하기 쉬움
-		public ArrayList<ChampMatchListDto> getChampMatchListHard(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<ChampMatchListDto> getChampMatchListHard( String champion_name, String champion_line) {
 			ArrayList<ChampMatchListDto> getChampMatchListHard = new ArrayList<ChampMatchListDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select match.enemy name, match.line line, match.COUNT count, match.WIN_RATE winRate, image.IMAGE_HEAD image"
 						+ " from C_CHAMP_MATCH match, CHAMP_SKILL image"
@@ -897,8 +948,10 @@ public class StatisticsDao {
 			return getChampMatchListHard;
 		}
 	// 상대하기 어려움
-		public ArrayList<ChampMatchListDto> getChampMatchListEasy(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<ChampMatchListDto> getChampMatchListEasy( String champion_name, String champion_line) {
 			ArrayList<ChampMatchListDto> getChampMatchListHard = new ArrayList<ChampMatchListDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select match.enemy name, match.line line, match.COUNT count, match.WIN_RATE winRate, image.IMAGE_HEAD image"
 						+ " from C_CHAMP_MATCH match, CHAMP_SKILL image"
@@ -933,8 +986,10 @@ public class StatisticsDao {
 			return getChampMatchListHard;
 		}
 	// 스펠
-		public ArrayList<ChampStartItemDto> getSpell(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<ChampStartItemDto> getSpell( String champion_name, String champion_line) {
 			ArrayList<ChampStartItemDto> getSpell = new ArrayList<ChampStartItemDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select craw.name name, craw.line line,image.name name1, image.IMAGE pick1, image.function function1, image2.name name2, image2.IMAGE pick2, image2.function function2, craw.WIN_RATE winRate, craw.PICK_RATE pickRate, craw.COUNT count"
 						+ " from C_SPELL_ITEM craw, ITEM_INFO image, ITEM_INFO image2"
@@ -976,8 +1031,10 @@ public class StatisticsDao {
 			return getSpell;
 		}
 	// 스타트 아이템	
-		public ArrayList<ChampStartItemDto> getStartItem(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<ChampStartItemDto> getStartItem( String champion_name, String champion_line) {
 			ArrayList<ChampStartItemDto> getStartItem = new ArrayList<ChampStartItemDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select craw.name name, craw.line line, image.name name1, image.IMAGE pick1, image.function function1, image2.name name2, nvl(image2.IMAGE, '없음') pick2, image2.function function2, craw.WIN_RATE winRate, craw.PICK_RATE pickRate, craw.COUNT count"
 						+ " from C_SPELL_ITEM craw, ITEM_INFO image, ITEM_INFO image2"
@@ -1019,8 +1076,10 @@ public class StatisticsDao {
 			return getStartItem;
 		}
 	// 신발
-		public ArrayList<ChampStartItemDto> getShoes(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<ChampStartItemDto> getShoes( String champion_name, String champion_line) {
 			ArrayList<ChampStartItemDto> getShoes = new ArrayList<ChampStartItemDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select craw.name name, craw.line line, image.name name1, image.IMAGE pick1, image.function function1, image2.name name2, nvl(image2.IMAGE, '없음') pick2, image2.function function2, craw.WIN_RATE winRate, craw.PICK_RATE pickRate, craw.COUNT count"
 						+ " from C_SPELL_ITEM craw, ITEM_INFO image, ITEM_INFO image2"
@@ -1062,8 +1121,10 @@ public class StatisticsDao {
 			return getShoes;
 		}
 	// 1코어 아이템
-		public ArrayList<CoreEachDto> getCore1(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreEachDto> getCore1( String champion_name, String champion_line) {
 			ArrayList<CoreEachDto> getCore1 = new ArrayList<CoreEachDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick, ii.image h, ii.function f, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_each cc, item_info ii "
@@ -1099,8 +1160,10 @@ public class StatisticsDao {
 			return getCore1;
 		}
 	// 2코어 아이템
-		public ArrayList<CoreEachDto> getCore2(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreEachDto> getCore2( String champion_name, String champion_line) {
 			ArrayList<CoreEachDto> getCore2 = new ArrayList<CoreEachDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick, ii.image h, ii.function f, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_each cc, item_info ii "
@@ -1136,8 +1199,10 @@ public class StatisticsDao {
 			return getCore2;
 		}
 	// 3코어 아이템
-		public ArrayList<CoreEachDto> getCore3(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreEachDto> getCore3( String champion_name, String champion_line) {
 			ArrayList<CoreEachDto> getCore3 = new ArrayList<CoreEachDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick, ii.image h, ii.function f, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_each cc, item_info ii "
@@ -1173,8 +1238,10 @@ public class StatisticsDao {
 			return getCore3;
 		}
 	// 2코어 아이템(2개)
-		public ArrayList<CoreCombineDto> get2CoreCombine(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreCombineDto> get2CoreCombine( String champion_name, String champion_line) {
 			ArrayList<CoreCombineDto> get2CoreCombine = new ArrayList<CoreCombineDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick1 p1, cc.pick2 p2, cc.pick3 p3, cc.pick4 p4, i1.function f1, i2.function f2, i3.function f3, i4.function f4, i1.image h1, i2.image h2, i3.image h3, i4.image h4, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_combine cc, item_info i1, item_info i2, item_info i3, item_info i4 "
@@ -1217,8 +1284,10 @@ public class StatisticsDao {
 			return get2CoreCombine;
 		}
 	// 3코어 아이템(3개)
-		public ArrayList<CoreCombineDto> get3CoreCombine(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreCombineDto> get3CoreCombine( String champion_name, String champion_line) {
 			ArrayList<CoreCombineDto> get3CoreCombine = new ArrayList<CoreCombineDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick1 p1, cc.pick2 p2, cc.pick3 p3, cc.pick4 p4, i1.function f1, i2.function f2, i3.function f3, i4.function f4, i1.image h1, i2.image h2, i3.image h3, i4.image h4, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_combine cc, item_info i1, item_info i2, item_info i3, item_info i4 "
@@ -1265,8 +1334,10 @@ public class StatisticsDao {
 			return get3CoreCombine;
 		}
 	// 4코어 아이템(4개)
-		public ArrayList<CoreCombineDto> get4CoreCombine(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<CoreCombineDto> get4CoreCombine( String champion_name, String champion_line) {
 			ArrayList<CoreCombineDto> get4CoreCombine = new ArrayList<CoreCombineDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cc.pick1 p1, cc.pick2 p2, cc.pick3 p3, cc.pick4 p4, i1.function f1, i2.function f2, i3.function f3, i4.function f4, i1.image h1, i2.image h2, i3.image h3, i4.image h4, cc.win_rate w, cc.pick_rate p, cc.count c "
 						+ "from c_core_combine cc, item_info i1, item_info i2, item_info i3, item_info i4 "
@@ -1317,8 +1388,10 @@ public class StatisticsDao {
 			return get4CoreCombine;
 		}
 	// 스킬 마스터리 순서
-		public ArrayList<SkillMasterDto> getSkillMaster(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<SkillMasterDto> getSkillMaster( String champion_name, String champion_line) {
 			ArrayList<SkillMasterDto> getSkillMaster = new ArrayList<SkillMasterDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select cs.pick1 pick1, si1.image h1, si1.skill_key key1, si1.function f1, cs.pick2 pick2, si2.image h2, si2.skill_key key2, si2.function f2, cs.pick3 pick3, si3.image h3, si3.skill_key key3, si3.function f3, cs.win_rate w, cs.pick_rate p, cs.count c " + 
 						"from c_skill_master cs, skill_info si1, skill_info si2, skill_info si3 " + 
@@ -1367,7 +1440,7 @@ public class StatisticsDao {
 			return getSkillMaster;
 		}
 	// 스킬순서 3
-		public ArrayList<SkillSeqDto> getSkillSeq3(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<SkillSeqDto> getSkillSeq3( String champion_name, String champion_line) {
 			ArrayList<SkillSeqDto> getSkillSeq3 = new ArrayList<SkillSeqDto>();
 			String sql = "select css.pick1, si1.image h1, si1.function f1, css.pick2, si2.image h2, si2.function f2, css.pick3, si3.image h3, si3.function f3, css.win_rate w, css.pick_rate p, css.count c  " + 
 					" from c_skill_seq css, skill_info si1, skill_info si2, skill_info si3 " + 
@@ -1378,6 +1451,8 @@ public class StatisticsDao {
 					" and css.line = ? " + 
 					" and css.what_level = 3 " + 
 					" order by pick_rate desc ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -1415,7 +1490,7 @@ public class StatisticsDao {
 			return getSkillSeq3;
 		}
 	// 스킬순서 6
-		public ArrayList<SkillSeqDto> getSkillSeq6(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<SkillSeqDto> getSkillSeq6( String champion_name, String champion_line) {
 			ArrayList<SkillSeqDto> getSkillSeq6 = new ArrayList<SkillSeqDto>();
 			String sql = "select css.pick1, si1.image h1, si1.function f1, css.pick2, si2.image h2, si2.function f2, css.pick3, si3.image h3, si3.function f3, css.pick4, si4.image h4, si4.function f4, " + 
 					" css.pick5, si5.image h5, si5.function f5, css.pick6, si6.image h6, si6.function f6, css.win_rate w, css.pick_rate p, css.count c  " + 
@@ -1430,6 +1505,8 @@ public class StatisticsDao {
 					" and css.line = ? " + 
 					" and css.what_level = 6 " + 
 					" order by pick_rate desc ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -1475,7 +1552,7 @@ public class StatisticsDao {
 			return getSkillSeq6;
 		}
 	// 스킬순서9
-		public ArrayList<SkillSeqDto> getSkillSeq11(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<SkillSeqDto> getSkillSeq11( String champion_name, String champion_line) {
 			ArrayList<SkillSeqDto> getSkillSeq11 = new ArrayList<SkillSeqDto>();
 			String sql = "select css.pick1, si1.image h1, si1.function f1, css.pick2, si2.image h2, si2.function f2, css.pick3, si3.image h3, si3.function f3, css.pick4, si4.image h4, si4.function f4, " + 
 					" css.pick5, si5.image h5, si5.function f5, css.pick6, si6.image h6, si6.function f6, css.pick7, si7.image h7, si7.function f7, css.pick8, si8.image h8, si8.function f8, css.pick9, si9.image h9,  " + 
@@ -1498,6 +1575,8 @@ public class StatisticsDao {
 					" and css.line = ? " + 
 					" and css.what_level = 11 " + 
 					" order by pick_rate desc ";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -1561,7 +1640,7 @@ public class StatisticsDao {
 			return getSkillSeq11;
 		}
 	// 룬조합
-		public ArrayList<RuneCombineDto> getRuneCombine(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<RuneCombineDto> getRuneCombine( String champion_name, String champion_line) {
 			ArrayList<RuneCombineDto> getRuneCombine = new ArrayList<RuneCombineDto>();
 			String sql = " select cr.pick1, ri1.image h1, ri1.function f1, cr.pick2, ri2.image h2, ri2.function f2, cr.pick3, ri3.image h3, ri3.function f3, cr.pick4, ri4.image h4, ri4.function f4, cr.pick5, ri5.image h5, ri5.function f5, cr.pick6, ri6.image h6, ri6.function f6, cr.win_rate w, cr.pick_rate p "
 						+ " from c_rune_combine cr, rune_info ri1 , rune_info ri2, rune_info ri3, rune_info ri4, rune_info ri5, rune_info ri6 "
@@ -1574,6 +1653,8 @@ public class StatisticsDao {
 						+ " and cr.name = ?"
 						+ " and cr.line = ?";
 			
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -1615,7 +1696,7 @@ public class StatisticsDao {
 			return getRuneCombine;
 		}
 	// 룬파편조합
-		public ArrayList<RuneShardDto> getRuneShard(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name, String champion_line) {
+		public ArrayList<RuneShardDto> getRuneShard( String champion_name, String champion_line) {
 			ArrayList<RuneShardDto> getRuneShard = new ArrayList<RuneShardDto>();
 			String sql = " select cr.pick1 p1, r1.image h1, r2.image h2, r3.image h3, cr.pick2 p2, cr.pick3 p3, cr.win_rate w, cr.pick_rate p "
 						+ " from c_rune_shard cr, rune_info r1, rune_info r2, rune_info r3 "
@@ -1624,6 +1705,8 @@ public class StatisticsDao {
 						+ " and cr.pick1 = r1.name "
 						+ " and cr.pick2 = r2.name "
 						+ " and cr.pick3 = r3.name";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champion_name);
@@ -1646,8 +1729,10 @@ public class StatisticsDao {
 			return getRuneShard;
 		}
 	// 기본 능력치
-		public ArrayList<ChampBasicStatDto> getChampBasicStat(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+		public ArrayList<ChampBasicStatDto> getChampBasicStat( String champion_name) {
 			ArrayList<ChampBasicStatDto> getChampBasicStat = new ArrayList<ChampBasicStatDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select name, stat, STAT_START startStat, STAT_FINAL finalStat, STAT_RANK statRank "
 						+ "from C_BASICSTAT "
@@ -1677,8 +1762,10 @@ public class StatisticsDao {
 			return getChampBasicStat;
 		}
 	// 기본 스킬
-		public ArrayList<ChampBasicSkillDto> getChampBasicSkill(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+		public ArrayList<ChampBasicSkillDto> getChampBasicSkill( String champion_name) {
 			ArrayList<ChampBasicSkillDto> getChampBasicSkill = new ArrayList<ChampBasicSkillDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select champ name, SHOW_NAME skillName, SKILL_KEY skillKey, FUNCTION, image from SKILL_INFO where champ = ?";
 				pstmt = conn.prepareStatement(sql);
@@ -1706,8 +1793,10 @@ public class StatisticsDao {
 			return getChampBasicSkill;
 		}
 	// 기본 상세정보
-		public ArrayList<ChampRoleDto> getChampRole(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+		public ArrayList<ChampRoleDto> getChampRole( String champion_name) {
 			ArrayList<ChampRoleDto> getChampRole = new ArrayList<ChampRoleDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "select role1 r1, nvl(role2,'없음') r2 "
 						+ "from champ_skill "
@@ -1734,8 +1823,10 @@ public class StatisticsDao {
 			return getChampRole;
 		}
 	// 히스토리
-		public ArrayList<ChampPatchHistoryDto> getChampPatchHistory(Connection conn, PreparedStatement pstmt, ResultSet rs, String champion_name) {
+		public ArrayList<ChampPatchHistoryDto> getChampPatchHistory( String champion_name) {
 			ArrayList<ChampPatchHistoryDto> getChampPatchHistory = new ArrayList<ChampPatchHistoryDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
 			try {
 				String sql = "SELECT craw.name name, craw.VERSION2 version, craw.SKILL_KEY skillKey, image.SHOW_NAME skillName, craw.FUNCTION function, image.IMAGE image"
 						+ "            FROM c_patch_history craw, SKILL_INFO image"

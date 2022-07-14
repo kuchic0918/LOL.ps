@@ -38,7 +38,7 @@ public class BasicSkillServlet extends HttpServlet {
 		
 		StatisticsDao basicSkill = new StatisticsDao();
 		ArrayList<ChampBasicSkillDto> basicSkillList = new ArrayList<ChampBasicSkillDto>();
-		basicSkillList = basicSkill.getChampBasicSkill(conn, pstmt, rs, champion_name);
+		basicSkillList = basicSkill.getChampBasicSkill(champion_name);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");

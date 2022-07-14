@@ -45,7 +45,7 @@ public class MatchListServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		if(counter.equals("hard")) {
 		ArrayList<ChampMatchListDto> matchHardList = new ArrayList<ChampMatchListDto>();
-		matchHardList = match.getChampMatchListHard(conn, pstmt, rs, champion_name, champion_line);
+		matchHardList = match.getChampMatchListHard(champion_name, champion_line);
 		
 		JSONArray hardArray = new JSONArray();
 		for(ChampMatchListDto dto:matchHardList) {
@@ -60,7 +60,7 @@ public class MatchListServlet extends HttpServlet {
 		out.println(hardArray);
 		}else{
 			ArrayList<ChampMatchListDto> matchEasyList = new ArrayList<ChampMatchListDto>();
-			matchEasyList = match.getChampMatchListEasy(conn, pstmt, rs, champion_name, champion_line);
+			matchEasyList = match.getChampMatchListEasy(champion_name, champion_line);
 			
 			
 			JSONArray easyArray = new JSONArray();

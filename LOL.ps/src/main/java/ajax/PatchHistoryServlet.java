@@ -41,7 +41,7 @@ public class PatchHistoryServlet extends HttpServlet {
 		
 		StatisticsDao patchHistory = new StatisticsDao();
 		ArrayList<ChampPatchHistoryDto> patchHistoryList = new ArrayList<ChampPatchHistoryDto>();
-		patchHistoryList = patchHistory.getChampPatchHistory(conn, pstmt, rs, champion_name);
+		patchHistoryList = patchHistory.getChampPatchHistory(champion_name);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");

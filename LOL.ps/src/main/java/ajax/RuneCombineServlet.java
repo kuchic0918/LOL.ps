@@ -43,7 +43,7 @@ public class RuneCombineServlet extends HttpServlet {
 		
 		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<RuneCombineDto> runeCombineList = new ArrayList<RuneCombineDto>();
-		runeCombineList = selectData.getRuneCombine(conn, pstmt, rs, champion_name, champion_line);
+		runeCombineList = selectData.getRuneCombine(champion_name, champion_line);
 		
 		JSONArray runeCombineArray = new JSONArray();
 		for(RuneCombineDto dto : runeCombineList) {

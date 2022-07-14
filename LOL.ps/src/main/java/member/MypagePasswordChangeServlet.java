@@ -35,7 +35,7 @@ public class MypagePasswordChangeServlet extends HttpServlet {
 		
 		MemberDAO mypagePasswordChangeDao = new MemberDAO();
 		if(nowPW.equals(member.getPw())) {
-			mypagePasswordChangeDao.getMypagePasswordChangeDao(conn, pstmt, member.getMemberkey(), newPW);
+			mypagePasswordChangeDao.getMypagePasswordChangeDao(member.getMemberkey(), newPW);
 			response.sendRedirect("lol/my-page.jsp?password=alright");
 		}else {
 			response.sendRedirect("lol/my-page.jsp?password=wrong");

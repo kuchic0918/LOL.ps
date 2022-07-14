@@ -45,7 +45,7 @@ public class StartItemServlet extends HttpServlet {
 		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("spell")) {
 			ArrayList<ChampStartItemDto> spellList = new ArrayList<ChampStartItemDto>();
-			spellList = selectData.getSpell(conn, pstmt, rs, champion_name, champion_line);
+			spellList = selectData.getSpell(champion_name, champion_line);
 			
 			JSONArray spellArray = new JSONArray();
 			for(ChampStartItemDto dto:spellList) {
@@ -66,7 +66,7 @@ public class StartItemServlet extends HttpServlet {
 			out.println(spellArray);
 		}else if(select.equals("startItem")) {
 			ArrayList<ChampStartItemDto> itemList = new ArrayList<ChampStartItemDto>();
-			itemList = selectData.getStartItem(conn, pstmt, rs, champion_name, champion_line);
+			itemList = selectData.getStartItem(champion_name, champion_line);
 			
 			JSONArray itemArray = new JSONArray();
 			for(ChampStartItemDto dto:itemList) {
@@ -87,7 +87,7 @@ public class StartItemServlet extends HttpServlet {
 			out.println(itemArray);
 		}else {
 			ArrayList<ChampStartItemDto> shoesList = new ArrayList<ChampStartItemDto>();
-			shoesList = selectData.getShoes(conn, pstmt, rs, champion_name, champion_line);
+			shoesList = selectData.getShoes(champion_name, champion_line);
 			
 			JSONArray shoesArray = new JSONArray();
 			for(ChampStartItemDto dto:shoesList) {

@@ -33,7 +33,7 @@ public class MypageIntroduceServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		
 		MemberDAO mypageIntroduceDao = new MemberDAO();
-		mypageIntroduceDao.updateMypageIntroduce(conn, pstmt, member.getMemberkey(), introduce);
+		mypageIntroduceDao.updateMypageIntroduce(member.getMemberkey(), introduce);
 		response.sendRedirect("lol/my-page.jsp");
 	}
 }

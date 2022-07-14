@@ -45,7 +45,7 @@ public class SkillSeqServlet extends HttpServlet {
 		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("3")) {
 			ArrayList<SkillSeqDto> seqList = new ArrayList<SkillSeqDto>();
-			seqList = selectData.getSkillSeq3(conn, pstmt, rs, champion_name, champion_line);
+			seqList = selectData.getSkillSeq3(champion_name, champion_line);
 			
 			JSONArray seqArray = new JSONArray();
 			for(SkillSeqDto dto : seqList) {
@@ -70,7 +70,7 @@ public class SkillSeqServlet extends HttpServlet {
 			out.println(seqArray);
 		}else if(select.equals("6")) {
 			ArrayList<SkillSeqDto> seqList = new ArrayList<SkillSeqDto>();
-			seqList = selectData.getSkillSeq6(conn, pstmt, rs, champion_name, champion_line);
+			seqList = selectData.getSkillSeq6(champion_name, champion_line);
 			
 			JSONArray seqArray = new JSONArray();
 			for(SkillSeqDto dto : seqList) {
@@ -107,7 +107,7 @@ public class SkillSeqServlet extends HttpServlet {
 			out.println(seqArray);
 		}else {
 			ArrayList<SkillSeqDto> seqList = new ArrayList<SkillSeqDto>();
-			seqList = selectData.getSkillSeq11(conn, pstmt, rs, champion_name, champion_line);
+			seqList = selectData.getSkillSeq11(champion_name, champion_line);
 			
 			JSONArray seqArray = new JSONArray();
 			for(SkillSeqDto dto : seqList) {

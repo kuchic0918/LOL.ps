@@ -26,82 +26,82 @@
 	//요약
 	StatisticsDao sDao = new StatisticsDao();
 	//챔피언 해드 이미지, 이름
-	ChampionSummaryHeadDto championNameImage = sDao.championSummaryHead(conn, pstmt, rs, champion_name);
+	ChampionSummaryHeadDto championNameImage = sDao.championSummaryHead(champion_name);
 	//높은 포지션 (라인 이름, 퍼센트)
-	ArrayList<ChampionSummaryHighPositionDto> champLineHighNamePer = sDao.championSummaryHighPosition(conn, pstmt, rs, champion_name);
+	ArrayList<ChampionSummaryHighPositionDto> champLineHighNamePer = sDao.championSummaryHighPosition(champion_name);
 	//선택한 포지션 (퍼센트)
-	ArrayList<ChampionSummarySelectPositionDto> champLinePer = sDao.championSummarySelectPosition(conn, pstmt, rs, champion_name);
+	ArrayList<ChampionSummarySelectPositionDto> champLinePer = sDao.championSummarySelectPosition(champion_name);
 	//ps스코어 전
-	String psScoreBefore = sDao.championSummaryPsRankBefore(conn, pstmt, rs, champion_name, champion_line);	
+	String psScoreBefore = sDao.championSummaryPsRankBefore(champion_name, champion_line);	
 	//ps스코어 현
-	String psScoreNow = sDao.championSummaryPsRankNow(conn, pstmt, rs, champion_name, champion_line);
+	String psScoreNow = sDao.championSummaryPsRankNow(champion_name, champion_line);
 	//챔피언 순위 전
-	String champRankBefore = sDao.championSummaryRankingBefore(conn, pstmt, rs, champion_name, champion_line);
+	String champRankBefore = sDao.championSummaryRankingBefore(champion_name, champion_line);
 	//챔피언 순위 현
-	String champRankNow = sDao.championSummaryRankingNow(conn, pstmt, rs, champion_name, champion_line);
+	String champRankNow = sDao.championSummaryRankingNow(champion_name, champion_line);
 	// 승률 픽률 밴율 카운트
-	ChampionSummaryWinPickBanRateDto champWinPickBanRate = sDao.championSummaryWinPickBanRate(conn, pstmt, rs, champion_name, champion_line);
+	ChampionSummaryWinPickBanRateDto champWinPickBanRate = sDao.championSummaryWinPickBanRate(champion_name, champion_line);
 	// 챔피언 메인룬
-	ArrayList<ChampionRuneDto> champMainRune = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champMainRune2 = sDao.championSummaryMainRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champMainRune = sDao.championSummaryMainRune(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champMainRune2 = sDao.championSummaryMainRune(champion_name, champion_line, champion_rate2);
 	// 챔피언 보조룬
-	ArrayList<ChampionRuneDto> champAssisRune = sDao.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champAssisRune2 = sDao.championSummaryAssisRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champAssisRune = sDao.championSummaryAssisRune(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champAssisRune2 = sDao.championSummaryAssisRune(champion_name, champion_line, champion_rate2);
 	// 챔피언 서브룬
-	ArrayList<ChampionRuneDto> champSubRune = sDao.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champSubRune2 = sDao.championSummarySubRune(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champSubRune = sDao.championSummarySubRune(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champSubRune2 = sDao.championSummarySubRune(champion_name, champion_line, champion_rate2);
 	// 챔피언 1~3 코어 아이템
-	ArrayList<ChampionRuneDto> champ1CoreItem = sDao.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champ1CoreItem2 = sDao.championSummaryItemEach1(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
-	ArrayList<ChampionRuneDto> champ2CoreItem = sDao.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champ2CoreItem2 = sDao.championSummaryItemEach2(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
-	ArrayList<ChampionRuneDto> champ3CoreItem = sDao.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate);
-	ArrayList<ChampionRuneDto> champ3CoreItem2 = sDao.championSummaryItemEach3(conn, pstmt, rs, champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champ1CoreItem = sDao.championSummaryItemEach1(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ1CoreItem2 = sDao.championSummaryItemEach1(champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champ2CoreItem = sDao.championSummaryItemEach2(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ2CoreItem2 = sDao.championSummaryItemEach2(champion_name, champion_line, champion_rate2);
+	ArrayList<ChampionRuneDto> champ3CoreItem = sDao.championSummaryItemEach3(champion_name, champion_line, champion_rate);
+	ArrayList<ChampionRuneDto> champ3CoreItem2 = sDao.championSummaryItemEach3(champion_name, champion_line, champion_rate2);
 	// 챔피언 스킬 마스터 추천 순서
-	ArrayList<GetSkillMasterDto> gsmlist = sDao.getSkillMaster(conn, pstmt, rs, champion_name, champion_line,champion_rate);
-	ArrayList<GetSkillMasterDto> gsmlist2 = sDao.getSkillMaster(conn, pstmt, rs, champion_name, champion_line,champion_rate2);
+	ArrayList<GetSkillMasterDto> gsmlist = sDao.getSkillMaster(champion_name, champion_line,champion_rate);
+	ArrayList<GetSkillMasterDto> gsmlist2 = sDao.getSkillMaster(champion_name, champion_line,champion_rate2);
 	// 챔피언 추천 스펠
-	ArrayList<RecommendedSpellsDto> reslist = sDao.recommendedSpells(conn, pstmt, rs, champion_name,champion_line, champion_rate);
-	ArrayList<RecommendedSpellsDto> reslist2 = sDao.recommendedSpells(conn, pstmt, rs, champion_name,champion_line, champion_rate2);
+	ArrayList<RecommendedSpellsDto> reslist = sDao.recommendedSpells(champion_name,champion_line, champion_rate);
+	ArrayList<RecommendedSpellsDto> reslist2 = sDao.recommendedSpells(champion_name,champion_line, champion_rate2);
 	// 챔피언 시작 아이템
-	ArrayList<RecommendedSpellsDto> stilist = sDao.startItem(conn, pstmt, rs, champion_name, champion_line,champion_rate);
-	ArrayList<RecommendedSpellsDto> stilist2 = sDao.startItem(conn, pstmt, rs, champion_name, champion_line,champion_rate2);
+	ArrayList<RecommendedSpellsDto> stilist = sDao.startItem(champion_name, champion_line,champion_rate);
+	ArrayList<RecommendedSpellsDto> stilist2 = sDao.startItem(champion_name, champion_line,champion_rate2);
 	// 신발
-	ArrayList<RecommendedSpellsDto> shoeslist = sDao.shoes(conn, pstmt, rs, champion_name, champion_line,champion_rate);
-	ArrayList<RecommendedSpellsDto> shoeslist2 = sDao.shoes(conn, pstmt, rs, champion_name, champion_line,champion_rate2);
+	ArrayList<RecommendedSpellsDto> shoeslist = sDao.shoes(champion_name, champion_line,champion_rate);
+	ArrayList<RecommendedSpellsDto> shoeslist2 = sDao.shoes(champion_name, champion_line,champion_rate2);
 	// 챔피언 qwer 이미지
-	ArrayList<ChampionQWERDto> csilist = sDao.championSkillImageQWER(conn, pstmt, rs, champion_name);
+	ArrayList<ChampionQWERDto> csilist = sDao.championSkillImageQWER(champion_name);
 	// 검색한 챔피언 스킬 11 (순서)
-	ArrayList<ChampionSummary11Dto> csylist = sDao.championSummary11(conn, pstmt, rs, champion_name,champion_line, champion_rate);
-	ArrayList<ChampionSummary11Dto> csylist2 = sDao.championSummary11(conn, pstmt, rs, champion_name,champion_line, champion_rate2);
+	ArrayList<ChampionSummary11Dto> csylist = sDao.championSummary11(champion_name,champion_line, champion_rate);
+	ArrayList<ChampionSummary11Dto> csylist2 = sDao.championSummary11(champion_name,champion_line, champion_rate2);
 	// 요약
 	
 	//statistics
 	//상대하기 쉬움, 어려움
-	ArrayList<ChampMatchListDto> matchHard = sDao.getChampMatchListHard(conn, pstmt, rs,champion_name, champion_line);
-	ArrayList<ChampMatchListDto> matchEasy = sDao.getChampMatchListEasy(conn, pstmt, rs,champion_name, champion_line);
+	ArrayList<ChampMatchListDto> matchHard = sDao.getChampMatchListHard(champion_name, champion_line);
+	ArrayList<ChampMatchListDto> matchEasy = sDao.getChampMatchListEasy(champion_name, champion_line);
 	//스펠, 스타트아이템, 신발
-	ArrayList<ChampStartItemDto> selectSpell = sDao.getSpell(conn, pstmt, rs, champion_name,champion_line);
-	ArrayList<ChampStartItemDto> selectStartItem = sDao.getStartItem(conn, pstmt, rs,champion_name, champion_line);
-	ArrayList<ChampStartItemDto> selectShoes = sDao.getShoes(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<ChampStartItemDto> selectSpell = sDao.getSpell(champion_name,champion_line);
+	ArrayList<ChampStartItemDto> selectStartItem = sDao.getStartItem(champion_name, champion_line);
+	ArrayList<ChampStartItemDto> selectShoes = sDao.getShoes(champion_name,champion_line);
 	//1,2,3 코어
-	ArrayList<CoreEachDto> core1 = sDao.getCore1(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<CoreEachDto> core2 = sDao.getCore2(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<CoreEachDto> core3 = sDao.getCore3(conn, pstmt, rs, champion_name, champion_line);
+	ArrayList<CoreEachDto> core1 = sDao.getCore1(champion_name, champion_line);
+	ArrayList<CoreEachDto> core2 = sDao.getCore2(champion_name, champion_line);
+	ArrayList<CoreEachDto> core3 = sDao.getCore3(champion_name, champion_line);
 	//2,3,4 코어조합
-	ArrayList<CoreCombineDto> coreCombine2 = sDao.get2CoreCombine(conn, pstmt, rs, champion_name,champion_line);
-	ArrayList<CoreCombineDto> coreCombine3 = sDao.get3CoreCombine(conn, pstmt, rs, champion_name,champion_line);
-	ArrayList<CoreCombineDto> coreCombine4 = sDao.get4CoreCombine(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<CoreCombineDto> coreCombine2 = sDao.get2CoreCombine(champion_name,champion_line);
+	ArrayList<CoreCombineDto> coreCombine3 = sDao.get3CoreCombine(champion_name,champion_line);
+	ArrayList<CoreCombineDto> coreCombine4 = sDao.get4CoreCombine(champion_name,champion_line);
 	//스킬 마스터 순서
-	ArrayList<SkillMasterDto> skillMaster = sDao.getSkillMaster(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<SkillMasterDto> skillMaster = sDao.getSkillMaster(champion_name,champion_line);
 	//스킬 순서
-	ArrayList<SkillSeqDto> skillSeq3 = sDao.getSkillSeq3(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<SkillSeqDto> skillSeq6 = sDao.getSkillSeq6(conn, pstmt, rs, champion_name, champion_line);
-	ArrayList<SkillSeqDto> skillSeq11 = sDao.getSkillSeq11(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<SkillSeqDto> skillSeq3 = sDao.getSkillSeq3(champion_name, champion_line);
+	ArrayList<SkillSeqDto> skillSeq6 = sDao.getSkillSeq6(champion_name, champion_line);
+	ArrayList<SkillSeqDto> skillSeq11 = sDao.getSkillSeq11(champion_name,champion_line);
 	//룬조합
-	ArrayList<RuneCombineDto> runeCombine = sDao.getRuneCombine(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<RuneCombineDto> runeCombine = sDao.getRuneCombine(champion_name,champion_line);
 	//룬파편조합
-	ArrayList<RuneShardDto> runeShard = sDao.getRuneShard(conn, pstmt, rs, champion_name,champion_line);
+	ArrayList<RuneShardDto> runeShard = sDao.getRuneShard(champion_name,champion_line);
 	//statistics
 %>
 <html class="statistics-main-html" lang="en">

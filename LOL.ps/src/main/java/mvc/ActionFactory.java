@@ -10,6 +10,9 @@ public class ActionFactory {
 	Action getAction(String command) {
 		Action action = null;
 		switch(command) {
+		case "search" :
+			action = new SearchAction();
+			break;
 		}
 		return action;
 	}

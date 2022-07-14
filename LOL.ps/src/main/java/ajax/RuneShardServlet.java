@@ -43,7 +43,7 @@ public class RuneShardServlet extends HttpServlet {
 		
 		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<RuneShardDto> runeShardList = new ArrayList<RuneShardDto>();
-		runeShardList = selectData.getRuneShard(conn, pstmt, rs, champion_name, champion_line);
+		runeShardList = selectData.getRuneShard(champion_name, champion_line);
 		
 		JSONArray runeShardArray = new JSONArray();
 		for(RuneShardDto dto : runeShardList) {

@@ -45,7 +45,7 @@ public class CoreCombineServlet extends HttpServlet {
 		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("2core")) {
 			ArrayList<CoreCombineDto> coreList = new ArrayList<CoreCombineDto>();
-			coreList = selectData.get2CoreCombine(conn, pstmt, rs, champion_name, champion_line);
+			coreList = selectData.get2CoreCombine(champion_name, champion_line);
 			
 			JSONArray coreArray = new JSONArray();
 			for(CoreCombineDto dto : coreList) {
@@ -66,7 +66,7 @@ public class CoreCombineServlet extends HttpServlet {
 			out.println(coreArray);
 		}else if(select.equals("3core")) {
 			ArrayList<CoreCombineDto> coreList = new ArrayList<CoreCombineDto>();
-			coreList = selectData.get3CoreCombine(conn, pstmt, rs, champion_name, champion_line);
+			coreList = selectData.get3CoreCombine(champion_name, champion_line);
 			
 			JSONArray coreArray = new JSONArray();
 			for(CoreCombineDto dto : coreList) {
@@ -91,7 +91,7 @@ public class CoreCombineServlet extends HttpServlet {
 			out.println(coreArray);
 		}else {
 			ArrayList<CoreCombineDto> coreList = new ArrayList<CoreCombineDto>();
-			coreList = selectData.get4CoreCombine(conn, pstmt, rs, champion_name, champion_line);
+			coreList = selectData.get4CoreCombine(champion_name, champion_line);
 			
 			JSONArray coreArray = new JSONArray();
 			for(CoreCombineDto dto : coreList) {

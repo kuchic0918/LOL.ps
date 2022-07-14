@@ -37,7 +37,7 @@ public class SignInServlet extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		MemberDTO member = new MemberDTO(0 , email ,password , nickname , null, null, null);
 		try {
-			if(memberdao.emailisOverlap(email,pstmt, conn,rs)) {
+			if(memberdao.emailisOverlap(email)) {
 				response.sendRedirect("lol/signin.jsp");
 		
 			}
@@ -47,7 +47,7 @@ public class SignInServlet extends HttpServlet {
 		}
 		
 		try {
-			if(memberdao.NickNameIsOverlap(nickname, pstmt,  conn, rs)) {
+			if(memberdao.NickNameIsOverlap(nickname)) {
 				response.sendRedirect("lol/signin.jsp");
 			}
 		}
@@ -55,8 +55,8 @@ public class SignInServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		//email pw,  하고 닉네임이 중복되지 않으면 ...
-		if(memberdao.isVaildEmail(email, conn, pstmt, rs) == false && memberdao.NickNameIsOverlap(nickname, pstmt, conn, rs) == false) {
-			memberdao.signin(member, conn, pstmt);
+		if(memberdao.isVaildEmail(email) == false && memberdao.NickNameIsOverlap(nickname) == false) {
+			memberdao.signin(member);
 			response.sendRedirect("lol/login.jsp");
 			}
 	}

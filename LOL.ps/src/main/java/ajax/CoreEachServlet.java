@@ -45,7 +45,7 @@ public class CoreEachServlet extends HttpServlet {
 		StatisticsDao selectData = new StatisticsDao();
 		if(select.equals("first")) {
 			ArrayList<CoreEachDto> firstList = new ArrayList<CoreEachDto>();
-			firstList = selectData.getCore1(conn, pstmt, rs, champion_name, champion_line);
+			firstList = selectData.getCore1(champion_name, champion_line);
 			
 			JSONArray firstArray = new JSONArray();
 			for(CoreEachDto dto : firstList) {
@@ -61,7 +61,7 @@ public class CoreEachServlet extends HttpServlet {
 			out.println(firstArray);
 		}else if(select.equals("secend")) {
 			ArrayList<CoreEachDto> secendList = new ArrayList<CoreEachDto>();
-			secendList = selectData.getCore2(conn, pstmt, rs, champion_name, champion_line);
+			secendList = selectData.getCore2(champion_name, champion_line);
 			
 			JSONArray secendArray = new JSONArray();
 			for(CoreEachDto dto : secendList) {
@@ -77,7 +77,7 @@ public class CoreEachServlet extends HttpServlet {
 			out.println(secendArray);
 		}else {
 			ArrayList<CoreEachDto> therdList = new ArrayList<CoreEachDto>();
-			therdList = selectData.getCore3(conn, pstmt, rs, champion_name, champion_line);
+			therdList = selectData.getCore3(champion_name, champion_line);
 			
 			JSONArray therdArray = new JSONArray();
 			for(CoreEachDto dto : therdList) {

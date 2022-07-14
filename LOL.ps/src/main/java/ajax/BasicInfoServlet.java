@@ -38,7 +38,7 @@ public class BasicInfoServlet extends HttpServlet {
 		
 		StatisticsDao basicStat = new StatisticsDao();
 		ArrayList<ChampBasicStatDto> basicStatList = new ArrayList<ChampBasicStatDto>();
-		basicStatList = basicStat.getChampBasicStat(conn, pstmt, rs, champion_name);
+		basicStatList = basicStat.getChampBasicStat(champion_name);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");

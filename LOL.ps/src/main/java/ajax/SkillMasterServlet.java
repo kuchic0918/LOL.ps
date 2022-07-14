@@ -43,7 +43,7 @@ public class SkillMasterServlet extends HttpServlet {
 		
 		StatisticsDao selectData = new StatisticsDao();
 		ArrayList<SkillMasterDto> masterList = new ArrayList<SkillMasterDto>();
-		masterList = selectData.getSkillMaster(conn, pstmt, rs, champion_name, champion_line);
+		masterList = selectData.getSkillMaster(champion_name, champion_line);
 		
 		JSONArray masterArray = new JSONArray();
 		for(SkillMasterDto dto : masterList) {

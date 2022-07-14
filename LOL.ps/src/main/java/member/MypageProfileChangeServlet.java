@@ -33,7 +33,7 @@ public class MypageProfileChangeServlet extends HttpServlet {
 		PreparedStatement pstmt = null;
 		
 		MemberDAO mypageProfileChangeDao = new MemberDAO();
-		mypageProfileChangeDao.getmypageProfileChange(conn, pstmt, member.getMemberkey(), image);
+		mypageProfileChangeDao.getmypageProfileChange(member.getMemberkey(), image);
 		response.sendRedirect("lol/my-page.jsp?image_name=change");
 	}
 }

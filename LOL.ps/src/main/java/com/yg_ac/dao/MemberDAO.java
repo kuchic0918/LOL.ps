@@ -11,8 +11,12 @@ import com.yg_ac.dto.MypageIntroduceDto;
 import com.yg_ac.dto.MypageProfileChangeDto;
 
 public class MemberDAO {
+	Y_DBmanager db = new Y_DBmanager();
+	Connection conn = db.getConnection();
 	//이메일 중복체크 
-	public boolean emailisOverlap(String Email, PreparedStatement pstmt, Connection conn, ResultSet rs) {
+	public boolean emailisOverlap(String Email) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select count(*) cnt from member where email = ? "; //
 			pstmt = conn.prepareStatement(sql); // sql 문 저장
@@ -41,9 +45,10 @@ public class MemberDAO {
 		return false;
 	}
 	//	닉네임 중복
-	public boolean NickNameIsOverlap(String NickName, PreparedStatement pstmt, Connection conn, ResultSet rs) {
+	public boolean NickNameIsOverlap(String NickName) {
 		String sql = "select count(*) cnt from member where nickname = ?";
-
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, NickName);
@@ -71,7 +76,9 @@ public class MemberDAO {
 		return true;
 	}
 	// 로그인 진행
-	public boolean loginvalid (String email, String pw, Connection conn, PreparedStatement pstmt, ResultSet rs ) { 
+	public boolean loginvalid (String email, String pw) { 
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			String sql = "select count(*) cnt from member where email = ? and Pw = ?";
 			pstmt=conn.prepareStatement(sql);
@@ -101,9 +108,10 @@ public class MemberDAO {
 		return true;
 	}
 	// email 중복
-	public boolean isVaildEmail(String email ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
+	public boolean isVaildEmail(String email) {
 		String sql = "select count(*) cnt from member where email = ?";
-
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -132,9 +140,10 @@ public class MemberDAO {
 		return true;
 	}
 	// 비밀번호 유효 검사
-	public boolean isVaildPW(String pw ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
+	public boolean isVaildPW(String pw) {
 		String sql = "select count(*) cnt from member where pw = ?";
-
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, pw);
@@ -161,9 +170,11 @@ public class MemberDAO {
 		return true;
 	}
 	// 세션 받아오기
-	public MemberDTO findByEmailPwMemberInfo(String email,String pw ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
+	public MemberDTO findByEmailPwMemberInfo(String email, String pw) {
 		String sql = "select * from member where email = ? and pw = ?";
 		MemberDTO member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -195,7 +206,8 @@ public class MemberDAO {
 		return member;
 	}
 	// 회원가입 완료	
-	public void signin (MemberDTO member ,Connection conn, PreparedStatement pstmt ) {
+	public void signin (MemberDTO member) {
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "insert into member values(temp_seq.nextval,?,?,?,'anne1.jpg',?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -217,7 +229,8 @@ public class MemberDAO {
 		}
 	}
 	// 네이버, 카톡 회원가입
-	public void snsSignIn(MemberDTO member , Connection conn , PreparedStatement pstmt ) {
+	public void snsSignIn(MemberDTO member) {
+		PreparedStatement pstmt = null;
 		try {
 			String sql = "insert into member values(temp_seq.nextval, ? , 'snsAdmin' , ? , 'anne1.jpg', ? ,? )";
 			pstmt = conn.prepareStatement(sql);
@@ -238,9 +251,11 @@ public class MemberDAO {
 		}
 	}
 	// 네이버, 카톡은 이메일과 닉네임 밖에 못가져옴.
-	public MemberDTO findByEmailNicknameMemberInfo(String email,String nickname ,Connection conn, PreparedStatement pstmt, ResultSet rs) {
+	public MemberDTO findByEmailNicknameMemberInfo(String email, String nickname) {
 		String sql = "select * from member where email = ? and nickname = ?";
 		MemberDTO member = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, email);
@@ -271,9 +286,11 @@ public class MemberDAO {
 		return member;
 	}
 	// 마이페이지 소개
-	public MypageIntroduceDto getMypageIntroduce(Connection conn, PreparedStatement pstmt, ResultSet rs, int key) {
+	public MypageIntroduceDto getMypageIntroduce(int key) {
 		MypageIntroduceDto get = null;
 		String sql = "SELECT * from member where memberkey = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, key);
@@ -294,9 +311,11 @@ public class MemberDAO {
 		return get;
 	}
 	// 마이페이지 이미지
-	public MypageIntroduceDto getMypageImage(Connection conn, PreparedStatement pstmt, ResultSet rs, int key) {
+	public MypageIntroduceDto getMypageImage(int key) {
 		MypageIntroduceDto get = null;
 		String sql = "SELECT * from member where memberkey = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, key);
@@ -317,8 +336,9 @@ public class MemberDAO {
 		return get;
 	}
 	// 마이페이지 소개글 업데이트
-	public void updateMypageIntroduce(Connection conn, PreparedStatement pstmt, int key, String introduce) {
+	public void updateMypageIntroduce(int key, String introduce) {
 		String sql = "update member set introduce = ? where memberkey = ?";
+		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, introduce);
@@ -335,8 +355,9 @@ public class MemberDAO {
 		}
 	}
 	// 마이페이지 로그인 되있으면 세션으로 멤버키 찾기
-	public void getMypageMemberSecession(Connection conn, PreparedStatement pstmt, int key) {
+	public void getMypageMemberSecession(int key) {
 		String sql = "DELETE FROM member WHERE memberkey=?";
+		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, key);
@@ -352,8 +373,9 @@ public class MemberDAO {
 		}
 	}
 	// 마이페이지 비밀번호 변경
-	public void getMypagePasswordChangeDao(Connection conn, PreparedStatement pstmt, int key, String password) {
+	public void getMypagePasswordChangeDao(int key, String password) {
 		String sql = "update member set pw = ? where memberkey = ?";
+		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, password);
@@ -370,9 +392,10 @@ public class MemberDAO {
 		}
 	}
 	// 마이페이지 프로필 사진 변경
-	public MypageProfileChangeDto getmypageProfileChange(Connection conn, PreparedStatement pstmt, int key, String image) {
+	public MypageProfileChangeDto getmypageProfileChange(int key, String image) {
 		MypageProfileChangeDto get = null;
 		String sql = "update member set image = ? where memberkey = ?";
+		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, image);

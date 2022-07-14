@@ -38,7 +38,7 @@ public class ChampRoleServlet extends HttpServlet {
 		
 		StatisticsDao champRole = new StatisticsDao();
 		ArrayList<ChampRoleDto> champRoleList = new ArrayList<ChampRoleDto>();
-		champRoleList = champRole.getChampRole(conn, pstmt, rs, champion_name);
+		champRoleList = champRole.getChampRole(champion_name);
 		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
