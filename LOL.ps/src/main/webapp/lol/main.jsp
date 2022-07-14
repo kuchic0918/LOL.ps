@@ -150,7 +150,7 @@
                     <div style="width: 560px;">
                         <input type="text" name="name" placeholder="챔피언 이름을 입력하세요">
                     </div>
-                    <button type="submit">
+                    <button type="submit" name="command" value="search">
                         <img src="Images/icon_search.webp" style="width: 20px; height: 20px;">
                     </button>
                 </div>
