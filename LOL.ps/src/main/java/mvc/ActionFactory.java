@@ -13,6 +13,9 @@ public class ActionFactory {
 		case "search" :
 			action = new SearchAction();
 			break;
+		case "statistics" :
+			action = new StatisticsAction();
+			break;
 		}
 		return action;
 	}

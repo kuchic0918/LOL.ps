@@ -7,21 +7,10 @@
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <%
-	//JDBC
-	Y_DBmanager db = new Y_DBmanager();
-	Connection conn = db.getConnection();
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
-	//sql용 변수
-	// String champion_name = "갱플랭크";
-	// String champion_line = "탑";
-	String champion_name = request.getParameter("name");
-	String champion_line = request.getParameter("line");
+	String champion_name = (String) request.getAttribute("name");
+	String champion_line = (String) request.getAttribute("line");
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
-// 	session.getAttribute("memberInfo");
-// 	System.out.println(session.getAttribute("memberInfo"));
 
 	//요약
 	StatisticsDao sDao = new StatisticsDao();
