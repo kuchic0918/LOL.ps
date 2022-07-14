@@ -34,6 +34,6 @@ public class MypageIntroduceServlet extends HttpServlet {
 		
 		MemberDAO mypageIntroduceDao = new MemberDAO();
 		mypageIntroduceDao.updateMypageIntroduce(member.getMemberkey(), introduce);
-		response.sendRedirect("lol/my-page.jsp");
+		response.sendRedirect("my-page.jsp");
 	}
 }
