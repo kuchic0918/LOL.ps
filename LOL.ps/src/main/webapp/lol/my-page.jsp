@@ -6,7 +6,12 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
-	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	session = request.getSession(false);
+	MemberDTO member = (MemberDTO)session.getAttribute("memberInfo");
+	System.out.println(session);
+	System.out.println(member);
+	System.out.println(member.getEmail());
+	System.out.println(member.getMemberkey());
 	Y_DBmanager db = new Y_DBmanager();
 	Connection conn = db.getConnection();
 	PreparedStatement pstmt = null;
@@ -48,7 +53,8 @@
     <title>마이페이지</title>
     <link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <script src="Js/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!--     <script src="Js/jquery-3.6.0.min.js"></script> -->
     <script src = 'https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
     <script>
     	$(function() {

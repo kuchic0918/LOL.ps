@@ -73,7 +73,7 @@
 	                <div class = "member-row">
 	                    <div class = "member-email_login_box"> 
 	                        <h3 class="member-h3">이메일 로그인</h3>
-	                        <form class="member-form" method="post" action = "loginServer.jsp" novalidate="novalidate">
+	                        <form class="member-form" method="post" action = "../LoginServlet" novalidate="novalidate">
 	                            <input type="hidden" name="csrfmiddlewaretoken" value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
 	                            <div class = "member-form-group">
 	                                <label class="member-label" for="id_email">이메일 주소</label>
@@ -96,7 +96,7 @@
 	                        <h3 class="member-h3">소셜계정으로 로그인</h3>
 	                        <ul class="member-ul">
 	                            <li class="member-li">
-	                            <a href="javascript:kakaoLogin();"><img src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;"/></a>
+	                            <a href="javascript:kakaoLogin();"><img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 50px;"/></a>
 	                                <script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
 								 		
