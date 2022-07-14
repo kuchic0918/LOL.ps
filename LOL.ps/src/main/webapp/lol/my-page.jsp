@@ -37,9 +37,9 @@
 			</script>
 		<%
 	}
-	MypageIntroduceDao mypageIntroduceDao = new MypageIntroduceDao();
-	MypageIntroduceDto mypageIntroduce = mypageIntroduceDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
-	MypageIntroduceDto mypageImage = mypageIntroduceDao.getMypageImage(conn, pstmt, rs, member.getMemberkey());
+	MemberDAO mDao = new MemberDAO();
+	MypageIntroduceDto mypageIntroduce = mDao.getMypageIntroduce(conn, pstmt, rs, member.getMemberkey());
+	MypageIntroduceDto mypageImage = mDao.getMypageImage(conn, pstmt, rs, member.getMemberkey());
 %>
 <head>
 	<meta charset="UTF-8">
