@@ -4,8 +4,15 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
-<%
+<%	
+	int pageNum = 3;
+	String category = "빌드 연구소";
+	int startBno = pageNum * 15 - 14;
+	int endBno = pageNum * 15;
 	
+	BoardDao bDao = new BoardDao();
+	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+	list = bDao.getBoardList(category, startBno, endBno);
 %>
 <html>
 <head>
@@ -15,7 +22,7 @@
 	<title>빌드 연구소</title>
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
-    <script src="../Js/jquery-3.6.0.min.js"></script>
+    <script src="Js/jquery-3.6.0.min.js"></script>
 </head>
 <body  class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -88,28 +95,38 @@
            	</div>
         </div>
         <div>
-        
+        	<%
+        	for(BoardDto dto:list){
+        		String image = bDao.getImage(dto.getChampName());
+        		String writer = bDao.getWriter(dto.getMemberkey());
+        		int like = dto.getGood()-dto.getBad();
+        		if(like < 0){
+        			like = 0;
+        		}
+        	%>
 	        <a class="contents-item" href="community-post-build.html">
            		<span class="build">
-           			<img class="champion-head" src="Images/champion/head/garen.png"/>
+           			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
            		</span>
            		<span class="build1">
-           			 [가렌] 이게 왜 좋은거지..? 화공탱 거드라 가렌
+           			 [<%=dto.getChampName()%>] <%=dto.getTitle() %>
            		</span>
            		<span class="build2" style="width:150px;">
-           			작성자 닉네임
+           			<%=writer %>
            		</span>
            		<span class="build2" style="width:100px;">
-           			2022-05-25
+           			<%=dto.getWritedate() %>
            		</span>
            		<span class="build2" style="width:30px;">
-           			579
+           			<%=like %>
            		</span>
            		<span class="build2" style="width:30px">
-           			10
+           			<%=dto.getCount() %>
            		</span>
 			</a>
-			
+			<%
+        	}
+			%>
         </div>
 		
     </main>
@@ -156,6 +173,6 @@
 
     </footer>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-<script src="../Js/all.js"></script>
+<script src="Js/all.js"></script>
 </body>
 </html>

@@ -16,16 +16,16 @@ public class BoardDao {
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select *" + 
-				"from(" + 
-				"    select rownum rnum, b1.*" + 
-				"    from(" + 
+		String sql = "select * " + 
+				"from( " + 
+				"    select rownum rnum, b1.* " + 
+				"    from( " + 
 				"        select * " + 
-				"        from community" + 
-				"        where category = ?" + 
-				"        order by bno desc) b1)" + 
-				"where rnum >= ?" + 
-				"and rnum <= ?;";
+				"        from community " + 
+				"        where category = ? " + 
+				"        order by bno desc) b1) " + 
+				"where rnum >= ? " + 
+				"and rnum <= ? ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
@@ -34,7 +34,7 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				int memberkey = rs.getInt("mamberkey");
+				int memberkey = rs.getInt("memberkey");
 				int bno = rs.getInt("bno");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
@@ -57,5 +57,57 @@ public class BoardDao {
 		}
 		
 		return list;
+	}
+	public String getImage(String champName) {
+		String image = "";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select image_head image " + 
+				"from champ_skill " + 
+				"where name = ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,champName);
+			rs = pstmt.executeQuery();
+			rs.next();
+			image = rs.getString("image");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return image;
+	}
+	public String getWriter(int memberkey) {
+		String writer = "";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select nickname name " + 
+				"from member " + 
+				"where memberkey = ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,memberkey);
+			rs = pstmt.executeQuery();
+			rs.next();
+			writer = rs.getString("name");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return writer;
 	}
 }
