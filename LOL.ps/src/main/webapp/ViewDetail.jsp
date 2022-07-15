@@ -15,7 +15,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>상세보기</title>
+	<title><%=dto.getCategory() %></title>
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
@@ -62,7 +62,7 @@
     </header>
 
     <div class="all-main">
-        <div class="first-title">빌드 연구소</div>
+        <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
         	<a class="main-button" href="write-post.html">✎게시물 쓰기</a>
         	<form method="post">
@@ -79,7 +79,7 @@
       	<div class="community-post-post-detail">
       		<!-- 포스트제목 -->
       		<div class="title">
-      			<div style="font-size:15px; color:#7e9bff;"><b>빌드연구소</b></div>
+      			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
       			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
       		</div>
       		<!-- 포스트내용 -->
