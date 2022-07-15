@@ -4,6 +4,9 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
+<%
+	
+%>
 <html>
 <head>
 	<meta charset="UTF-8">
