@@ -94,7 +94,7 @@
            			<img class="champion-head" src="Images/champion/head/garen.png"/>
            		</span>
            		<span class="build1">
-           			 [상남자의 라인, TOP] 이게 왜 좋은거지..? 화공탱 거드라 가렌
+           			 [가렌] 이게 왜 좋은거지..? 화공탱 거드라 가렌
            		</span>
            		<span class="build2" style="width:150px;">
            			작성자 닉네임
