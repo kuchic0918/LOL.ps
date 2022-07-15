@@ -42,7 +42,7 @@ public class SignInServlet extends HttpServlet {
 		MemberDTO member = new MemberDTO(0 , email ,password , nickname , null, null, null);
 		try {
 			if(memberdao.emailisOverlap(email)) {
-				response.sendRedirect("lol/signin.jsp");
+				response.sendRedirect("signin.jsp");
 		
 			}
 		}
@@ -52,7 +52,7 @@ public class SignInServlet extends HttpServlet {
 		
 		try {
 			if(memberdao.NickNameIsOverlap(nickname)) {
-				response.sendRedirect("lol/signin.jsp");
+				response.sendRedirect("signin.jsp");
 			}
 		}
 		catch(Exception e) {
@@ -61,7 +61,7 @@ public class SignInServlet extends HttpServlet {
 		//email pw,  하고 닉네임이 중복되지 않으면 ...
 		if(memberdao.isVaildEmail(email) == false && memberdao.NickNameIsOverlap(nickname) == false) {
 			memberdao.signin(member);
-			response.sendRedirect("lol/login.jsp");
+			response.sendRedirect("login.jsp");
 			}
 	}
 	

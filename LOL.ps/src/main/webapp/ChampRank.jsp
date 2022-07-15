@@ -73,9 +73,10 @@
         <div class="rank-main-content">
             <p>챔피언 랭킹</p>
             <span class="rank-main-content-item rank-main-content-active">라인별 챔피언 티어</span>
-            <form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
-				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
-			</form>
+				<form action="Controller" method="get" id="search_form" autocomplete="off">
+					<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+					<button style="opacity:0;" type="submit" name="command" value="search"></button>
+				</form>
             <div style="clear: both;"></div>
         </div>
     </div>

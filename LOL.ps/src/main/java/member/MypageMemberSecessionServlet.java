@@ -33,7 +33,7 @@ public class MypageMemberSecessionServlet extends HttpServlet {
 		
 		MemberDAO mypageMemberSecessionDao = new MemberDAO();
 		mypageMemberSecessionDao.getMypageMemberSecession(member.getMemberkey());
-		response.sendRedirect("lol/login.jsp");
+		response.sendRedirect("login.jsp");
 	}
 
 }

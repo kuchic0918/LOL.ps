@@ -7,8 +7,15 @@
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <%
-	String champion_name = (String) request.getAttribute("name");
-	String champion_line = (String) request.getAttribute("line");
+	String champion_name;
+	String champion_line;
+	if((String) request.getAttribute("name") == null) {
+		champion_name = request.getParameter("name");
+		champion_line = request.getParameter("line");
+	} else {
+		champion_name = (String) request.getAttribute("name");
+		champion_line = (String) request.getAttribute("line");
+	}
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
 
@@ -120,7 +127,7 @@
 				$('#seq3').addClass('statistics-what-level-active');
 				$.ajax({
 					type:"get",
-					url:"../SkillSeqServlet",
+					url:"SkillSeqServlet",
 					data:{"name":champName,"line":champLine,"select":"3"},
 					datatype:"json",
 					success:function(data){
@@ -170,7 +177,7 @@
 				$('#seq6').addClass('statistics-what-level-active');
 				$.ajax({
 					type:"get",
-					url:"../SkillSeqServlet",
+					url:"SkillSeqServlet",
 					data:{"name":champName,"line":champLine,"select":"6"},
 					datatype:"json",
 					success:function(data){
@@ -241,7 +248,7 @@
 				$('#seq11').addClass('statistics-what-level-active');
 				$.ajax({
 					type:"get",
-					url:"../SkillSeqServlet",
+					url:"SkillSeqServlet",
 					data:{"name":champName,"line":champLine,"select":"11"},
 					datatype:"json",
 					success:function(data){
@@ -577,7 +584,7 @@
 				$('#champ-nav1').addClass('champ-nav-active');
 				$.ajax({
 				   	type:"get",
-					url:"../MatchListServlet",
+					url:"MatchListServlet",
 					data:{"name":champName,"line":champLine,"counter":"hard"},
 					datatype:"json",
 					async: false,
@@ -614,7 +621,7 @@
 			   });
 			   $.ajax({
 					type:"get",
-					url:"../MatchListServlet",
+					url:"MatchListServlet",
 					data:{"name":champName,"line":champLine,"counter":"easy"},
 					datatype:"json",
 					async: false,
@@ -646,7 +653,7 @@
 			   });
 			   $.ajax({
 					type:"get",
-					url:"../StartItemServlet",
+					url:"StartItemServlet",
 					data:{"name":champName,"line":champLine,"select":"spell"},
 					datatype:"json",
 					async: false,
@@ -691,7 +698,7 @@
 				});
 			   $.ajax({
 					type:"get",
-					url:"../StartItemServlet",
+					url:"StartItemServlet",
 					data:{"name":champName,"line":champLine,"select":"startItem"},
 					datatype:"json",
 					async: false,
@@ -740,7 +747,7 @@
 				});
 			   $.ajax({
 					type:"get",
-					url:"../StartItemServlet",
+					url:"StartItemServlet",
 					data:{"name":champName,"line":champLine,"select":"shoes"},
 					datatype:"json",
 					async: false,
@@ -777,7 +784,7 @@
 				});
 			   $.ajax({
 					type:"get",
-					url:"../CoreEachServlet",
+					url:"CoreEachServlet",
 					data:{"name":champName,"line":champLine,"select":"first"},
 					datatype:"json",
 					async: false,
@@ -814,7 +821,7 @@
 			   });
 			   $.ajax({
 					type:"get",
-					url:"../CoreEachServlet",
+					url:"CoreEachServlet",
 					data:{"name":champName,"line":champLine,"select":"secend"},
 					datatype:"json",
 					async: false,
@@ -851,7 +858,7 @@
 			   });
 			   $.ajax({
 					type:"get",
-					url:"../CoreEachServlet",
+					url:"CoreEachServlet",
 					data:{"name":champName,"line":champLine,"select":"therd"},
 					datatype:"json",
 					async: false,
@@ -888,7 +895,7 @@
 			   });
 				$.ajax({
 					type:"get",
-					url:"../CoreCombineServlet",
+					url:"CoreCombineServlet",
 					data:{"name":champName,"line":champLine,"select":"2core"},
 					datatype:"json",
 					async: false,
@@ -931,7 +938,7 @@
 			   });
 				$.ajax({
 					type:"get",
-					url:"../CoreCombineServlet",
+					url:"CoreCombineServlet",
 					data:{"name":champName,"line":champLine,"select":"3core"},
 					datatype:"json",
 					async: false,
@@ -981,7 +988,7 @@
 			   });
 				$.ajax({
 					type:"get",
-					url:"../CoreCombineServlet",
+					url:"CoreCombineServlet",
 					data:{"name":champName,"line":champLine,"select":"4core"},
 					datatype:"json",
 					async: false,
@@ -1038,7 +1045,7 @@
 			   });
 				$.ajax({
 					type:"get",
-					url:"../SkillMasterServlet",
+					url:"SkillMasterServlet",
 					data:{"name":champName,"line":champLine},
 					datatype:"json",
 					async: false,
@@ -1083,7 +1090,7 @@
 				});
 				$.ajax({
 					type:"get",
-					url:"../SkillSeqServlet",
+					url:"SkillSeqServlet",
 					data:{"name":champName,"line":champLine,"select":"3"},
 					datatype:"json",
 					async: false,
@@ -1128,7 +1135,7 @@
 				});
 				$.ajax({
 					type:"get",
-					url:"../RuneCombineServlet",
+					url:"RuneCombineServlet",
 					data:{"name":champName,"line":champLine},
 					datatype:"json",
 					async: false,
@@ -1198,7 +1205,7 @@
 				});
 				$.ajax({
 					type:"get",
-					url:"../RuneShardServlet",
+					url:"RuneShardServlet",
 					data:{"name":champName,"line":champLine},
 					datatype:"json",
 					async: false,
@@ -1257,7 +1264,7 @@
 			   $('#champ-nav2').addClass('champ-nav-active');
 			   $.ajax({
 					type:"get",
-					url:"../BasicInfoServlet",
+					url:"BasicInfoServlet",
 					data:{"name":champName},
 					datatype:"json",
 					async: false,
@@ -1300,7 +1307,7 @@
 			   });
 			   $.ajax({
 				   	type:"get",
-					url:"../BasicSkillServlet",
+					url:"BasicSkillServlet",
 					data:{"name":champName},
 					datatype:"json",
 					async: false,
@@ -1415,7 +1422,7 @@
 			   });
 			   $.ajax({
 				   type:"get",
-					url:"../ChampRoleServlet",
+					url:"ChampRoleServlet",
 					data:{"name":champName},
 					datatype:"json",
 					success: function(data){
@@ -1443,7 +1450,7 @@
 				$('#champ-nav3').addClass('champ-nav-active');
 				$.ajax({
 				   	type:"get",
-					url:"../PatchHistoryServlet",
+					url:"PatchHistoryServlet",
 					data:{"name":champName},
 					datatype:"json",
 					success:function(data){
@@ -1483,7 +1490,7 @@
 			   $('#champ-nav4').addClass('champ-nav-active');
 			   $.ajax({
 				   	type:"get",
-					url:"../PatchHistoryServlet",
+					url:"PatchHistoryServlet",
 					data:{"name":champName},
 					datatype:"json",
 					success:function(data){
@@ -1491,7 +1498,7 @@
 									    <div class = "champ-community-community-container">
 									        <div class = "champ-community-first-row">
 									            <h2 class = "champ-community-champ-name">블라디미르 게시판</h2>
-									            <a class = "champ-community-board-btn" href="../community/write-post.html">
+									            <a class = "champ-community-board-btn" href="community/write-post.html">
 									                <span class = "icno-font">
 									                    <i class="fa-regular champ-community-fa-pen"></i>
 									                </span>
@@ -1523,7 +1530,7 @@
 									        </li>
 									    </ul>
 									    <div class = "champ-community-board-btn2" >
-									        <a class = "champ-community-btn-write" href="../community/write-post.html">
+									        <a class = "champ-community-btn-write" href="community/write-post.html">
 									            <i class="fa-regular fa-pen"></i>
 									            <span>게시물 쓰기</span>
 									        </a>
@@ -1531,7 +1538,7 @@
 								    </div>`;
 						$("#loadContents").html(write);
 						for(var i = 0;i < data.length;i++){
-							write = `<a class = "champ-community-board-item" href="../community/community-post-build.html">
+							write = `<a class = "champ-community-board-item" href="community/community-post-build.html">
 					                    <span class = "champ-community-post-img">
 					                        <img src="img/icon.webp" style="width: 40px; height : 40px;"/>
 					                    </span>
@@ -1711,8 +1718,9 @@
 						</a>
 					</div>
 					<div class="input-box">
-						<form action="../MainStatisticsServlet" method="get" id="search_form" autocomplete="off">
+						<form action="Controller" method="get" id="search_form" autocomplete="off">
 							<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+							<button style="opacity:0;" type="submit" name="command" value="search"></button>
 						</form>
 					</div>
 					<div style="clear: both;"></div>

@@ -18,7 +18,10 @@ public class SearchAction implements Action {
 		String line = dao.getChampionHighLine(name);
 		request.setAttribute("name", name);
 		request.setAttribute("line", line);
-		
-		request.getRequestDispatcher("Controller?command=statistics").forward(request, response);
+		if(line==null) {
+			response.sendRedirect("main.jsp?searchedChampion=wrong");
+		} else {
+			request.getRequestDispatcher("Controller?command=statistics").forward(request, response);
+		}
 	}
 }

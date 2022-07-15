@@ -31,9 +31,9 @@ public class MainStatisticsServlet extends HttpServlet {
 		line = championHighLlineDao.getChampionHighLine(champion_name);
 		
 		if(line!=null) {
-			response.sendRedirect("lol/statistics.jsp?name=" + URLEncoder.encode(champion_name, "utf-8") + "&line=" + URLEncoder.encode(line, "utf-8"));
+			response.sendRedirect("statistics.jsp?name=" + URLEncoder.encode(champion_name, "utf-8") + "&line=" + URLEncoder.encode(line, "utf-8"));
 		} else {
-			response.sendRedirect("lol/main.jsp?searchedChampion=wrong");
+			response.sendRedirect("main.jsp?searchedChampion=wrong");
 		}
 	}
 

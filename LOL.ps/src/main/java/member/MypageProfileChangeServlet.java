@@ -34,6 +34,6 @@ public class MypageProfileChangeServlet extends HttpServlet {
 		
 		MemberDAO mypageProfileChangeDao = new MemberDAO();
 		mypageProfileChangeDao.getmypageProfileChange(member.getMemberkey(), image);
-		response.sendRedirect("lol/my-page.jsp?image_name=change");
+		response.sendRedirect("my-page.jsp?image_name=change");
 	}
 }

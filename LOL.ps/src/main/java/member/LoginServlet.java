@@ -37,17 +37,17 @@ public class LoginServlet extends HttpServlet {
 		if (mDao.loginvalid(email, password)) {
 			MemberDTO member = mDao.findByEmailPwMemberInfo(email, password);	 	
 			session.setAttribute("memberInfo", member);
-			request.getRequestDispatcher("lol/my-page.jsp").forward(request, response);
+			request.getRequestDispatcher("my-page.jsp").forward(request, response);
 			
 		} else if (mDao.isVaildEmail(email) == false
 				&& mDao.isVaildPW(password) == false) {
-			response.sendRedirect("lol/login.jsp");
+			response.sendRedirect("login.jsp");
 			
 		} else if (mDao.isVaildPW(password) == false) {
-			response.sendRedirect("lol/login.jsp");
+			response.sendRedirect("login.jsp");
 			
 		} else if (mDao.isVaildEmail(email) == false) {
-			response.sendRedirect("lol/login.jsp");
+			response.sendRedirect("login.jsp");
 			
 		}
 	}
