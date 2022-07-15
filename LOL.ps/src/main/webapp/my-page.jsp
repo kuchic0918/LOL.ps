@@ -322,7 +322,7 @@
 		<div class="introduce-modal" id="introduce-modal-id">
 		
 				<div>한줄소개 변경<button type="button" class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
-			<form action="../MypageIntroduceServlet" method="post">
+			<form action="MypageIntroduceServlet" method="post">
 				
 				<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id" name="mypage-textarea"></textarea>
 	
@@ -340,7 +340,7 @@
 		
 			<div>비밀번호 변경<button class="change-pw-modal-btn" id="change-pw-modal-btn-id">✖</button></div>
 			
-			<form action="../MypagePasswordChangeServlet" class="password-form" method="post" novalidate>
+			<form action="MypagePasswordChangeServlet" class="password-form" method="post" novalidate>
 				<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
 					<p style="font-size:12px;">현재 비밀번호</p>
 					<input class="pw-input" id="now-password" name="now_pw" type="password" />
@@ -367,7 +367,7 @@
 			<div style="height:58px;">
 				<p class="member-secession-div">회원 탈퇴를 하게 되면 보유하신 프로필, 업적 등이 모두 사라지며, 작성한 글, 댓글 등이 모두 사라집니다. 동의하십니까?</p>
 			</div>
-			<form action="../MypageMemberSecessionServlet" method="post">
+			<form action="MypageMemberSecessionServlet" method="post">
 				<div style="float:right; width:90px; height:50px;">
 					<button type="submit" style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
 				</div>
