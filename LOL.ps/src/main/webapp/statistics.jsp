@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import = "java.net.URLDecoder" %>
-<%@ page import="java.sql.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%@ page import="java.util.*" %>
@@ -1638,8 +1637,8 @@
 <body class="statistics-main-body" style="height: auto;">
 	<header class="header-mainnav">
 		<div class="header-container">
-			<a href="main.jsp"> <img src="Images/header-logo.webp"
-				alt="LOL.PS">
+			<a href="main.jsp"> 
+				<img src="Images/header-logo.webp" alt="LOL.PS">
 			</a>
 			<div class="nav-item-container">
 				<a class="nav-items" href="notice/notice.html">공지사항</a> <a

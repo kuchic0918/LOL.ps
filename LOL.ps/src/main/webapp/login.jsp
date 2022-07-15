@@ -154,7 +154,11 @@
 								                            console.log(kakao_account);
 								                            var kakaoEmail =res.kakao_account.email +"Kakao";
 								                            var kakaoNickname =res.kakao_account.profile.nickname;
+<<<<<<< HEAD
 								                            location.href = "Controller?command=kakaoLogin&kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
+=======
+								                            location.href = "kakaoLoginAction?command=kakako&kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
+>>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
 								 				}
 								 			});
 								 		},
