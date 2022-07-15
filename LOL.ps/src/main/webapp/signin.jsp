@@ -3,6 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+	if("nicknameoverlap".equals((String)request.getAttribute("nicknameoverlap"))) {
+		
+%>
+		<script>
+			alert("중복된 닉네임이 존재합니다.");
+		</script>
+<% 	
+	}
+%>
+<%
+	if("emailoverlap".equals((String)request.getAttribute("emailoverlap"))) {
+		
+%>
+		<script>
+			alert("중복된 email이 존재합니다.");
+		</script>
+<% 	
+	}
+%>
+<%
+	if("success".equals((String)request.getAttribute("success"))) {
+		
+%>
+		<script>
+			alert("회원가입이 완료되었습니다.");
+		</script>
+<% 	
+	}
+%>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,7 +135,7 @@ $(function() {
 	                <div class = "member-row">
 	                    <div class = "member-email_login_box"> 
 	                        <h3 class="member-h3">이메일 회원 가입</h3>
-	                        <form action = "../SignInServlet" class="member-form" name="signInForm" method = "POST" novalidate>
+	                        <form action = "SignInServlet" class="member-form" name="signInForm" method = "POST" novalidate>
 	                            <div class = "member-form-group">
 	                                <label class="member-laber">이메일 주소</label>
 	                                <input type="email" name="email" class="member-form-control" placeholder="gamer@lol.ps" >

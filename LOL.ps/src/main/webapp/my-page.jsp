@@ -11,6 +11,15 @@
 <!DOCTYPE html>
 <html>
 <%	
+	if("welcome".equals((String)request.getAttribute("welcome"))) {
+		
+		%>
+			<script>
+				alert("환영합니다 !");
+			</script>
+		<% 
+	}
+		
 	if("wrong".equals(request.getParameter("password"))) {
 		%>
 			<script>

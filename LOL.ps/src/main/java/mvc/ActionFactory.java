@@ -16,6 +16,12 @@ public class ActionFactory {
 		case "statistics" :
 			action = new StatisticsAction();
 			break;
+		case "kakaoLogin" :
+			action = new KakaoLoginAction();
+			break;
+		case "naverLogin" :
+			action = new NaverLoginAction();
+			break;
 		}
 		return action;
 	}

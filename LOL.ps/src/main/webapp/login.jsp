@@ -3,6 +3,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+	if("error".equals((String)request.getAttribute("error"))) {
+		
+%>
+		<script>
+			alert("유효하지 않은 정보입니다.");
+		</script>
+<% 	
+	}
+%>
+<%
+	if("pwerror".equals((String)request.getAttribute("pwerror"))) {
+		
+%>
+		<script>
+			alert("비밀번호가 올바르지 않습니다.");
+		</script>
+<% 	
+	}
+%>
+<%
+	if("emailerror".equals((String)request.getAttribute("emailerror"))) {
+		
+%>
+		<script>
+			alert("이메일이 올바르지 않습니다.");
+		</script>
+<% 	
+	}
+%>
+<%
+	if("success".equals((String)request.getAttribute("success"))) {
+		
+%>
+		<script>
+			alert("회원가입이 완료되었습니다.");
+		</script>
+<% 	
+	}
+%>
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
@@ -73,7 +113,7 @@
 	                <div class = "member-row">
 	                    <div class = "member-email_login_box"> 
 	                        <h3 class="member-h3">이메일 로그인</h3>
-	                        <form class="member-form" method="post" action = "loginServer.jsp" novalidate="novalidate">
+	                        <form class="member-form" method="post" action = "LoginServlet" novalidate="novalidate">
 	                            <input type="hidden" name="csrfmiddlewaretoken" value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
 	                            <div class = "member-form-group">
 	                                <label class="member-label" for="id_email">이메일 주소</label>
@@ -112,10 +152,9 @@
 								                        success: (res) => {
 								                            const kakao_account = res.kakao_account;
 								                            console.log(kakao_account);
-								                            alert(res.kakao_account);
 								                            var kakaoEmail =res.kakao_account.email +"Kakao";
 								                            var kakaoNickname =res.kakao_account.profile.nickname;
-								                            location.href = "kakaoLoginAction.jsp?kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
+								                            location.href = "Controller?command=kakaoLogin&kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
 								 				}
 								 			});
 								 		},
@@ -129,10 +168,10 @@
 	                            <li class="member-li">
 	                               <a id = "naver_id_login">
 	                             		 <script type="text/javascript">
-											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/lol/naverCallback.jsp");
+											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/naverCallback.jsp");
 											  	var state = naver_id_login.getUniqState();
 											  	naver_id_login.setButton("white", 2,40);
-											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/lol/login.jsp");
+											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/login.jsp");
 											  	naver_id_login.setState(state);
 // 											  	naver_id_login.setPopup();
 											  	naver_id_login.init_naver_id_login();

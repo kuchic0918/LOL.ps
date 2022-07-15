@@ -41,13 +41,16 @@ public class LoginServlet extends HttpServlet {
 			
 		} else if (mDao.isVaildEmail(email) == false
 				&& mDao.isVaildPW(password) == false) {
-			response.sendRedirect("login.jsp");
+			request.setAttribute("error", "error");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		} else if (mDao.isVaildPW(password) == false) {
-			response.sendRedirect("login.jsp");
+			request.setAttribute("pwerror", "pwerror");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		} else if (mDao.isVaildEmail(email) == false) {
-			response.sendRedirect("login.jsp");
+			request.setAttribute("emailerror", "emailerror");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		}
 	}
