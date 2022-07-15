@@ -12,14 +12,13 @@
 	<%		
 		//풀 확인
 		MemberDAO memberdao = new MemberDAO();
+			
 		String kakaoEmail = "kakao/" + request.getParameter("kakaoEmail") ;
 		String kakaoNickname =request.getParameter("kakaoNickname") ;
 		MemberDTO member = new MemberDTO(0 , kakaoEmail , "snsAdmin" , kakaoNickname , null, null, null);
 		System.out.println("email : " + kakaoEmail  + "  nickname :   " + kakaoNickname);
 		// 이메일이 가입된 적이 없으면  . . .
 		//회원가입 진행 
-	
-
 		if(memberdao.isVaildEmail(kakaoEmail)==false) {
 
 			memberdao.snsSignIn(member);

@@ -115,7 +115,7 @@
 								                            alert(res.kakao_account);
 								                            var kakaoEmail =res.kakao_account.email +"Kakao";
 								                            var kakaoNickname =res.kakao_account.profile.nickname;
-								                            location.href = "kakaoLoginAction.jsp?kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
+								                            location.href = "kakaoLoginAction?command=kakako&kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
 								 				}
 								 			});
 								 		},
