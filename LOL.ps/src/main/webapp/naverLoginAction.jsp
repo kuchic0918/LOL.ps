@@ -7,14 +7,8 @@
 <%
 	String email = "naver/" + request.getParameter("email");
 	String nickname = request.getParameter("nickname");
-	Y_DBmanager y_dbmanager = new Y_DBmanager();
-	Connection conn  = y_dbmanager.getConnection();
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
 	MemberDAO memberdao = new MemberDAO();
-	
 	MemberDTO member = new MemberDTO(0 , email , "naverPw" , nickname , null, null, null);
-	
 	//DB에 네이버 이메일이 아예 없는경우
 	%>
 <html>

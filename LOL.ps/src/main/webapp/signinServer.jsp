@@ -15,10 +15,6 @@
 <body class="member-body" style="height: 1200px;">
 	<%
 	request.setCharacterEncoding("UTF-8");
-	Y_DBmanager y_dbmanager = new Y_DBmanager();
- 	Connection conn  = y_dbmanager.getConnection();
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
 	MemberDAO memberdao = new MemberDAO();
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");

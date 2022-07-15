@@ -5,14 +5,7 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
-	Y_DBmanager db = new Y_DBmanager();
-
-	ResultSet rs = null;
-	Connection conn = db.getConnection();
-	PreparedStatement pstmt = null;
-	
 	ChampRankDao champRankDao = new ChampRankDao();
-	
 	ArrayList<ChampRankDto> rankAll = champRankDao.getChampRankAll();
 	ArrayList<ChampRankDto> rankTopLine = champRankDao.getChampRankByLine("탑");
 	ArrayList<ChampRankDto> rankJungleLine = champRankDao.getChampRankByLine("정글");

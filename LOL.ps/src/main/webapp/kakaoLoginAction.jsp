@@ -11,12 +11,7 @@
 <body>
 	<%		
 		//풀 확인
-		Y_DBmanager y_dbmanager = new Y_DBmanager();
- 		Connection conn  = y_dbmanager.getConnection();
- 		PreparedStatement pstmt = null;
- 		ResultSet rs = null;
 		MemberDAO memberdao = new MemberDAO();
-			
 		String kakaoEmail = "kakao/" + request.getParameter("kakaoEmail") ;
 		String kakaoNickname =request.getParameter("kakaoNickname") ;
 		MemberDTO member = new MemberDTO(0 , kakaoEmail , "snsAdmin" , kakaoNickname , null, null, null);

@@ -5,12 +5,6 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
-	Y_DBmanager db = new Y_DBmanager();
-
-	ResultSet rs = null;
-	Connection conn = db.getConnection();
-	PreparedStatement pstmt = null;
-	
 	ChampRankDao champRankDao = new ChampRankDao();
 	session.getAttribute("memberInfo");
 	ArrayList<ChampRankDto> rankAll = champRankDao.getChampRankAll();

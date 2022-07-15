@@ -7,10 +7,6 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <%
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-	Y_DBmanager db = new Y_DBmanager();
-	Connection conn = db.getConnection();
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
 %>
 <!DOCTYPE html>
 <html>
