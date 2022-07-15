@@ -5,14 +5,7 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <%@ page import="java.util.*" %>
 <%
-	Y_DBmanager db = new Y_DBmanager();
-	
-	ResultSet rs = null;
-	Connection conn = db.getConnection();
-	PreparedStatement pstmt = null;
-	
 	MainCardDao mainCardDao = new MainCardDao();
-	
 	ArrayList<MainCardDto> mainCardList =  mainCardDao.getMainCard();
 %>
 <!DOCTYPE html>
@@ -48,7 +41,7 @@
     			//alert('name' + name + 'line' + line);
 	    			$.ajax({
 	    				type: 'post',
-	    				url: '../MainCardServlet',
+	    				url: 'MainCardServlet',
 	    				data: { name : name, line : line },
 	    				datatype: 'json',
 	    				success: function(data) {
