@@ -48,7 +48,7 @@
     			//alert('name' + name + 'line' + line);
 	    			$.ajax({
 	    				type: 'post',
-	    				url: '../MainCardServlet',
+	    				url: 'MainCardServlet',
 	    				data: { name : name, line : line },
 	    				datatype: 'json',
 	    				success: function(data) {
