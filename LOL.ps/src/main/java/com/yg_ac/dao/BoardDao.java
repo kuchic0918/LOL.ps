@@ -110,4 +110,31 @@ public class BoardDao {
 		
 		return writer;
 	}
+	public BoardDto getDetail(int bno) {
+		BoardDto detail = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * " + 
+				"from community " + 
+				"where bno = ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+			rs.next();
+			int memberkey = rs.getInt("memberkey");
+			String title = rs.getString("title");
+			String content = rs.getString("content");
+			String writedate = rs.getString("writedate");
+			int good = rs.getInt("good");
+			int bad = rs.getInt("bad");
+			int count = rs.getInt("count");
+			String category = rs.getString("category");
+			String champName = rs.getString("champname");
+			detail = new BoardDto(memberkey,title,content,writedate,good,bad,count,category,champName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return detail;
+	}
 }

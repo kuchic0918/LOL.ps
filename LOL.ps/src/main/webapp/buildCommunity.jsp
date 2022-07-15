@@ -23,6 +23,11 @@
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
+    <script>
+    	$(function(){
+    		
+    	});
+    </script>
 </head>
 <body  class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -104,7 +109,7 @@
         			like = 0;
         		}
         	%>
-	        <a class="contents-item" href="community-post-build.html">
+	        <a class="contents-item" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
            		<span class="build">
            			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
            		</span>
@@ -132,24 +137,24 @@
     </main>
     
     <div class="bottom-btn">
-		<button class="bottom-btn-in"><<</button>
+		<button class="bottom-btn-in" id="first"><<</button>
+		
 		<button class="bottom-btn-in">1</button>
 		<button class="bottom-btn-in">2</button>
 		<button class="bottom-btn-in">3</button>
 		<button class="bottom-btn-in">4</button>
 		<button class="bottom-btn-in">5</button>
-		<button class="bottom-btn-in">>></button>
+		
+		<button class="bottom-btn-in" id="end">>></button>
 		<span class="bottom-btn-in2">
 			<button class="main-button">✎게시물쓰기</button>
 		</span>
+		
 	</div>
 	
 	<div class="top-button">
         <span style="color: #6c757d;">UP</span>
     </div>
-	
-	
-	
 	
    	<footer class="footer">
 

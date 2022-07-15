@@ -9,6 +9,7 @@ public class BoardDto {
 	private int good;
 	private int bad;
 	private int count;
+	private String category;
 	private String champName;
 	
 	public BoardDto(int memberkey, int bno, String title, String content, String writedate, int good, int bad,
@@ -21,6 +22,20 @@ public class BoardDto {
 		this.good = good;
 		this.bad = bad;
 		this.count = count;
+		this.champName = champName;
+	}
+	
+	public BoardDto(int memberkey, String title, String content, String writedate, int good, int bad, int count,
+			String category, String champName) {
+		super();
+		this.memberkey = memberkey;
+		this.title = title;
+		this.content = content;
+		this.writedate = writedate;
+		this.good = good;
+		this.bad = bad;
+		this.count = count;
+		this.category = category;
 		this.champName = champName;
 	}
 
@@ -94,6 +109,14 @@ public class BoardDto {
 
 	public void setChampName(String champName) {
 		this.champName = champName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }
