@@ -29,7 +29,7 @@ public class KakaoLoginAction implements Action {
 			memberdao.snsSignIn(member);
 			member = memberdao.findByEmailNicknameMemberInfo(kakaoEmail, kakaoNickname);
 			session.setAttribute("memberInfo", member);
-			request.setAttribute("welcome", "welcome");
+			request.setAttribute("member", "alright");
 			request.getRequestDispatcher("my-page.jsp").forward(request, response);
 		//이미 가입이 되어있으면 로그인 진행
 		}else {

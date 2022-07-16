@@ -22,6 +22,18 @@ public class ActionFactory {
 		case "naverLogin" :
 			action = new NaverLoginAction();
 			break;
+		case "login" :
+			action = new LoginAction();
+			break;
+		case "introduceSave" :
+			action = new IntroduceSaveAction();
+			break;
+		case "profileImage" :
+			action = new ProfileImageAction();
+			break;
+		case "passwordChange" :
+			action = new PasswordChangeAction();
+			break;
 		}
 		return action;
 	}

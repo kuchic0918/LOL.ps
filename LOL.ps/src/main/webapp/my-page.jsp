@@ -11,33 +11,37 @@
 <!DOCTYPE html>
 <html>
 <%	
-	if("welcome".equals((String)request.getAttribute("welcome"))) {
-		
+	if("alright".equals((String)request.getAttribute("member"))) {
 		%>
 			<script>
-				alert("환영합니다 !");
+				alert('환영합니다 !');
 			</script>
 		<% 
-	}
-		
-	if("wrong".equals(request.getParameter("password"))) {
+	} else if("passwordWrong".equals(request.getParameter("mypage"))) {
 		%>
 			<script>
-				alert('현재 비밀번호가 맞지 않습니다.')
+				alert('현재 비밀번호가 맞지 않습니다.');
 				location.href = 'my-page.jsp';
 			</script>
 		<%
-	}else if("alright".equals(request.getParameter("password"))) {
+	}else if("passwordAlright".equals(request.getParameter("mypage"))) {
 		%>
 			<script>
-				alert('비밀번호가 변경되었습니다.')
+				alert('비밀번호가 변경되었습니다.');
 				location.href = 'my-page.jsp';
 			</script>
 		<%
-	}else if("change".equals(request.getParameter("image_name"))) {
+	}else if("imageChange".equals(request.getParameter("mypage"))) {
 		%>
 			<script>
-				alert('프로필사진이 변경되었습니다.')
+				alert('프로필사진이 변경되었습니다.');
+				location.href = 'my-page.jsp';
+			</script>
+		<%
+	}else if("profile".equals(request.getParameter("mypage"))) {
+		%>
+			<script>
+				alert('프로필글이 변경되었습니다.');
 				location.href = 'my-page.jsp';
 			</script>
 		<%
@@ -78,17 +82,6 @@
     			$(this).find("img").eq(2).animate({opacity:0});  //.css('opacity','0');
     		});
     		//한줄소개변경
-    		$("#btn-save-id").click(function() {
-    	   		var text = $("#introduce-modal-insert-id").val();
-    	    	$("#introduce-text").html(text);
-    	    	alert("한줄소개가 변경되었습니다.");
-    	    	location.href = "my-page-action.jsp?text="+text;
-    	    });
-    		
-    		$("#btn-save-id3").click(function() {
-    	    	alert("회원탈퇴 완료.");
-    	    });
-    		
     		$('#introduce-modal-id').animate({opacity:0},25);
     		$('#change-pw-modal-id').animate({opacity:0},25);
     		$('#member-secession-modal-id').animate({opacity:0},25);
@@ -280,15 +273,7 @@
     			});
     		});
 
-
-			/* $('#new-password-confirm').on('change', function() {
-				if($('#new-password').val() === $('#new-password-confirm').val()) {
-					$('#password-confirm-tag').html('')
-				}else {
-					$('#password-confirm-tag').html('새로운 비밀번호와 일치하지 않습니다!!')
-				}
-			}); */
-			$('.password-form').validate({
+    		$('.password-form').validate({
 				rules: {
 					new_pw: {
 						required : true,
@@ -325,18 +310,13 @@
 
 	<div class="background-gray modal-del" id="background-gray-id">
 		<div class="introduce-modal" id="introduce-modal-id">
-		
-				<div>한줄소개 변경<button type="button" class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
-			<form action="MypageIntroduceServlet" method="post">
-				
+			<div>한줄소개 변경<button type="button" class="introduce-modal-btn" id="introduce-modal-btn-id">✖</button></div>
+			<form action="Controller" method="post">
 				<textarea class="introduce-modal-insert" placeholder="한줄소개 입력" id="introduce-modal-insert-id" name="mypage-textarea"></textarea>
-	
-				<div style="float:right; margin-right:2px; width:120px; height:50px;">
-					<button type="button" style="margin-right:5px;" class = "btn-cancel">취소</button> 
-					<button type="submit" class="btn-save" id="btn-save-id">저장</button>
+				<div style="float:right; margin-right:2px; width:65px; height:50px;">
+					<button type="submit" class="btn-save" id="btn-save-id" name="command" value="introduceSave">저장</button>
 				</div>
 			</form>
-			
 		</div>
 	</div>
 	
@@ -345,19 +325,19 @@
 		
 			<div>비밀번호 변경<button class="change-pw-modal-btn" id="change-pw-modal-btn-id">✖</button></div>
 			
-			<form action="MypagePasswordChangeServlet" class="password-form" method="post" novalidate>
+			<form action="Controller" class="password-form" method="post" novalidate>
 				<div style="width:240px; height: 180px; padding-top:40px; margin:auto;">
 					<p style="font-size:12px;">현재 비밀번호</p>
-					<input class="pw-input" id="now-password" name="now_pw" type="password" />
+					<input class="pw-input" id="now-password" name="nowPw" type="password" />
 					<p style="font-size:12px;">새로운 비밀번호</p>
-					<input class="pw-input" id="new-password" name="new_pw" type="password" />
+					<input class="pw-input" id="new-password" name="newPw" type="password" />
 					<p style="font-size:12px;">새로운 비밀번호 확인</p>
 					<input class="pw-input" id="new-password-confirm" name="new_pw2" type="password" />
 					<p id="password-confirm-tag" style="color: #ff4040; margin-top: 5px; font-size: 14px;"></p>
 				</div>
 			
 				<div style="float:right; margin-right:2px; width:120px; height:50px;">
-					<button type="submit" style="font-size:12px; margin-top: 30px;" class="btn-save">비밀번호 재설정</button>
+					<button type="submit" style="font-size:12px; margin-top: 30px;" class="btn-save" name="command" value="passwordChange">비밀번호 재설정</button>
 				</div>
 			</form>
 			
@@ -366,9 +346,7 @@
 	
 	<div class="background-gray3 modal-del" id="background-gray-id3">
 		<div class="member-secession-modal" id="member-secession-modal-id">
-		
 			<div>회원탈퇴<button class="member-secession-modal-btn" id="member-secession-modal-btn-id">✖</button></div>
-			
 			<div style="height:58px;">
 				<p class="member-secession-div">회원 탈퇴를 하게 되면 보유하신 프로필, 업적 등이 모두 사라지며, 작성한 글, 댓글 등이 모두 사라집니다. 동의하십니까?</p>
 			</div>
@@ -377,7 +355,6 @@
 					<button type="submit" style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
 				</div>
 			</form>
-			
 		</div>
 	</div>
 	
@@ -486,151 +463,221 @@
     
         <div class="change-img">
         	<div style="height:150px;">
-				<form action="../MypageProfileChangeServlet" method="post">
+				<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/anne1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="anne1.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="anne1.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/anne1.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/anne2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="anne2.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="anne2.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/anne2.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/bro.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="bro.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="bro.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/bro.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/dk.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="dk.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="dk.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/dk.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/DRX.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="DRX.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="DRX.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/DRX.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/gen.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="gen.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="gen.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/gen.jpg"/>
 	       			</div>
+	       		</form>
 	       			
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/hle.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="hle.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="hle.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/hle.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jhin.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button value="jhin.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="jhin.jpg"/>
+	        			<button value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/jhin.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jinx1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="jinx1.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="jinx1.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/jinx1.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/jinx2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="jinx2.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="jinx2.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/jinx2.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/kaisa.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="kaisa.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="kaisa.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/kaisa.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/KDF.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="KDF.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="KDF.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/KDF.jpg"/>
 	       			</div>
+	       		</form>
 	       			
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/kt.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="kt.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="kt.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/kt.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/lsb.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="lsb.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="lsb.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/lsb.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/nasus.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="nasus.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="nasus.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/nasus.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/ns.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="ns.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="ns.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/ns.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/t1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="t1.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="t1.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/t1.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/yuumi1.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="yuumi1.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="yuumi1.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/yuumi1.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/yuumi2.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="yuumi2.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="yuumi2.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/yuumi2.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/blackcat.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="blackcat.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="blackcat.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/blackcat.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/whitecat.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="whitecat.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="whitecat.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/whitecat.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/sofi.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="sofi.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="sofi.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/sofi.jpg"/>
 	       			</div>
+	       		</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/rengoku.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="rengoku.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="rengoku.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/rengoku.jpg"/>
 	       			</div>
+       			</form>
+	       		<form action="Controller" method="post">
 	       			<div class="profile-settings fl">
 	        			<img class="img" src="Images/profile/satoru.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
-	        			<button name="image_name" value="satoru.jpg">프로필로<br/>설정</button>
+	        			<input type="hidden" name="imageName" value="satoru.jpg"/>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/satoru.jpg"/>
 	       			</div>
         		</form>

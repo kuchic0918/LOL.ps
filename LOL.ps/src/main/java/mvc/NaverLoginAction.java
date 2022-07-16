@@ -25,7 +25,7 @@ public class NaverLoginAction implements Action {
 			memberdao.snsSignIn(member);
 			member = memberdao.findByEmailNicknameMemberInfo(email, nickname);
 			session.setAttribute("memberInfo", member);
-			request.setAttribute("welcome", "welcome");
+			request.setAttribute("member", "alright");
 			request.getRequestDispatcher("my-page.jsp").forward(request, response);
 	
 		//이미 가입이 되어있으면 로그인 진행
