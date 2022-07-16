@@ -14,13 +14,13 @@ public class ProfileImageAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String image = request.getParameter("imageName");
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 		
 		MemberDAO mypageProfileChangeDao = new MemberDAO();
 		mypageProfileChangeDao.getmypageProfileChange(member.getMemberkey(), image);
-		response.sendRedirect("my-page.jsp?mypage=imageChange");
+		request.setAttribute("mypage", "imageChange");
+		request.getRequestDispatcher("my-page.jsp").forward(request, response);
 	}
 }

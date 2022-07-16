@@ -10,17 +10,16 @@ import javax.servlet.http.HttpSession;
 import com.yg_ac.dao.MemberDAO;
 import com.yg_ac.dto.MemberDTO;
 
-public class IntroduceSaveAction implements Action {
+public class SecessionAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String introduce = request.getParameter("mypage-textarea");
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		
-		MemberDAO mypageIntroduceDao = new MemberDAO();
-		mypageIntroduceDao.updateMypageIntroduce(member.getMemberkey(), introduce);
-		request.setAttribute("mypage", "profile");
-		request.getRequestDispatcher("my-page.jsp").forward(request, response);
+		MemberDAO mypageMemberSecessionDao = new MemberDAO();
+		mypageMemberSecessionDao.getMypageMemberSecession(member.getMemberkey());
+		session.removeAttribute("memberInfo");
+		request.setAttribute("mypage", "secession");
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 }

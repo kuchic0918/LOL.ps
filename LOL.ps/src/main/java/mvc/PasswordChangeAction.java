@@ -14,7 +14,6 @@ public class PasswordChangeAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String nowPW = request.getParameter("nowPw");
 		String newPW= request.getParameter("newPw");
 		HttpSession session = request.getSession(false);
@@ -23,9 +22,11 @@ public class PasswordChangeAction implements Action {
 		MemberDAO mypagePasswordChangeDao = new MemberDAO();
 		if(nowPW.equals(member.getPw())) {
 			mypagePasswordChangeDao.getMypagePasswordChangeDao(member.getMemberkey(), newPW);
-			response.sendRedirect("login.jsp?mypage=passwordAlright");
+			request.setAttribute("mypage", "passwordAlright");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else {
-			response.sendRedirect("my-page.jsp?mypage=passwordWrong");
+			request.setAttribute("mypage", "passwordWrong");
+			request.getRequestDispatcher("my-page.jsp").forward(request, response);
 		}
 	}
 }

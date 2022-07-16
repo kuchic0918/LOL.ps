@@ -19,20 +19,28 @@ public class LoginAction implements Action {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		if (mDao.loginvalid(email, password)) {
+		if (mDao.loginvalid(email, password)) {	
+			// 로그인 o
 			MemberDTO member = mDao.findByEmailPwMemberInfo(email, password);	 	
 			session.setAttribute("memberInfo", member);
 			request.setAttribute("member", "alright");
 			request.getRequestDispatcher("my-page.jsp").forward(request, response);
-		} else if (mDao.isVaildEmail(email) == false && mDao.isVaildPW(password) == false) {
-			response.sendRedirect("login.jsp?member=wrong");
-			
-		} else if (mDao.isVaildPW(password) == false) {
-			response.sendRedirect("login.jsp?member=passwordWrong");
-		} else if (mDao.isVaildEmail(email) == false) {
-			response.sendRedirect("login.jsp?member=emailWrong");
+		} else if (mDao.isVaildEmail(email) == false && mDao.isVaildPW(password) == false) { 
+			// 정보 x
+			request.setAttribute("member", "wrong");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		} else if (mDao.isVaildPW(password) == false) {	
+			// 비밀번호 x
+			request.setAttribute("member", "passwordWrong");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		} else if (mDao.isVaildEmail(email) == false) { 
+			// 이메일 x
+			request.setAttribute("member", "emailWrong");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		} else {
-			response.sendRedirect("login.jsp?member=passwordWrong");
+			// 비밀번호 x
+			request.setAttribute("member", "passwordWrong");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
 }

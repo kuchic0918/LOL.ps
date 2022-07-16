@@ -17,32 +17,28 @@
 				alert('환영합니다 !');
 			</script>
 		<% 
-	} else if("passwordWrong".equals(request.getParameter("mypage"))) {
+	} else if("passwordWrong".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('현재 비밀번호가 맞지 않습니다.');
-				location.href = 'my-page.jsp';
 			</script>
 		<%
-	}else if("passwordAlright".equals(request.getParameter("mypage"))) {
+	}else if("passwordAlright".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('비밀번호가 변경되었습니다.');
-				location.href = 'my-page.jsp';
 			</script>
 		<%
-	}else if("imageChange".equals(request.getParameter("mypage"))) {
+	}else if("imageChange".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('프로필사진이 변경되었습니다.');
-				location.href = 'my-page.jsp';
 			</script>
 		<%
-	}else if("profile".equals(request.getParameter("mypage"))) {
+	}else if("profile".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('프로필글이 변경되었습니다.');
-				location.href = 'my-page.jsp';
 			</script>
 		<%
 	}
@@ -350,9 +346,9 @@
 			<div style="height:58px;">
 				<p class="member-secession-div">회원 탈퇴를 하게 되면 보유하신 프로필, 업적 등이 모두 사라지며, 작성한 글, 댓글 등이 모두 사라집니다. 동의하십니까?</p>
 			</div>
-			<form action="MypageMemberSecessionServlet" method="post">
+			<form action="Controller" method="post">
 				<div style="float:right; width:90px; height:50px;">
-					<button type="submit" style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
+					<button type="submit" name="command" value="secession" style="font-size:12px; border-radius: 2px;" class="btn-save" id="btn-save-id3">동의합니다</button>
 				</div>
 			</form>
 		</div>
@@ -532,7 +528,7 @@
 	        			<img class="img" src="Images/profile/jhin.jpg"/>
 	        			<img src="Images/icon_search2.webp"/>
 	        			<input type="hidden" name="imageName" value="jhin.jpg"/>
-	        			<button value="profileImage">프로필로<br/>설정</button>
+	        			<button name="command" value="profileImage">프로필로<br/>설정</button>
 	        			<img class="img" src="Images/profile/jhin.jpg"/>
 	       			</div>
 	       		</form>

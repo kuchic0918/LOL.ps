@@ -3,34 +3,42 @@
 <!DOCTYPE html>
 <html>
 <% 
-	if("wrong".equals(request.getParameter("member"))) {
+	if("wrong".equals((String) request.getAttribute("member"))) {
 		%>
 			<script>
 				alert('유효하지 않은 정보입니다.');
-				href = 'login.jsp';
 			</script>
 		<% 
-	} else if("passwordWrong".equals(request.getParameter("member"))) {
+	} else if("passwordWrong".equals((String) request.getAttribute("member"))) {
 		%>
 			<script>
 				alert('비밀번호가 올바르지 않습니다.');
-				href = 'login.jsp';
 			</script>
 		<%
-	} else if("emailWrong".equals(request.getParameter("member"))) {
+	} else if("emailWrong".equals((String) request.getAttribute("member"))) {
 		%>
 			<script>
 				alert('이메일이 올바르지 않습니다.');
-				href = 'login.jsp';
 			</script>
 		<%
-	} else if("passwordAlright".equals(request.getParameter("mypage"))) {
+	} else if("passwordAlright".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('비밀번호가 변경되었습니다. 다시로그인 해주세요.');
-				href = 'login.jsp';
 			</script>
 		<%
+	} else if("secession".equals((String) request.getAttribute("mypage"))) {
+		%>
+			<script>
+				alert('회원탈퇴.');
+			</script>
+	<%
+	} else if("success".equals((String) request.getAttribute("signin"))) {
+		%>
+			<script>
+				alert("회원가입이 완료되었습니다. 로그인 해주세요.");
+			</script>
+		<% 	
 	}
 %>
 <head>

@@ -16,6 +16,9 @@ public class ActionFactory {
 		case "statistics" :
 			action = new StatisticsAction();
 			break;
+		case "signin" :
+			action = new SigninAction();
+			break;
 		case "kakaoLogin" :
 			action = new KakaoLoginAction();
 			break;
@@ -33,6 +36,9 @@ public class ActionFactory {
 			break;
 		case "passwordChange" :
 			action = new PasswordChangeAction();
+			break;
+		case "secession" :
+			action = new SecessionAction();
 			break;
 		}
 		return action;
