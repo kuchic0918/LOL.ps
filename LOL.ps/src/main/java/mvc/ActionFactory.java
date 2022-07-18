@@ -40,6 +40,9 @@ public class ActionFactory {
 		case "secession" :
 			action = new SecessionAction();
 			break;
+		case "write":
+			action = new WriteAction();
+			break;
 		}
 		return action;
 	}

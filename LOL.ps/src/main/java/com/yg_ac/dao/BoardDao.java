@@ -165,4 +165,8 @@ public class BoardDao {
 		}
 		return detail;
 	}
+	public void writeAction(int memberkey, String title, String content, String category, String champName) {
+		String sql = "insert into community values (memberkey,BNO_SEQ.nextval,title,content,sysdate,0,0,0,category,champName)";
+		
+	}
 }
