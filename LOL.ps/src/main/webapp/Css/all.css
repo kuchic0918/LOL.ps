@@ -1740,14 +1740,41 @@ p {
 
 .bottom-btn-in {
 	display: block;
-	width: 35px;
-	height: 35px;
+	width: 28px;
+	height: 28px;
 	border-radius:50%;
-	padding: 2px;
+	padding: 4px;
+	text-align: center;
 	cursor: pointer;
 	border: none;
 	color: rgb(67, 91, 171);
 	background-color: transparent;
+}
+
+.bottom-btn-in-off {
+	display: block;
+	width: 28px;
+	height: 28px;
+	border-radius:50%;
+	padding: 4px;
+	text-align: center;
+	border: none;
+	color: lightgray;
+	background-color: transparent;
+	pointer-events:none;
+}
+
+.bottom-btn-in-active {
+	display: block;
+	width: 28px;
+	height: 28px;
+	border-radius:50%;
+	padding: 4px;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	color: #fff;
+	background-color: blue;
 }
 
 .bottom-btn-in:hover {

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.yg_ac.dto.BoardDto;
+import com.yg_ac.dto.MemberDTO;
 
 public class BoardDao {
 	Y_DBmanager db = new Y_DBmanager();
@@ -58,6 +59,32 @@ public class BoardDao {
 		
 		return list;
 	}
+	public ArrayList<BoardDto> getAllBoardList(String category){
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from community where category = ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				int bno = rs.getInt("bno");
+				list.add(new BoardDto(bno));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
 	public String getImage(String champName) {
 		String image = "";
 		PreparedStatement pstmt = null;
@@ -84,11 +111,11 @@ public class BoardDao {
 		
 		return image;
 	}
-	public String getWriter(int memberkey) {
-		String writer = "";
+	public MemberDTO getWriter(int memberkey) {
+		MemberDTO member = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select nickname name " + 
+		String sql = "select nickname name, image, introduce " + 
 				"from member " + 
 				"where memberkey = ? ";
 		try {
@@ -96,7 +123,10 @@ public class BoardDao {
 			pstmt.setInt(1,memberkey);
 			rs = pstmt.executeQuery();
 			rs.next();
-			writer = rs.getString("name");
+			String writer = rs.getString("name");
+			String image = rs.getString("image");
+			String introduce = rs.getString("introduce");
+			member = new MemberDTO(writer,image,introduce);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -108,7 +138,7 @@ public class BoardDao {
 			}
 		}
 		
-		return writer;
+		return member;
 	}
 	public BoardDto getDetail(int bno) {
 		BoardDto detail = null;

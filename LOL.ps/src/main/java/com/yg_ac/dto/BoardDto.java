@@ -25,6 +25,11 @@ public class BoardDto {
 		this.champName = champName;
 	}
 	
+	public BoardDto(int bno) {
+		super();
+		this.bno = bno;
+	}
+
 	public BoardDto(int memberkey, String title, String content, String writedate, int good, int bad, int count,
 			String category, String champName) {
 		super();

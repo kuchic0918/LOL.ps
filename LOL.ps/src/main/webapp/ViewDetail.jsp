@@ -8,7 +8,11 @@
 	int bno = Integer.parseInt(request.getParameter("bno"));
 	BoardDao bDao = new BoardDao();
 	BoardDto dto = bDao.getDetail(bno);
-	String writer = bDao.getWriter(dto.getMemberkey());
+	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
+	String introduce = writer.getIntroduce();
+	if(writer.getIntroduce()==null){
+		introduce = "";
+	}
 %>
 <html>
 <head>
@@ -89,13 +93,13 @@
       		<!-- 포스트글쓴이 -->
       		<div class="writer">
       			<div>
-      				<img class="writer-img" src="Images/profile/anne1.jpg"/>
+      				<img class="writer-img" src="Images/profile/<%=writer.getImage() %>"/>
       			</div>
       			
       			<div class="writer-mid">
       				<div style="padding:5px 10px; font-size:12px; color:darkgray;">글쓴이</div>
-      				<div style="padding:5px 10px;"><b><%=writer %></b></div>
-      				<div style="padding:5px 10px; font-size:15px; color:gray;">안녕 나는 블라디미르 장인 KS 야 6767</div>
+      				<div style="padding:5px 10px;"><b><%=writer.getNickname() %></b></div>
+      				<div style="padding:5px 10px; font-size:15px; color:gray;"><%=introduce %></div>
       			</div>
       			
       			<div class="writer-bot">

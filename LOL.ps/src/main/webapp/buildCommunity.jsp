@@ -5,7 +5,12 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <%	
-	int pageNum = 3;
+	int pageNum;
+	if(request.getParameter("page")==null){
+		pageNum = 1;
+	}else{
+		pageNum = Integer.parseInt(request.getParameter("page"));
+	}
 	String category = "빌드 연구소";
 	int startBno = pageNum * 15 - 14;
 	int endBno = pageNum * 15;
@@ -13,6 +18,8 @@
 	BoardDao bDao = new BoardDao();
 	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 	list = bDao.getBoardList(category, startBno, endBno);
+	ArrayList<BoardDto> allList = new ArrayList<BoardDto>();
+	allList = bDao.getAllBoardList(category);
 %>
 <html>
 <head>
@@ -25,7 +32,9 @@
     <script src="Js/jquery-3.6.0.min.js"></script>
     <script>
     	$(function(){
-    		
+    		$(".bottom-btn-in").on("click",function(){
+    			
+    		});
     	});
     </script>
 </head>
@@ -103,7 +112,7 @@
         	<%
         	for(BoardDto dto:list){
         		String image = bDao.getImage(dto.getChampName());
-        		String writer = bDao.getWriter(dto.getMemberkey());
+        		MemberDTO writer = bDao.getWriter(dto.getMemberkey());
         		int like = dto.getGood()-dto.getBad();
         		if(like < 0){
         			like = 0;
@@ -117,7 +126,7 @@
            			 [<%=dto.getChampName()%>] <%=dto.getTitle() %>
            		</span>
            		<span class="build2" style="width:150px;">
-           			<%=writer %>
+           			<%=writer.getNickname() %>
            		</span>
            		<span class="build2" style="width:100px;">
            			<%=dto.getWritedate() %>
@@ -137,15 +146,47 @@
     </main>
     
     <div class="bottom-btn">
-		<button class="bottom-btn-in" id="first"><<</button>
+    	<%
+    	String firstPage = "bottom-btn-in";
+    	String endPage = "bottom-btn-in";
+    	String href = "";
+    	String href2 = "";
+    	if(pageNum==1){
+    		firstPage = "bottom-btn-in-off";
+    		href = "";
+    	}else{
+    		firstPage = "bottom-btn-in";
+    		href = "buildCommunity.jsp?page=1";
+    	}
+    	%>
+		<a class="<%=firstPage %>" href="<%=href %>" id="first"><<</a>
+		<%
+    	
+		int end = allList.size()/15+1;
+		String act = "bottom-btn-in";
+		for(int i=1;i<=end;i++){
+			if(i==pageNum){
+				act = "bottom-btn-in-active";
+			}else{
+				act = "bottom-btn-in";
+			}
+		%>
+		<a class="<%=act%>" href="buildCommunity.jsp?page=<%=i %>"><%=i %></a>
+		<%
+		}
 		
-		<button class="bottom-btn-in">1</button>
-		<button class="bottom-btn-in">2</button>
-		<button class="bottom-btn-in">3</button>
-		<button class="bottom-btn-in">4</button>
-		<button class="bottom-btn-in">5</button>
+		if(pageNum==end){
+			endPage = "bottom-btn-in-off";
+			href2 = "";
+		}else{
+			endPage = "bottom-btn-in";
+			href2 = "buildCommunity.jsp?page="+end;
+		}
+		%>
+		<a class="<%=endPage %>" href="<%=href2 %>" id="end">>></a>
+		<%
 		
-		<button class="bottom-btn-in" id="end">>></button>
+		%>
 		<span class="bottom-btn-in2">
 			<button class="main-button">✎게시물쓰기</button>
 		</span>
