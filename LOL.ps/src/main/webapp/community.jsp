@@ -25,8 +25,7 @@
 	BoardDao bDao = new BoardDao();
 	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 	list = bDao.getBoardList(category, startBno, endBno);
-	ArrayList<BoardDto> allList = new ArrayList<BoardDto>();
-	allList = bDao.getAllBoardList(category);
+	int allList = bDao.getAllBoardList(category);
 %>
 <html>
 <head>
@@ -184,7 +183,7 @@
 		<a class="<%=firstPage %>" href="<%=href %>" id="first"><<</a>
 		<%
     	
-		int end = allList.size()/15+1;
+		int end = allList/15+1;
 		String act = "bottom-btn-in";
 		for(int i=1;i<=end;i++){
 			if(i==pageNum){

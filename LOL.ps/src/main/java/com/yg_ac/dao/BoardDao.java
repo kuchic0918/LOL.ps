@@ -59,19 +59,17 @@ public class BoardDao {
 		
 		return list;
 	}
-	public ArrayList<BoardDto> getAllBoardList(String category){
-		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+	public int getAllBoardList(String category){
+		int cnt=0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from community where category = ? ";
+		String sql = "select count(*) cnt from community where category = ? ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
 			rs = pstmt.executeQuery();
-			while(rs.next()){
-				int bno = rs.getInt("bno");
-				list.add(new BoardDto(bno));
-			}
+			rs.next();
+			cnt = rs.getInt("cnt");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -83,7 +81,7 @@ public class BoardDao {
 			}
 		}
 		
-		return list;
+		return cnt;
 	}
 	public String getImage(String champName) {
 		String image = "";
