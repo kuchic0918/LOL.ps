@@ -84,7 +84,17 @@
       		<!-- 포스트제목 -->
       		<div class="title">
       			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
-      			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+      			<%
+      			if(dto.getCategory().equals("자유 게시판")) {
+      			%>
+      			<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
+      			<%	
+      			} else {
+      			%>
+     			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+      			<%	
+      			}
+      			%>
       		</div>
       		<!-- 포스트내용 -->
       		<div class="write">
