@@ -6,11 +6,20 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
+	session = request.getSession(false);
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 %>
 <!DOCTYPE html>
 <html>
 <%	
+	if(member==null) {
+		%>
+			<script>
+				alert('로그인 먼저 하세요.');
+				location.href = 'login.jsp';
+			</script>
+		<%
+	}
 	if("alright".equals((String)request.getAttribute("member"))) {
 		%>
 			<script>
@@ -364,8 +373,8 @@
             <div class = "nav-item-container">
             	<a class="nav-items" href="notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="community/build.html">빌드게시판</a>
-                <a class="nav-items" href="community/free.html">자유게시판</a>
+                <a class="nav-items" href="Community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="Community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
 			<div class="sign-login">
 				<%

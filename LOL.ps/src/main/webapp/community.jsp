@@ -5,21 +5,34 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <%	
-	int pageNum = 3;
-	String category = "빌드 연구소";
+	int pageNum;
+	if(request.getParameter("page")==null){
+		pageNum = 1;
+	}else{
+		pageNum = Integer.parseInt(request.getParameter("page"));
+	}
+	String category = request.getParameter("category");
 	int startBno = pageNum * 15 - 14;
 	int endBno = pageNum * 15;
+	
+	String categoryImage;
+	if(category.equals("자유 게시판")) {
+		categoryImage = "소환사";
+	}else {
+		categoryImage = "챔피언";
+	}
 	
 	BoardDao bDao = new BoardDao();
 	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 	list = bDao.getBoardList(category, startBno, endBno);
+	int allList = bDao.getAllBoardList(category);
 %>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>빌드 연구소</title>
+	<title>community</title>
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
@@ -38,8 +51,8 @@
             <div class = "nav-item-container">
             	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="buildCommunity.jsp">빌드 연구소</a>
-                <a class="nav-items" href="../community/free.html">자유게시판</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
             <div class="sign-login">
 				<%
@@ -66,9 +79,9 @@
     </header>
 
     <div class="all-main">
-        <div class="first-title">빌드 연구소</div>
+        <div class="first-title"><%=category %></div>
         <div class="second-title">
-        	<a class="main-button" href="write-post.html">✎게시물 쓰기</a>
+        	<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
         	<form method="post">
         		<input class="main-input" spellcheck="false" placeholder="챔피언이름을 입력하세요"/>
         	</form>
@@ -80,18 +93,18 @@
         <div class="contents">
            	<div class="whiteDiv"></div>
            	<div class="firstDiv">
-           		<div class="firstDivLeft">빌드 연구소</div>
+           		<div class="firstDivLeft"><%=category %></div>
            		<div class="justify-content-start">
            			<select class="select">
            				<option>제목</option>
            				<option>작성자</option>
            			</select>
            			<input class="contents-input" spellcheck="false" placeholder="게시물 검색"/>
-           			<button class="main-button">✎게시물쓰기</button>
+           			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
            		</div>
            	</div>
            	<div class="title-build">
-           		<span style="padding-left:8px;">챔피언</span>
+           		<span style="padding-left:8px;"><%=categoryImage%></span>
            		<span style="padding-left:8px;">제목</span>
            		<span style="padding-left:660px;">작성자</span>
            		<span style="padding-left:50px;">날짜</span>
@@ -103,21 +116,36 @@
         	<%
         	for(BoardDto dto:list){
         		String image = bDao.getImage(dto.getChampName());
-        		String writer = bDao.getWriter(dto.getMemberkey());
+        		MemberDTO writer = bDao.getWriter(dto.getMemberkey());
         		int like = dto.getGood()-dto.getBad();
         		if(like < 0){
         			like = 0;
         		}
         	%>
 	        <a class="contents-item" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
-           		<span class="build">
-           			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
-           		</span>
-           		<span class="build1">
-           			 [<%=dto.getChampName()%>] <%=dto.getTitle() %>
-           		</span>
+           		<%
+         		if(category.equals("자유 게시판")){
+          		%>
+          		<span class="build">
+          			<img class="champion-head" src="Images/profile/<%=writer.getImage()%>"/>
+          		</span>
+          		<span class="build1">
+          			 <%=dto.getTitle() %> <b style="color:blue;"> [0]</b>
+          		</span>
+          		<%
+          		} else {
+           		%>
+       			<span class="build">
+          			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
+          		</span>
+          		<span class="build1">
+          			 [<%=dto.getChampName()%>]<%=dto.getTitle() %> <b style="color:blue;"> [0]</b>
+          		</span>
+	           	<%
+           		}
+           		%>
            		<span class="build2" style="width:150px;">
-           			<%=writer %>
+           			<%=writer.getNickname() %>
            		</span>
            		<span class="build2" style="width:100px;">
            			<%=dto.getWritedate() %>
@@ -137,17 +165,49 @@
     </main>
     
     <div class="bottom-btn">
-		<button class="bottom-btn-in" id="first"><<</button>
+    	<%
+    	String firstPage = "bottom-btn-in";
+    	String endPage = "bottom-btn-in";
+    	String href = "";
+    	String href2 = "";
+    	if(pageNum==1){
+    		firstPage = "bottom-btn-in-off";
+    		href = "";
+    	}else{
+    		firstPage = "bottom-btn-in";
+    		href = "community.jsp?category="+category+"&page=1";
+    	}
+    	%>
+		<a class="<%=firstPage %>" href="<%=href %>" id="first"><<</a>
+		<%
+    	
+		int end = allList/15+1;
+		String act = "bottom-btn-in";
+		for(int i=1;i<=end;i++){
+			if(i==pageNum){
+				act = "bottom-btn-in-active";
+			}else{
+				act = "bottom-btn-in";
+			}
+		%>
+		<a class="<%=act%>" href="community.jsp?category=<%=category %>&page=<%=i %>"><%=i %></a>
+		<%
+		}
 		
-		<button class="bottom-btn-in">1</button>
-		<button class="bottom-btn-in">2</button>
-		<button class="bottom-btn-in">3</button>
-		<button class="bottom-btn-in">4</button>
-		<button class="bottom-btn-in">5</button>
+		if(pageNum==end){
+			endPage = "bottom-btn-in-off";
+			href2 = "";
+		}else{
+			endPage = "bottom-btn-in";
+			href2 = "community.jsp?category="+category+"&page="+end;
+		}
+		%>
+		<a class="<%=endPage %>" href="<%=href2 %>" id="end">>></a>
+		<%
 		
-		<button class="bottom-btn-in" id="end">>></button>
+		%>
 		<span class="bottom-btn-in2">
-			<button class="main-button">✎게시물쓰기</button>
+			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
 		</span>
 		
 	</div>

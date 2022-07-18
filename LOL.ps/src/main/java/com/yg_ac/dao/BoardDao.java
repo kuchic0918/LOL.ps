@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.yg_ac.dto.BoardDto;
+import com.yg_ac.dto.MemberDTO;
 
 public class BoardDao {
 	Y_DBmanager db = new Y_DBmanager();
@@ -58,6 +59,30 @@ public class BoardDao {
 		
 		return list;
 	}
+	public int getAllBoardList(String category){
+		int cnt=0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) cnt from community where category = ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return cnt;
+	}
 	public String getImage(String champName) {
 		String image = "";
 		PreparedStatement pstmt = null;
@@ -84,11 +109,11 @@ public class BoardDao {
 		
 		return image;
 	}
-	public String getWriter(int memberkey) {
-		String writer = "";
+	public MemberDTO getWriter(int memberkey) {
+		MemberDTO member = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select nickname name " + 
+		String sql = "select nickname name, image, introduce " + 
 				"from member " + 
 				"where memberkey = ? ";
 		try {
@@ -96,7 +121,10 @@ public class BoardDao {
 			pstmt.setInt(1,memberkey);
 			rs = pstmt.executeQuery();
 			rs.next();
-			writer = rs.getString("name");
+			String writer = rs.getString("name");
+			String image = rs.getString("image");
+			String introduce = rs.getString("introduce");
+			member = new MemberDTO(writer,image,introduce);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -108,7 +136,7 @@ public class BoardDao {
 			}
 		}
 		
-		return writer;
+		return member;
 	}
 	public BoardDto getDetail(int bno) {
 		BoardDto detail = null;
@@ -136,5 +164,9 @@ public class BoardDao {
 			e.printStackTrace();
 		}
 		return detail;
+	}
+	public void writeAction(int memberkey, String title, String content, String category, String champName) {
+		String sql = "insert into community values (memberkey,BNO_SEQ.nextval,title,content,sysdate,0,0,0,category,champName)";
+		
 	}
 }

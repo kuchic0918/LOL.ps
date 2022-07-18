@@ -6,11 +6,37 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.yg_ac.dto.ChampNameDto;
 import com.yg_ac.dto.ChampRankDto;
 
 public class ChampRankDao {
 	Y_DBmanager db = new Y_DBmanager();
 	Connection conn = db.getConnection();
+	//전체 챔피언
+	public ArrayList<ChampNameDto> getChampName() {
+		ArrayList<ChampNameDto> get = new ArrayList<ChampNameDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select name from champ_skill";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String name = rs.getString("name");
+				get.add(new ChampNameDto(name));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
 	//챔피언 랭킹 라인별
 	public ArrayList<ChampRankDto> getChampRankByLine(String champion_line) {
 		ArrayList<ChampRankDto> getChampRankByLine = new ArrayList<ChampRankDto>();

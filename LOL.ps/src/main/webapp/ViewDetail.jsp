@@ -8,7 +8,11 @@
 	int bno = Integer.parseInt(request.getParameter("bno"));
 	BoardDao bDao = new BoardDao();
 	BoardDto dto = bDao.getDetail(bno);
-	String writer = bDao.getWriter(dto.getMemberkey());
+	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
+	String introduce = writer.getIntroduce();
+	if(writer.getIntroduce()==null){
+		introduce = "";
+	}
 %>
 <html>
 <head>
@@ -25,7 +29,7 @@
     	});
     </script>
 </head>
-<body>
+<body class="community-body">
 	<header class="all-header-mainnav header-mainnav">
         <div class="header-container">
             <a href="main.jsp">
@@ -34,8 +38,8 @@
             <div class = "nav-item-container">
             	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="buildCommunity.jsp">빌드 연구소</a>
-                <a class="nav-items" href="../community/free.html">자유게시판</a>
+                <a class="nav-items" href="Community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="Community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
             <div class="sign-login">
 				<%
@@ -80,7 +84,17 @@
       		<!-- 포스트제목 -->
       		<div class="title">
       			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
-      			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+      			<%
+      			if(dto.getCategory().equals("자유 게시판")) {
+      			%>
+      			<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
+      			<%	
+      			} else {
+      			%>
+     			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+      			<%	
+      			}
+      			%>
       		</div>
       		<!-- 포스트내용 -->
       		<div class="write">
@@ -89,13 +103,13 @@
       		<!-- 포스트글쓴이 -->
       		<div class="writer">
       			<div>
-      				<img class="writer-img" src="Images/profile/anne1.jpg"/>
+      				<img class="writer-img" src="Images/profile/<%=writer.getImage() %>"/>
       			</div>
       			
       			<div class="writer-mid">
       				<div style="padding:5px 10px; font-size:12px; color:darkgray;">글쓴이</div>
-      				<div style="padding:5px 10px;"><b><%=writer %></b></div>
-      				<div style="padding:5px 10px; font-size:15px; color:gray;">안녕 나는 블라디미르 장인 KS 야 6767</div>
+      				<div style="padding:5px 10px;"><b><%=writer.getNickname() %></b></div>
+      				<div style="padding:5px 10px; font-size:15px; color:gray;"><%=introduce %></div>
       			</div>
       			
       			<div class="writer-bot">

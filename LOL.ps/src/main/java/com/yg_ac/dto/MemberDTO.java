@@ -20,6 +20,14 @@ public class MemberDTO {
 		this.admin = admin;
 	}
 
+	public MemberDTO(String nickname, String image, String introduce) {
+		super();
+		this.nickname = nickname;
+		this.image = image;
+		this.introduce = introduce;
+	}
+
+
 	public int getMemberkey() {
 		return memberkey;
 	}
