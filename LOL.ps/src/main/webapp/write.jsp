@@ -99,7 +99,7 @@
 	           		if(category.equals("빌드 연구소")) {
 	           		%>
            			<span style="font-size:15px;"><b>챔피언</b></span>
-	           			<select style="width:700px; border-color:rgb(126, 155, 255);" class="input-title">
+	           			<select style="width:700px; border-color:rgb(126, 155, 255);" class="input-title" name="champion">
 	           				<%
 	           				for(int i=0; i<list.size(); i++) {
 		      				%>
@@ -120,7 +120,8 @@
 	      				<div style="height:20px;"></div>
 						<!-- form 안에 에디터를 사용하는 경우 (보통 이경우를 많이 사용하는듯)-->
 						<textarea style="resize: none;" id="summernote" class="summernote" name="editordata"></textarea>
-				</div>
+					</div>
+					<input type="hidden" name="category" value="<%=category%>"/>
 	      		</div>
 				
 				<div class="complete-btn-div">

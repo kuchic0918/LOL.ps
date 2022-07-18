@@ -162,11 +162,36 @@ public class BoardDao {
 			detail = new BoardDto(memberkey,title,content,writedate,good,bad,count,category,champName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return detail;
 	}
 	public void writeAction(int memberkey, String title, String content, String category, String champName) {
-		String sql = "insert into community values (memberkey,BNO_SEQ.nextval,title,content,sysdate,0,0,0,category,champName)";
-		
+		String sql = "insert into community values ( ? , BNO_SEQ.nextval, ? , ? , sysdate, 0, 0, 0, ? , ? )";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,memberkey);
+			pstmt.setString(2,title);
+			pstmt.setString(3,content);
+			pstmt.setString(4,category);
+			pstmt.setString(5,champName);
+			pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
