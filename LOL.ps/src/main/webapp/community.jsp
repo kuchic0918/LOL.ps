@@ -11,7 +11,7 @@
 	}else{
 		pageNum = Integer.parseInt(request.getParameter("page"));
 	}
-	String category = "자유 게시판";
+	String category = request.getParameter("category");
 	int startBno = pageNum * 15 - 14;
 	int endBno = pageNum * 15;
 	
@@ -38,9 +38,7 @@
     <script src="Js/jquery-3.6.0.min.js"></script>
     <script>
     	$(function(){
-    		$(".bottom-btn-in").on("click",function(){
-    			
-    		});
+    		
     	});
     </script>
 </head>
@@ -53,8 +51,8 @@
             <div class = "nav-item-container">
             	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="buildCommunity.jsp">빌드 연구소</a>
-                <a class="nav-items" href="../community/free.html">자유게시판</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
             <div class="sign-login">
 				<%
@@ -177,7 +175,7 @@
     		href = "";
     	}else{
     		firstPage = "bottom-btn-in";
-    		href = "buildCommunity.jsp?page=1";
+    		href = "community.jsp?category="+category+"&page=1";
     	}
     	%>
 		<a class="<%=firstPage %>" href="<%=href %>" id="first"><<</a>
@@ -192,7 +190,7 @@
 				act = "bottom-btn-in";
 			}
 		%>
-		<a class="<%=act%>" href="buildCommunity.jsp?page=<%=i %>"><%=i %></a>
+		<a class="<%=act%>" href="community.jsp?category=<%=category %>&page=<%=i %>"><%=i %></a>
 		<%
 		}
 		
@@ -201,7 +199,7 @@
 			href2 = "";
 		}else{
 			endPage = "bottom-btn-in";
-			href2 = "buildCommunity.jsp?page="+end;
+			href2 = "community.jsp?category="+category+"&page="+end;
 		}
 		%>
 		<a class="<%=endPage %>" href="<%=href2 %>" id="end">>></a>
