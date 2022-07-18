@@ -6,20 +6,11 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
-	session = request.getSession(false);
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 %>
 <!DOCTYPE html>
 <html>
 <%	
-	if(member==null) {
-		%>
-			<script>
-				alert('로그인 먼저 하세요.');
-				location.href = 'login.jsp';
-			</script>
-		<%
-	}
 	if("alright".equals((String)request.getAttribute("member"))) {
 		%>
 			<script>
@@ -51,9 +42,20 @@
 			</script>
 		<%
 	}
-	MemberDAO mDao = new MemberDAO();
-	MypageIntroduceDto mypageIntroduce = mDao.getMypageIntroduce(member.getMemberkey());
-	MypageIntroduceDto mypageImage = mDao.getMypageImage(member.getMemberkey());
+	MypageIntroduceDto mypageIntroduce = null;
+	MypageIntroduceDto mypageImage = null;
+	if(member==null) {
+		%>
+			<script>
+				alert('로그인 먼저 하세요.');
+				location.href = 'login.jsp';
+			</script>
+		<%
+	} else {
+		MemberDAO mDao = new MemberDAO();
+		mypageIntroduce = mDao.getMypageIntroduce(member.getMemberkey());
+		mypageImage = mDao.getMypageImage(member.getMemberkey());		
+	}
 %>
 <head>
 	<meta charset="UTF-8">

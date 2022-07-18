@@ -1,11 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="org.apache.catalina.tribes.membership.MemberImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "yg_ac_java.*"%>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <html>
 <%
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	if(member==null) {
+		%>
+			<script>
+				alert('로그인 먼저 하세요.');
+				location.href = 'login.jsp';
+			</script>
+		<%
+	}
 	String category = request.getParameter("category");
 	ChampRankDao dao = new ChampRankDao();
 	ArrayList<ChampNameDto> list = dao.getChampName();

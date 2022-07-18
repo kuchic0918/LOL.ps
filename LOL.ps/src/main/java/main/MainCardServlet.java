@@ -1,10 +1,7 @@
 package main;
 
-import java.io.IOException;	
+import java.io.IOException;		
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 import com.yg_ac.dao.MainCardDao;
-import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.MainCardDto;
 
 @WebServlet("/MainCardServlet")
@@ -27,11 +23,6 @@ public class MainCardServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Y_DBmanager db = new Y_DBmanager();
-		Connection conn = db.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
 		String champion_name = request.getParameter("name");
 		String champion_line = request.getParameter("line");
 		MainCardDto card = null;
