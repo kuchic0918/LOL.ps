@@ -11,6 +11,14 @@
 <!DOCTYPE html>
 <html>
 <%	
+	if((String)request.getAttribute("member")==null) {
+		%>
+			<script>
+				alert('로그인 먼저 하세요.');
+				location.href = 'login.jsp';
+			</script>
+		<%
+	}
 	if("alright".equals((String)request.getAttribute("member"))) {
 		%>
 			<script>

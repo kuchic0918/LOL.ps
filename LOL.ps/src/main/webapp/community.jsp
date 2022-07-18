@@ -32,7 +32,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>빌드 연구소</title>
+	<title>community</title>
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
@@ -81,7 +81,7 @@
     <div class="all-main">
         <div class="first-title"><%=category %></div>
         <div class="second-title">
-        	<a class="main-button" href="write-post.html">✎게시물 쓰기</a>
+        	<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
         	<form method="post">
         		<input class="main-input" spellcheck="false" placeholder="챔피언이름을 입력하세요"/>
         	</form>
@@ -100,7 +100,7 @@
            				<option>작성자</option>
            			</select>
            			<input class="contents-input" spellcheck="false" placeholder="게시물 검색"/>
-           			<button class="main-button">✎게시물쓰기</button>
+           			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
            		</div>
            	</div>
            	<div class="title-build">
@@ -130,7 +130,7 @@
           			<img class="champion-head" src="Images/profile/<%=writer.getImage()%>"/>
           		</span>
           		<span class="build1">
-          			 <%=dto.getTitle() %>
+          			 <%=dto.getTitle() %> <b style="color:blue;"> [0]</b>
           		</span>
           		<%
           		} else {
@@ -139,7 +139,7 @@
           			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
           		</span>
           		<span class="build1">
-          			 [<%=dto.getChampName()%>]<%=dto.getTitle() %>
+          			 [<%=dto.getChampName()%>]<%=dto.getTitle() %> <b style="color:blue;"> [0]</b>
           		</span>
 	           	<%
            		}
@@ -207,7 +207,7 @@
 		
 		%>
 		<span class="bottom-btn-in2">
-			<button class="main-button">✎게시물쓰기</button>
+			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
 		</span>
 		
 	</div>
