@@ -29,7 +29,7 @@
     	});
     </script>
 </head>
-<body>
+<body class="community-body">
 	<header class="all-header-mainnav header-mainnav">
         <div class="header-container">
             <a href="main.jsp">
