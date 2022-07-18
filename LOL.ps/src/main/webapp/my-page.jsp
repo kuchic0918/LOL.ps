@@ -6,12 +6,13 @@
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <%
+	session = request.getSession(false);
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
 %>
 <!DOCTYPE html>
 <html>
 <%	
-	if((String)request.getAttribute("member")==null) {
+	if(member==null) {
 		%>
 			<script>
 				alert('로그인 먼저 하세요.');
