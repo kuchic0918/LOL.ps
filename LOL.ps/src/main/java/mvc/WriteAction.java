@@ -1,6 +1,7 @@
 package mvc;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class WriteAction implements Action{
 		String champName = request.getParameter("champion");
 		
 		bDao.writeAction(memberkey, title, content, category, champName);
-		response.sendRedirect("community.jsp?category="+category);
+		response.sendRedirect("community.jsp?category="+URLEncoder.encode(category, "UTF-8"));
 	}
 
 }

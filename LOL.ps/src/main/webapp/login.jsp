@@ -6,7 +6,7 @@
 	if("wrong".equals((String) request.getAttribute("member"))) {
 		%>
 			<script>
-				alert('유효하지 않은 정보입니다.');
+				alert('다시 로그인 해주세요.');
 			</script>
 		<% 
 	} else if("passwordWrong".equals((String) request.getAttribute("member"))) {
@@ -90,10 +90,10 @@
 				alt="LOL.PS">
 			</a>
 			<div class="nav-item-container">
-				<a class="nav-items" href="notice/notice.html">공지사항</a> 
-				<a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a> 
-				<a class="nav-items" href="Community.jsp?category=빌드 연구소">빌드 연구소</a>
-                <a class="nav-items" href="Community.jsp?category=자유 게시판">자유 게시판</a>
+				<a class="nav-items" href="../notice/notice.html">공지사항</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
 			</div>
 			<div class="sign-login">
 				<a class="signin" href="signin.jsp">회원가입</a> <a class="login"

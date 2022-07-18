@@ -13,6 +13,8 @@
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
+	int lastBno = bDao.getFirstLastBno(dto.getCategory()).get(0);
+	int firstBno = bDao.getFirstLastBno(dto.getCategory()).get(bDao.getFirstLastBno(dto.getCategory()).size()-1);
 %>
 <html>
 <head>
@@ -23,11 +25,6 @@
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
-    <script>
-    	$(function(){
-    		
-    	});
-    </script>
 </head>
 <body class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -38,8 +35,8 @@
             <div class = "nav-item-container">
             	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="Community.jsp?category=빌드 연구소">빌드 연구소</a>
-                <a class="nav-items" href="Community.jsp?category=자유 게시판">자유 게시판</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
             <div class="sign-login">
 				<%
@@ -68,10 +65,11 @@
     <div class="all-main">
         <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
-        	<a class="main-button" href="write-post.html">✎게시물 쓰기</a>
-        	<form method="post">
-        		<input class="main-input" spellcheck="false" placeholder="챔피언이름을 입력하세요"/>
-        	</form>
+        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>">✎게시물 쓰기</a>
+        	<form action="Controller" method="get" id="search_form" autocomplete="off">
+				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+				<button style="opacity:0;" type="submit" name="command" value="search"></button>
+			</form>
         </div>
         <div style="clear: both;"></div>
     </div>
@@ -120,14 +118,35 @@
       		
       		<!-- 포스트하단 -->
            	<div class="content-function">
-           		<a style="padding-left:30px;" class="prev-next" href="#">←이전</a>
+           		<%
+           		if(bno==firstBno) {
+           		%>
+           		<a style="padding-left:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=bno-1%>">←이전</a>
+           		<%
+           		}else {
+           		%>
+           		<a style="padding-left:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=bno-1%>">←이전</a>
+           		<%
+           		}
+           		%>
            		
            		<div class="justify-content-start">
            			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&uarr;    </span>0</button>
            			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&darr;    </span>0</button>
            		</div>
            		
-           		<a style="padding-right:30px;" class="prev-next" href="#">다음→</a>
+           		<%
+           		if(bno==lastBno) {
+           		%>
+           		<a style="padding-right:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=bno+1%>">다음→</a>
+           		<%
+           		}else {
+           		%>
+           		<a style="padding-right:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=bno+1%>">다음→</a>
+           		<%
+           		}
+           		%>
+           		
            	</div>
         </div>
       	<div style="height:40px;"></div>
@@ -181,8 +200,8 @@
            		<button class="comment-regist" type="button">등록</button>
            	</div>
            	<div class="list-under-div">
-           		<a style="border-radius:6%;" class="list-under" href="write-post.html">게시물 쓰기</a>
-           		<a style="border-radius:10%;" class="list-under" href="build.html">목록</a>
+           		<a style="border-radius:6%;" class="list-under" href="write.jsp?category=<%=dto.getCategory()%>">게시물 쓰기</a>
+           		<a style="border-radius:10%;" class="list-under" href="community.jsp?category=<%=dto.getCategory()%>">목록</a>
      		</div>
      	</div>
     </main>

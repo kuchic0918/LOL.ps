@@ -1366,7 +1366,6 @@ p {
 .champ-community-board-list {
     padding: 8px 4px;
     cursor: pointer;
-    border-bottom: 1px solid #dbdde1;
 }
 
 .champ-community-board-item {
@@ -1852,6 +1851,15 @@ p {
 	font-size: 15px;
 	margin-top: auto;
 	margin-bottom: auto;
+}
+
+.prev-next-none {
+	color: rgb(242, 244, 247);
+	text-decoration: none;
+	font-size: 15px;
+	margin-top: auto;
+	margin-bottom: auto;
+	pointer-events: none;
 }
 
 .prev-next:hover {

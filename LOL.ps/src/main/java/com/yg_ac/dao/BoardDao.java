@@ -80,7 +80,6 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
-		
 		return cnt;
 	}
 	public String getImage(String champName) {
@@ -94,8 +93,9 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,champName);
 			rs = pstmt.executeQuery();
-			rs.next();
-			image = rs.getString("image");
+			if(rs.next()) {
+				image = rs.getString("image");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -193,5 +193,30 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
+	}
+	public ArrayList<Integer> getFirstLastBno(String category) {
+		ArrayList<Integer> get = new ArrayList<Integer>();
+		String sql = "select * from community where category = ? order by bno desc";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int bno = rs.getInt("bno");
+				get.add(bno);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
 	}
 }

@@ -6,6 +6,8 @@
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <%
+	StatisticsDao sDao = new StatisticsDao();
+	// 챔프 정보 가져오기
 	String champion_name;
 	String champion_line;
 	if((String) request.getAttribute("name") == null) {
@@ -17,9 +19,19 @@
 	}
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
-
+	// 챔프 게시판
+	int pageNum;
+	if(request.getParameter("page")==null) {
+		pageNum = 1;
+	} else {
+		pageNum = Integer.parseInt(request.getParameter("page"));
+	}
+	int startBno = pageNum * 15 - 14;
+	int endBno = pageNum * 15;
+	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+	list = sDao.getBoardList(champion_name);
+	int allList = sDao.getAllBoardList(champion_name);
 	//요약
-	StatisticsDao sDao = new StatisticsDao();
 	//챔피언 해드 이미지, 이름
 	ChampionSummaryHeadDto championNameImage = sDao.championSummaryHead(champion_name);
 	//높은 포지션 (라인 이름, 퍼센트)
@@ -931,8 +943,8 @@
 							$("#2CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('1');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){ 
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 			   });
 				$.ajax({
@@ -981,8 +993,8 @@
 							$("#3CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('2');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 			   });
 				$.ajax({
@@ -1038,8 +1050,8 @@
 							$("#4CoreCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('3');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){ 
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 			   });
 				$.ajax({
@@ -1083,8 +1095,8 @@
 							$("#skillMaster").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('4');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 				});
 				$.ajax({
@@ -1128,8 +1140,8 @@
 							$("#skillSeq").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('5');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 				});
 				$.ajax({
@@ -1198,8 +1210,8 @@
 							$("#runeCombine").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('6');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){ 
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 				});
 				$.ajax({
@@ -1247,8 +1259,8 @@
 							$("#runeShard").append(write);
 						}
 					},
-					error:function(r,s,e){ alert('7');
-						/* alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e); */
+					error:function(r,s,e){ 
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 				});
 			});
@@ -1489,29 +1501,29 @@
 			   $('#champ-nav4').addClass('champ-nav-active');
 			   $.ajax({
 				   	type:"get",
-					url:"PatchHistoryServlet",
+					url:"ChampCommunityServlet",
 					data:{"name":champName},
 					datatype:"json",
 					success:function(data){
 						var write = `<div id="champ-community">
 									    <div class = "champ-community-community-container">
 									        <div class = "champ-community-first-row">
-									            <h2 class = "champ-community-champ-name">블라디미르 게시판</h2>
-									            <a class = "champ-community-board-btn" href="community/write-post.html">
+									            <h2 class = "champ-community-champ-name">\${champName} 게시판</h2>
+									            <a class = "champ-community-board-btn" href="write.jsp?category=빌드 게시판">
 									                <span class = "icno-font">
 									                    <i class="fa-regular champ-community-fa-pen"></i>
 									                </span>
 									                <span>게시물 쓰기</span>
 									            </a>
 									        </div>
-									        <div class = "champ-community-board-header">
-									            <span class ="champ-community-board-champion">챔피언</span>
-									            <span class ="champ-community-board-title">제목</span>
-									            <span class ="champ-community-board-writer">작성자</span>
-									            <span class ="champ-community-board-date">날짜</span>
-									            <span class ="champ-community-board-count">조회</span>
-									            <span class ="champ-community-board-recommand">추천</span>
-									        </div>
+									        <div class="title-build">
+								           		<span style="padding-left:8px;">챔피언</span>
+								           		<span style="padding-left:8px;">제목</span>
+								           		<span style="padding-left:700px;">작성자</span>
+								           		<span style="padding-left:15px;">날짜</span>
+								           		<span style="padding-left:40px;">조회</span>
+								           		<span style="padding-left:5px;">추천</span>
+							          	 	</div>
 									        <div class ="champ-community-board-list-container">
 									            <div class = "champ-community-board-list" id="champCommunity">
 									            </div>
@@ -1529,7 +1541,7 @@
 									        </li>
 									    </ul>
 									    <div class = "champ-community-board-btn2" >
-									        <a class = "champ-community-btn-write" href="community/write-post.html">
+									        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 게시판">
 									            <i class="fa-regular fa-pen"></i>
 									            <span>게시물 쓰기</span>
 									        </a>
@@ -1537,19 +1549,25 @@
 								    </div>`;
 						$("#loadContents").html(write);
 						for(var i = 0;i < data.length;i++){
-							write = `<a class = "champ-community-board-item" href="community/community-post-build.html">
-					                    <span class = "champ-community-post-img">
-					                        <img src="img/icon.webp" style="width: 40px; height : 40px;"/>
-					                    </span>
-					                    <span class = "champ-community-board-detail-box">
-					                    	<span class ="champ-community-board-detail-title">[상남자의 라인, TOP] 이게 왜 좋은거지..? 화공탱 거드라 가렌
-					                    		<i class = "champ-community-board-detail-comment">[\${i}]</i>
-					                    	</span>
-					                    </span>
-					                    <span class = "champ-community-board-detail-writer">작성자 닉네임</span>
-					                    <span class = "champ-community-board-detail-date">2022-05-25</span>
-					                    <span class = "champ-community-board-detail-count">579</span>
-					                    <span class = "champ-community-board-detail-recommand">10</span>
+							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
+										<span class="build">
+			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
+			          					</span>
+			          					<span class="build1">
+			          			 			[\${data[i].champname}] \${data[i].title}<b style="color:blue;"> [0]</b>
+			          					</span>
+			          					<span class="build2" style="width:150px;">
+			                   				\${data[i].writer}
+				                   		</span>
+				                   		<span class="build2" style="width:100px;">
+				                   			\${data[i].writedate}
+				                   		</span>
+				                   		<span class="build2" style="width:30px;">
+				                   			\${data[i].like}
+				                   		</span>
+				                   		<span class="build2" style="width:30px">
+				                   			\${data[i].count}
+				                   		</span>
 					                </a>`;
 							$("#champCommunity").append(write);
 						}
@@ -1641,10 +1659,10 @@
 				<img src="Images/header-logo.webp" alt="LOL.PS">
 			</a>
 			<div class="nav-item-container">
-				<a class="nav-items" href="notice/notice.html">공지사항</a> <a
-					class="nav-items"  href="ChampRank.jsp">챔피언 랭킹</a> <a
-					class="nav-items" href="community/build.html">빌드게시판</a> <a
-					class="nav-items" href="community/free.html">자유게시판</a>
+				<a class="nav-items" href="../notice/notice.html">공지사항</a>
+                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
 			</div>
 			<div class="sign-login">
 				<%

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.yg_ac.dto.BoardDto;
 import com.yg_ac.dto.ChampBasicSkillDto;
 import com.yg_ac.dto.ChampBasicStatDto;
 import com.yg_ac.dto.ChampMatchListDto;
@@ -1889,5 +1890,74 @@ public class StatisticsDao {
 			}
 			
 			return getChampionHighLine;
+		}
+	// 챔프 히스토리
+		public ArrayList<BoardDto> getBoardList(String champname){
+			ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = "select * " + 
+					"from( " + 
+					"    select rownum rnum, b1.* " + 
+					"    from( " + 
+					"        select * " + 
+					"        from community " + 
+					"        where category = '빌드 연구소' " +
+					"		 and champname = ? " +
+					"        order by bno desc) b1)";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, champname);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					int memberkey = rs.getInt("memberkey");
+					int bno = rs.getInt("bno");
+					String title = rs.getString("title");
+					String content = rs.getString("content");
+					String writedate = rs.getString("writedate");
+					int good = rs.getInt("good");
+					int bad = rs.getInt("bad");
+					int count = rs.getInt("count");
+					String champName = rs.getString("champname");
+					list.add(new BoardDto(memberkey,bno,title,content,writedate,good,bad,count,champName));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					rs.close();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return list;
+		}
+	// 챔프 히스토리 전체 글
+		public int getAllBoardList(String category){
+			int cnt=0;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = "select count(*) cnt from community where category = ? ";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, category);
+				rs = pstmt.executeQuery();
+				rs.next();
+				cnt = rs.getInt("cnt");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					rs.close();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return cnt;
 		}
 }

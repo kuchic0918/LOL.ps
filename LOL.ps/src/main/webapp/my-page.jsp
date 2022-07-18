@@ -373,10 +373,10 @@
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
-            	<a class="nav-items" href="notice/notice.html">공지사항</a>
+            	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="Community.jsp?category=빌드 연구소">빌드 연구소</a>
-                <a class="nav-items" href="Community.jsp?category=자유 게시판">자유 게시판</a>
+                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
+                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
             </div>
 			<div class="sign-login">
 				<%
@@ -392,7 +392,8 @@
             			<form action= "my-page.jsp" >
             				<input class="signin" type="submit" value="마이페이지"/>
             			</form>
-		                <form action = "login.jsp" >
+		                <form action = "Controller" >
+		                	<input type="hidden" name="command" value="login"/>
 		                	<input class="login" type="submit" value="로그아웃"/>
 	                	</form>     
             	<%

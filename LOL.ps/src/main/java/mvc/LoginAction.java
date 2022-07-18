@@ -18,7 +18,7 @@ public class LoginAction implements Action {
 		MemberDAO mDao = new MemberDAO();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
+		session.removeAttribute("memberInfo");
 		if (mDao.loginvalid(email, password)) {	
 			// 로그인 o
 			MemberDTO member = mDao.findByEmailPwMemberInfo(email, password);	 	
