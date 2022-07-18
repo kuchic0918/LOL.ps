@@ -138,7 +138,7 @@
 						<h3 class="member-h3">소셜계정으로 로그인</h3>
 						<ul class="member-ul">
 							<li class="member-li"><a href="javascript:kakaoLogin();"><img
-									src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;" /></a>
+									src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 100px;" /></a>
 								<script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
 								 		
