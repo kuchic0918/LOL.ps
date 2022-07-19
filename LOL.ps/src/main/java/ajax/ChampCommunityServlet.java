@@ -1,6 +1,6 @@
 package ajax;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -14,7 +14,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.yg_ac.dao.BoardDao;
-import com.yg_ac.dao.MemberDAO;
 import com.yg_ac.dao.StatisticsDao;
 import com.yg_ac.dto.BoardDto;
 import com.yg_ac.dto.MemberDTO;
@@ -27,7 +26,6 @@ public class ChampCommunityServlet extends HttpServlet {
 		String champion_name = request.getParameter("name");
 		StatisticsDao sDao = new StatisticsDao();
 		BoardDao bDao = new BoardDao();
-		MemberDAO mDao = new MemberDAO();
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		String image = bDao.getImage(champion_name);
 		list = sDao.getBoardList(champion_name);
@@ -41,6 +39,7 @@ public class ChampCommunityServlet extends HttpServlet {
 		for(BoardDto dto:list) {
 			JSONObject obj = new JSONObject();
 			int like = dto.getGood() - dto.getBad();
+			if(like<0) {like = 0;}
 			writer = bDao.getWriter(dto.getMemberkey());
 			obj.put("writer", writer.getNickname());
 			obj.put("bno", dto.getBno());
