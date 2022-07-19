@@ -200,9 +200,6 @@
 		}
 		%>
 		<a class="<%=endPage %>" href="<%=href2 %>" id="end">>></a>
-		<%
-		
-		%>
 		<span class="bottom-btn-in2">
 			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
 		</span>
