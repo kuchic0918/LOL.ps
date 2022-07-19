@@ -43,6 +43,9 @@ public class ActionFactory {
 		case "write":
 			action = new WriteAction();
 			break;
+		case "communitySearch" :
+			action = new CommunitySearchAction();
+			break;
 		}
 		return action;
 	}

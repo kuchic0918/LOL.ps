@@ -12,8 +12,7 @@ public class BoardDto {
 	private String category;
 	private String champName;
 	
-	public BoardDto(int memberkey, int bno, String title, String content, String writedate, int good, int bad,
-			int count, String champName) {
+	public BoardDto(int memberkey, int bno, String title, String content, String writedate, int good, int bad, int count, String champName) {
 		this.memberkey = memberkey;
 		this.bno = bno;
 		this.title = title;
@@ -30,8 +29,7 @@ public class BoardDto {
 		this.bno = bno;
 	}
 
-	public BoardDto(int memberkey, String title, String content, String writedate, int good, int bad, int count,
-			String category, String champName) {
+	public BoardDto(int memberkey, String title, String content, String writedate, int good, int bad, int count, String category, String champName) {
 		super();
 		this.memberkey = memberkey;
 		this.title = title;

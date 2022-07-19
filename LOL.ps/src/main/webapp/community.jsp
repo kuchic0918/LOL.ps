@@ -12,7 +12,12 @@
 	}else{
 		pageNum = Integer.parseInt(request.getParameter("page"));
 	}
-	String category = request.getParameter("category");
+	String category = null;
+	if((String) request.getAttribute("category")==null) {
+		category = request.getParameter("category");
+	} else {
+		category = (String) request.getAttribute("category");	
+	}
 	int startBno = pageNum * 15 - 14;
 	int endBno = pageNum * 15;
 	
@@ -22,13 +27,32 @@
 	}else {
 		categoryImage = "챔피언";
 	}
-	
-	BoardDao bDao = new BoardDao();
-	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
-	list = bDao.getBoardList(category, startBno, endBno);
-	int allList = bDao.getAllBoardList(category);
 %>
 <html>
+<%
+	BoardDao bDao = new BoardDao();
+	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+	int allList = 0;
+	if("title".equals((String) request.getAttribute("search"))) {
+		String name = (String) request.getAttribute("titleWriter");
+		String search = (String) request.getAttribute("searchWrite");
+		list = bDao.getBoardListTitle(category, search, startBno, endBno);
+		allList = bDao.getAllBoardListTitle(category, search);
+		if(list==null) {
+			%>
+			<script>
+				alert('검색 결과가 없습니다.');
+				location.href = 'community.jsp?category=<%=category%>'; 
+			</script>
+			<%
+		}
+	}else if("writer".equals((String) request.getAttribute("search"))) {
+	
+	}else {
+		list = bDao.getBoardList(category, startBno, endBno);
+		allList = bDao.getAllBoardList(category);
+	}
+%>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,11 +116,15 @@
            	<div class="firstDiv">
            		<div class="firstDivLeft"><%=category %></div>
            		<div class="justify-content-start">
-           			<select class="select">
-           				<option>제목</option>
-           				<option>작성자</option>
-           			</select>
-           			<input class="contents-input" spellcheck="false" placeholder="게시물 검색"/>
+           			<form action="Controller" method="GET">
+	           			<select class="select" name="titleWriter">
+	           				<option value="title">제목</option>
+	           				<option value="writer">작성자</option>
+	           			</select>
+	           			<input class="contents-input" name="searchWrite" spellcheck="false" placeholder="게시물 검색"/>
+	           			<input type="hidden" name="category" value="<%=category%>"/>
+	           			<button type="submit" name="command" value="communitySearch" style="display : none;"></button>
+	           		</form>
            			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
            		</div>
            	</div>

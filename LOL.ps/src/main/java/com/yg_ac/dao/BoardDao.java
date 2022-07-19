@@ -219,4 +219,76 @@ public class BoardDao {
 		}
 		return get;
 	}
+	public ArrayList<BoardDto> getBoardListTitle(String category, String name, int startBno, int endBno){
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * " + 
+				"from( " + 
+				"    select rownum rnum, b1.* " + 
+				"    from( " + 
+				"        select * " + 
+				"        from community " + 
+				"        where category = ? " + 
+				"        and title = ? " + 
+				"        order by bno desc) b1) " + 
+				"where rnum >= ? " + 
+				"and rnum <= ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setString(2, name);
+			pstmt.setInt(3, startBno);
+			pstmt.setInt(4, endBno);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int memberkey = rs.getInt("memberkey");
+				int bno = rs.getInt("bno");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String writedate = rs.getString("writedate");
+				int good = rs.getInt("good");
+				int bad = rs.getInt("bad");
+				int count = rs.getInt("count");
+				String champName = rs.getString("champname");
+				list.add(new BoardDto(memberkey,bno,title,content,writedate,good,bad,count,champName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	public int getAllBoardListTitle(String category, String name){
+		int cnt=0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) cnt from community where category = ? title = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setString(2, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			};
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return cnt;
+	}
 }
