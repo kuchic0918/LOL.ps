@@ -100,7 +100,7 @@
            			<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
            		</div>
            	</div>
-           	<div class="title-build">
+           	<div class="title-build" style="width:960px;">
            		<span style="padding-left:8px;"><%=categoryImage%></span>
            		<span style="padding-left:8px;">제목</span>
            		<span style="padding-left:660px;">작성자</span>
