@@ -1554,7 +1554,7 @@
 			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
 			          					</span>
 			          					<span class="build1">
-			          			 			[\${data[i].champname}] \${data[i].title}<b style="color:blue;"> [0]</b>
+			          			 			<b>[\${data[i].champname}] \${data[i].title}</b><b style="color:blue;"> [0]</b>
 			          					</span>
 			          					<span class="build2" style="width:150px;">
 			                   				\${data[i].writer}

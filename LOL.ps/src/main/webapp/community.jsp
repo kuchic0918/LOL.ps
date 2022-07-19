@@ -136,7 +136,7 @@
           			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
           		</span>
           		<span class="build1">
-          			 [<%=dto.getChampName()%>]<%=dto.getTitle() %> <b style="color:blue;"> [0]</b>
+          			 <b>[<%=dto.getChampName()%>]<%=dto.getTitle() %></b> <b style="color:blue;"> [0]</b>
           		</span>
 	           	<%
            		}
