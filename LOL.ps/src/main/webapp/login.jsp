@@ -143,8 +143,6 @@
 					<div class="member-sign-sns signin">
 						<h3 class="member-h3">소셜계정으로 로그인</h3>
 						<ul class="member-ul">
-							<li class="member-li"><a href="javascript:kakaoLogin();"><img
-									src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 100px;" /></a>
 							<li class="member-li">
 								<a href="javascript:kakaoLogin();">
 									<img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 25px;" />
