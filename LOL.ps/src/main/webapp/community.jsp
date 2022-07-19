@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.net.URLDecoder" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
@@ -36,11 +37,6 @@
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
-    <script>
-    	$(function(){
-    		
-    	});
-    </script>
 </head>
 <body  class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -82,9 +78,10 @@
         <div class="first-title"><%=category %></div>
         <div class="second-title">
         	<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
-        	<form method="post">
-        		<input class="main-input" spellcheck="false" placeholder="챔피언이름을 입력하세요"/>
-        	</form>
+        	<form action="Controller" method="get" id="search_form" autocomplete="off">
+				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
+				<button style="opacity:0;" type="submit" name="command" value="search"></button>
+			</form>
         </div>
         <div style="clear: both;"></div>
     </div>

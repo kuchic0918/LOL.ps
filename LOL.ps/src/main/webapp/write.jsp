@@ -1,11 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="org.apache.catalina.tribes.membership.MemberImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import = "yg_ac_java.*"%>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <html>
 <%
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	if(member==null) {
+		%>
+			<script>
+				alert('로그인 먼저 하세요.');
+				location.href = 'login.jsp';
+			</script>
+		<%
+	}
 	String category = request.getParameter("category");
 	ChampRankDao dao = new ChampRankDao();
 	ArrayList<ChampNameDto> list = dao.getChampName();
@@ -88,7 +99,7 @@
 	           		if(category.equals("빌드 연구소")) {
 	           		%>
            			<span style="font-size:15px;"><b>챔피언</b></span>
-	           			<select style="width:700px; border-color:rgb(126, 155, 255);" class="input-title">
+	           			<select style="width:700px; border-color:rgb(126, 155, 255);" class="input-title" name="champion">
 	           				<%
 	           				for(int i=0; i<list.size(); i++) {
 		      				%>
@@ -109,7 +120,8 @@
 	      				<div style="height:20px;"></div>
 						<!-- form 안에 에디터를 사용하는 경우 (보통 이경우를 많이 사용하는듯)-->
 						<textarea style="resize: none;" id="summernote" class="summernote" name="editordata"></textarea>
-				</div>
+					</div>
+					<input type="hidden" name="category" value="<%=category%>"/>
 	      		</div>
 				
 				<div class="complete-btn-div">

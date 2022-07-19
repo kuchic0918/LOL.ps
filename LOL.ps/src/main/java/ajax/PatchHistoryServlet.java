@@ -2,9 +2,6 @@ package ajax;
 
 import java.io.IOException;	
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -17,7 +14,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.yg_ac.dao.StatisticsDao;
-import com.yg_ac.dao.Y_DBmanager;
 import com.yg_ac.dto.ChampPatchHistoryDto;
 
 /**
@@ -33,11 +29,6 @@ public class PatchHistoryServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String champion_name = request.getParameter("name");
-		
-		Y_DBmanager db = new Y_DBmanager();
-		Connection conn = db.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		
 		StatisticsDao patchHistory = new StatisticsDao();
 		ArrayList<ChampPatchHistoryDto> patchHistoryList = new ArrayList<ChampPatchHistoryDto>();

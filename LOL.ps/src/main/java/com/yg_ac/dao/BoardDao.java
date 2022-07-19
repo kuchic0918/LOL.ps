@@ -80,7 +80,6 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
-		
 		return cnt;
 	}
 	public String getImage(String champName) {
@@ -94,8 +93,9 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,champName);
 			rs = pstmt.executeQuery();
-			rs.next();
-			image = rs.getString("image");
+			if(rs.next()) {
+				image = rs.getString("image");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -162,11 +162,61 @@ public class BoardDao {
 			detail = new BoardDto(memberkey,title,content,writedate,good,bad,count,category,champName);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return detail;
 	}
 	public void writeAction(int memberkey, String title, String content, String category, String champName) {
-		String sql = "insert into community values (memberkey,BNO_SEQ.nextval,title,content,sysdate,0,0,0,category,champName)";
-		
+		String sql = "insert into community values ( ? , BNO_SEQ.nextval, ? , ? , sysdate, 0, 0, 0, ? , ? )";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,memberkey);
+			pstmt.setString(2,title);
+			pstmt.setString(3,content);
+			pstmt.setString(4,category);
+			pstmt.setString(5,champName);
+			pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<Integer> getFirstLastBno(String category) {
+		ArrayList<Integer> get = new ArrayList<Integer>();
+		String sql = "select * from community where category = ? order by bno desc";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int bno = rs.getInt("bno");
+				get.add(bno);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
 	}
 }

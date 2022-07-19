@@ -18,7 +18,6 @@ public class PasswordChangeAction implements Action {
 		String newPW= request.getParameter("newPw");
 		HttpSession session = request.getSession(false);
 		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-		
 		MemberDAO mypagePasswordChangeDao = new MemberDAO();
 		if(nowPW.equals(member.getPw())) {
 			mypagePasswordChangeDao.getMypagePasswordChangeDao(member.getMemberkey(), newPW);
