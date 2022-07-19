@@ -33,7 +33,7 @@
 	BoardDao bDao = new BoardDao();
 	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 	int allList = 0;
-	if("title".equals((String) request.getAttribute("search"))) {
+	if("title".equals((String) request.getAttribute("titleWriter"))) {
 		String name = (String) request.getAttribute("titleWriter");
 		String search = (String) request.getAttribute("searchWrite");
 		list = bDao.getBoardListTitle(category, search, startBno, endBno);
