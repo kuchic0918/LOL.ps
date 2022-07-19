@@ -24,11 +24,14 @@ public class ChampCommunityServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String champion_name = request.getParameter("name");
+		int startBno = Integer.parseInt(request.getParameter("startBno"));
+		int endBno = Integer.parseInt(request.getParameter("endBno"));
+		
 		StatisticsDao sDao = new StatisticsDao();
 		BoardDao bDao = new BoardDao();
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		String image = bDao.getImage(champion_name);
-		list = sDao.getBoardList(champion_name);
+		list = sDao.getBoardList(champion_name,startBno,endBno);
 		MemberDTO writer = null;
 		
 		response.setCharacterEncoding("UTF-8");

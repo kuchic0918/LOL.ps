@@ -1738,6 +1738,12 @@ p {
 	padding-top: 100px;
 	margin: auto;
 }
+.bottom-btn2 {
+	display: flex;
+	justify-content: center;
+	width: 1000px;
+	margin: auto;
+}
 
 .bottom-btn-in {
 	display: block;
@@ -1749,7 +1755,7 @@ p {
 	cursor: pointer;
 	border: none;
 	color: rgb(67, 91, 171);
-	background-color: transparent;
+	background-color: #fff;
 }
 
 .bottom-btn-in-off {
@@ -1772,10 +1778,10 @@ p {
 	border-radius:50%;
 	padding: 4px;
 	text-align: center;
-	cursor: pointer;
 	border: none;
 	color: #fff;
 	background-color: blue;
+	pointer-events:none;
 }
 
 .bottom-btn-in:hover {
