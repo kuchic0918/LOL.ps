@@ -25,6 +25,9 @@ public class ActionFactory {
 		case "naverLogin" :
 			action = new NaverLoginAction();
 			break;
+		case "googleLogin" :
+			action = new GoogleLoginAction();
+			break;
 		case "login" :
 			action = new LoginAction();
 			break;

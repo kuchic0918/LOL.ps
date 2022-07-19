@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
+
 <% 
 	if("wrong".equals((String) request.getAttribute("member"))) {
 		%>
@@ -49,6 +51,9 @@
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
 	rel='stylesheet' type='text/css'>
 <script src="Js/jquery-3.6.0.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src='https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js'></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -141,11 +146,11 @@
 					</div>
 
 					<div class="member-sign-sns signin">
-						<h3 class="member-h3">소셜계정으로 로그인</h3>
+						<h3 class="member-h3" style = "margin-left : 38px;" >소셜계정으로 로그인</h3>
 						<ul class="member-ul">
 							<li class="member-li">
 								<a href="javascript:kakaoLogin();">
-									<img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 25px;" />
+									<img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 50px;" />
 								</a> 
 								<script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
@@ -159,7 +164,7 @@
 								                        success: (res) => {
 								                            const kakao_account = res.kakao_account;
 								                            console.log(kakao_account);
-								                            var kakaoEmail =res.kakao_account.email +"Kakao";
+								                            var kakaoEmail =res.kakao_account.email ;
 								                            var kakaoNickname =res.kakao_account.profile.nickname;
 								                            location.href = "Controller?command=kakaoLogin&kakaoEmail="+kakaoEmail+"&kakaoNickname="+kakaoNickname;
 								 				}
@@ -176,14 +181,51 @@
 										type="text/javascript">
 											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/naverCallback.jsp");
 											  	var state = naver_id_login.getUniqState();
-											  	naver_id_login.setButton("white", 2,40);
+											  	naver_id_login.setButton("green", 3,30);
 											  	naver_id_login.setDomain("http://localhost:9090/LOL.ps/login.jsp");
 											  	naver_id_login.setState(state);
 // 											  	naver_id_login.setPopup();
 											  	naver_id_login.init_naver_id_login();
   										</script>
 							</a></li>
-
+							<li class = "member-li">
+	                            	<script>
+								        function handleCredentialResponse(response) {
+								        	const responsePayload = parseJwt(response.credential);
+								        	console.log("ID: " + responsePayload.sub);
+								            console.log('Full Name: ' + responsePayload.name);
+								            console.log('Given Name: ' + responsePayload.given_name);
+								            console.log('Family Name: ' + responsePayload.family_name);
+								            console.log("Image URL: " + responsePayload.picture);
+								            console.log("Email: " + responsePayload.email);
+								            var googleEmail = responsePayload.email;
+								            var googleNickname = responsePayload.name;
+								            location.href = "Controller?command=googleLogin&googleEmail="+googleEmail+"&googleNickName="+googleNickname;
+								            
+								        }
+								        function parseJwt (token) {
+								            var base64Url = token.split('.')[1];
+								            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+								            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+								                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+								            }).join(''));
+								
+								            return JSON.parse(jsonPayload);
+								        };
+								        window.onload = function () {
+								          google.accounts.id.initialize({
+								            client_id: "617468967353-01kodva3scdm890l5ahl1t02rm12b42h.apps.googleusercontent.com",
+								            callback: handleCredentialResponse
+								          });
+								          google.accounts.id.renderButton(
+								            document.getElementById("buttonDiv"),
+								            { theme: "outline", size: "middle" }  // customization attributes
+								          );
+								          google.accounts.id.prompt(); // also display the One Tap dialog
+								        }
+							    </script>
+							    <div id="buttonDiv"></div> 
+	                            </li>
 
 						</ul>
 					</div>
