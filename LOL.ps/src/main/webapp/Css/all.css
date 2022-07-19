@@ -3526,3 +3526,7 @@ p {
     margin-right: 0.7em;
     margin-left: 0.2em;
 }
+#naver_id_login img {
+	width:204px;
+	height:50px;
+}
