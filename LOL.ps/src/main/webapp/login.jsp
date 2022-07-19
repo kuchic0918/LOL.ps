@@ -5,40 +5,40 @@
 <% 
 	if("wrong".equals((String) request.getAttribute("member"))) {
 		%>
-			<script>
+<script>
 				alert('다시 로그인 해주세요.');
 			</script>
-		<% 
+<% 
 	} else if("passwordWrong".equals((String) request.getAttribute("member"))) {
 		%>
-			<script>
+<script>
 				alert('비밀번호가 올바르지 않습니다.');
 			</script>
-		<%
+<%
 	} else if("emailWrong".equals((String) request.getAttribute("member"))) {
 		%>
-			<script>
+<script>
 				alert('이메일이 올바르지 않습니다.');
 			</script>
-		<%
+<%
 	} else if("passwordAlright".equals((String) request.getAttribute("mypage"))) {
 		%>
-			<script>
+<script>
 				alert('비밀번호가 변경되었습니다. 다시로그인 해주세요.');
 			</script>
-		<%
+<%
 	} else if("secession".equals((String) request.getAttribute("mypage"))) {
 		%>
-			<script>
+<script>
 				alert('회원탈퇴.');
 			</script>
-	<%
+<%
 	} else if("success".equals((String) request.getAttribute("signin"))) {
 		%>
-			<script>
+<script>
 				alert("회원가입이 완료되었습니다. 로그인 해주세요.");
 			</script>
-		<% 	
+<% 	
 	}
 %>
 <head>
@@ -90,10 +90,10 @@
 				alt="LOL.PS">
 			</a>
 			<div class="nav-item-container">
-				<a class="nav-items" href="../notice/notice.html">공지사항</a>
-                <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
-                <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
-                <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
+				<a class="nav-items" href="../notice/notice.html">공지사항</a> <a
+					class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a> <a
+					class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a> <a
+					class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
 			</div>
 			<div class="sign-login">
 				<a class="signin" href="signin.jsp">회원가입</a> <a class="login"
@@ -116,20 +116,26 @@
 				<div class="member-row">
 					<div class="member-email_login_box">
 						<h3 class="member-h3">이메일 로그인</h3>
-						<form class="member-form" method="post" action="Controller" novalidate="novalidate">
-							<input type="hidden" name="csrfmiddlewaretoken" value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
+						<form class="member-form" method="post" action="Controller"
+							novalidate="novalidate">
+							<input type="hidden" name="csrfmiddlewaretoken"
+								value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
 							<div class="member-form-group">
-								<label class="member-label" for="id_email">이메일 주소</label> 
-								<input required type="email" name="email" class="member-form-control" placeholder="gamer@lol.ps" id="id_email">
+								<label class="member-label" for="id_email">이메일 주소</label> <input
+									required type="email" name="email" class="member-form-control"
+									placeholder="gamer@lol.ps" id="id_email">
 							</div>
 							<div class="member-form-group">
-								<label class="member-label" for="id_password">비밀번호</label> 
-								<input required type="password" name="password" class="member-form-control" placeholder="비밀번호" id="id_password">
+								<label class="member-label" for="id_password">비밀번호</label> <input
+									required type="password" name="password"
+									class="member-form-control" placeholder="비밀번호" id="id_password">
 							</div>
-							<button type="submit" class="member-btn-theme member-btn-big" name="command" value="login">이메일 계정 로그인</button>
+							<button type="submit" class="member-btn-theme member-btn-big"
+								name="command" value="login">이메일 계정 로그인</button>
 							<div class="member-text-center">
-								<a href="#" class="member-btn-light-theme member-btn-small">이메일 찾기</a>
-								<a href="#" class="member-btn-light-theme member-btn-small">비밀번호 찾기</a>
+								<a href="#" class="member-btn-light-theme member-btn-small">이메일
+									찾기</a> <a href="#" class="member-btn-light-theme member-btn-small">비밀번호
+									찾기</a>
 							</div>
 						</form>
 					</div>
@@ -137,14 +143,13 @@
 					<div class="member-sign-sns signin">
 						<h3 class="member-h3">소셜계정으로 로그인</h3>
 						<ul class="member-ul">
-							<li class="member-li"><a href="javascript:kakaoLogin();"><img
-									src="./kakao_login.png" alt="카카오계정 로그인" style="height: 100px;" /></a>
+							<li class="member-li">
+								<a href="javascript:kakaoLogin();">
+									<img src="Images/kakao_login_medium_narrow.png" alt="카카오계정 로그인" style="height: 25px;" />
+								</a> 
 								<script type="text/javascript">
 								 	 window.Kakao.init('e1ef84940dda0239cd6f5ad9c860e5b6');
-								 		
 								 		function kakaoLogin(){
-								 			
-								 	
 								 			window.Kakao.Auth.login({
 								 				scope:'account_email , profile_nickname',
 								 				success:function(response) {
@@ -165,7 +170,8 @@
 								 			}
 								 		});
 								 		}
-								 	</script></li>
+							 	</script>
+							</li>
 							<li class="member-li"><a id="naver_id_login"> <script
 										type="text/javascript">
 											  	var naver_id_login = new naver_id_login("79hXuwg9931gTF0Q5VRD", "http://localhost:9090/LOL.ps/naverCallback.jsp");
