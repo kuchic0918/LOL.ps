@@ -1,4 +1,4 @@
-package com.yg_ac.dao;
+		package com.yg_ac.dao;
 
 import java.sql.Connection;			
 import java.sql.PreparedStatement;
@@ -1936,14 +1936,14 @@ public class StatisticsDao {
 			return list;
 		}
 	// 챔프 히스토리 전체 글
-		public int getAllBoardList(String category){
+		public int getAllBoardList(String champName){
 			int cnt=0;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
-			String sql = "select count(*) cnt from community where category = ? ";
+			String sql = "select count(*) cnt from community where champname = ? ";
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, category);
+				pstmt.setString(1, champName);
 				rs = pstmt.executeQuery();
 				rs.next();
 				cnt = rs.getInt("cnt");

@@ -1738,6 +1738,12 @@ p {
 	padding-top: 100px;
 	margin: auto;
 }
+.bottom-btn2 {
+	display: flex;
+	justify-content: center;
+	width: 1000px;
+	margin: auto;
+}
 
 .bottom-btn-in {
 	display: block;

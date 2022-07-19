@@ -1529,17 +1529,11 @@
 									            </div>
 											</div>
 										</div>
-										<ul class = "champ-community-page-box">
-									        <li class="champ-community-page-back">
-									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
-									        </li>
-									        <li class = "champ-community-page-active">
-									            <span class = "champ-community-page-link2" aria-label="CurremtPage" title="Curremt Page"></span>
-									        </li>
-									        <li class = "champ-community-page-back">
-									            <span class = "champ-community-page-link" aria-hidden="true" title="Curremt Page"></span>
-									        </li>
-									    </ul>
+										<div class="bottom-btn2">
+											<a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1" id="first"><<</a>
+									        <a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1">1</a>
+									        <a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1" id="end">>></a>
+									    </div>
 									    <div class = "champ-community-board-btn2" >
 									        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 게시판">
 									            <i class="fa-regular fa-pen"></i>
