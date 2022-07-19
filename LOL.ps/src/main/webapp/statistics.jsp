@@ -360,8 +360,223 @@
 					}
 				});
 		   	});
-		    
-   		 });
+		    $(document).on("click","#first",function(){
+		    	var champName = "<%=champion_name%>";
+		    	var pageNum = 1;
+		    	var startBno = 1;
+		    	var endBno = 5;
+		    	var write = "";
+		    	$("#champCommunity").html(write);
+		    	$.ajax({
+				   	type:"get",
+					url:"ChampCommunityServlet",
+					data:{"name":champName,"startBno":startBno,"endBno":endBno},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i < data.length;i++){
+							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
+										<span class="build">
+			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
+			          					</span>
+			          					<span class="build1">
+			          			 			[\${data[i].champname}] \${data[i].title}<b style="color:blue;"> [0]</b>
+			          					</span>
+			          					<span class="build2" style="width:150px;">
+			                   				\${data[i].writer}
+				                   		</span>
+				                   		<span class="build2" style="width:100px;">
+				                   			\${data[i].writedate}
+				                   		</span>
+				                   		<span class="build2" style="width:30px;">
+				                   			\${data[i].like}
+				                   		</span>
+				                   		<span class="build2" style="width:30px">
+				                   			\${data[i].count}
+				                   		</span>
+					                </a>`;
+							$("#champCommunity").append(write);
+						}
+						write = "";
+						$(".bottom-btn2").html(write);
+						var clas = "bottom-btn-in";
+						for(var i=0;i<=<%=endPage%>+1;i++){
+							if(i==0){
+								if(pageNum==1){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="first"><<</button>`;
+								$(".bottom-btn2").append(write);
+							}else if(i==<%=endPage%>+1){
+								if(pageNum==<%=endPage%>){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="end">>></button>`;
+								$(".bottom-btn2").append(write);
+							}else{
+								if(i==pageNum){
+									clas = "bottom-btn-in-active";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="pageBtn" value="\${i}">\${i}</button>`;
+								$(".bottom-btn2").append(write);
+							}
+						}
+					},
+					error: function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			   });
+		    });
+		    $(document).on("click","#end",function(){
+		    	var champName = "<%=champion_name%>";
+		    	var pageNum = <%=endPage%>;
+		    	var startBno = pageNum * 5 - 4;
+		    	var endBno = pageNum * 5;
+		    	var write = "";
+		    	$("#champCommunity").html(write);
+		    	$.ajax({
+				   	type:"get",
+					url:"ChampCommunityServlet",
+					data:{"name":champName,"startBno":startBno,"endBno":endBno},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i < data.length;i++){
+							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
+										<span class="build">
+			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
+			          					</span>
+			          					<span class="build1">
+			          			 			[\${data[i].champname}] \${data[i].title}<b style="color:blue;"> [0]</b>
+			          					</span>
+			          					<span class="build2" style="width:150px;">
+			                   				\${data[i].writer}
+				                   		</span>
+				                   		<span class="build2" style="width:100px;">
+				                   			\${data[i].writedate}
+				                   		</span>
+				                   		<span class="build2" style="width:30px;">
+				                   			\${data[i].like}
+				                   		</span>
+				                   		<span class="build2" style="width:30px">
+				                   			\${data[i].count}
+				                   		</span>
+					                </a>`;
+							$("#champCommunity").append(write);
+						}
+						write = "";
+						$(".bottom-btn2").html(write);
+						var clas = "bottom-btn-in";
+						for(var i=0;i<=<%=endPage%>+1;i++){
+							if(i==0){
+								if(pageNum==1){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="first"><<</button>`;
+								$(".bottom-btn2").append(write);
+							}else if(i==<%=endPage%>+1){
+								if(pageNum==<%=endPage%>){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="end">>></button>`;
+								$(".bottom-btn2").append(write);
+							}else{
+								if(i==pageNum){
+									clas = "bottom-btn-in-active";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="pageBtn" value="\${i}">\${i}</button>`;
+								$(".bottom-btn2").append(write);
+							}
+						}
+					},
+					error: function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+		    	});
+		    });
+		    $(document).on("click","#pageBtn",function(){
+		    	var champName = "<%=champion_name%>";
+		    	var pageNum = $(this).val();
+		    	var startBno = pageNum * 5 - 4;
+		    	var endBno = pageNum * 5;
+		    	var write = "";
+		    	$("#champCommunity").html(write);
+		    	$.ajax({
+				   	type:"get",
+					url:"ChampCommunityServlet",
+					data:{"name":champName,"startBno":startBno,"endBno":endBno},
+					datatype:"json",
+					success:function(data){
+						for(var i = 0;i < data.length;i++){
+							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
+										<span class="build">
+			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
+			          					</span>
+			          					<span class="build1">
+			          			 			[\${data[i].champname}] \${data[i].title}<b style="color:blue;"> [0]</b>
+			          					</span>
+			          					<span class="build2" style="width:150px;">
+			                   				\${data[i].writer}
+				                   		</span>
+				                   		<span class="build2" style="width:100px;">
+				                   			\${data[i].writedate}
+				                   		</span>
+				                   		<span class="build2" style="width:30px;">
+				                   			\${data[i].like}
+				                   		</span>
+				                   		<span class="build2" style="width:30px">
+				                   			\${data[i].count}
+				                   		</span>
+					                </a>`;
+							$("#champCommunity").append(write);
+						}
+						write = "";
+						$(".bottom-btn2").html(write);
+						var clas = "bottom-btn-in";
+						for(var i=0;i<=<%=endPage%>+1;i++){
+							if(i==0){
+								if(pageNum==1){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="first"><<</button>`;
+								$(".bottom-btn2").append(write);
+							}else if(i==<%=endPage%>+1){
+								if(pageNum==<%=endPage%>){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="end">>></button>`;
+								$(".bottom-btn2").append(write);
+							}else{
+								if(i==pageNum){
+									clas = "bottom-btn-in-active";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<button class="\${clas}" id="pageBtn" value="\${i}">\${i}</button>`;
+								$(".bottom-btn2").append(write);
+							}
+						}
+					},
+					error: function(r,s,e){
+						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
+					}
+			    });
+	   		 });
+		 });
     	/* 통계, 기본정보,패치히스토리, 커뮤니티 선택이벤트 핸들러 */
     	$(function(){
     		 /*탑, 정글, 미드, 원딜, 서폿 버튼태그*/
@@ -1575,7 +1790,7 @@
 								}else{
 									clas = "bottom-btn-in";
 								}
-								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=1" id="first"><<</a>`;
+								write = `<button class="\${clas}" id="first"><<</button>`;
 								$(".bottom-btn2").append(write);
 							}else if(i==<%=endPage%>+1){
 								if(<%=pageNum%>==<%=endPage%>){
@@ -1583,7 +1798,7 @@
 								}else{
 									clas = "bottom-btn-in";
 								}
-								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=1" id="end">>></a>`;
+								write = `<button class="\${clas}" id="end">>></button>`;
 								$(".bottom-btn2").append(write);
 							}else{
 								if(i==<%=pageNum%>){
@@ -1591,7 +1806,7 @@
 								}else{
 									clas = "bottom-btn-in";
 								}
-								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=\${i}">\${i}</a>`;
+								write = `<button class="\${clas}" id="pageBtn" value="\${i}">\${i}</button>`;
 								$(".bottom-btn2").append(write);
 							}
 						}
