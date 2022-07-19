@@ -13,8 +13,23 @@
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
-	int lastBno = bDao.getFirstLastBno(dto.getCategory()).get(0);
-	int firstBno = bDao.getFirstLastBno(dto.getCategory()).get(bDao.getFirstLastBno(dto.getCategory()).size()-1);
+	ArrayList<Integer> getBno = bDao.getFirstLastBno(dto.getCategory());
+	int nextBno = 0;
+	int beforeBno = 0;
+	for(int i=0; i<getBno.size(); i++) {
+		if(bno==getBno.get(i)){
+			if(getBno.get(i)==getBno.get(getBno.size()-1)){
+				nextBno = 0;
+				beforeBno = getBno.get(i-1);
+			}else if(getBno.get(i)==getBno.get(0)){
+				nextBno = getBno.get(i+1);
+				beforeBno = 0;
+			}else {
+				nextBno = getBno.get(i+1);
+				beforeBno = getBno.get(i-1);
+			}
+		}
+	}
 %>
 <html>
 <head>
@@ -119,13 +134,13 @@
       		<!-- 포스트하단 -->
            	<div class="content-function">
            		<%
-           		if(bno==firstBno) {
+           		if(beforeBno==0) {
            		%>
-           		<a style="padding-left:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=bno-1%>">←이전</a>
+           		<a style="padding-left:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=beforeBno%>">←이전</a>
            		<%
            		}else {
            		%>
-           		<a style="padding-left:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=bno-1%>">←이전</a>
+           		<a style="padding-left:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=beforeBno%>">←이전</a>
            		<%
            		}
            		%>
@@ -136,13 +151,13 @@
            		</div>
            		
            		<%
-           		if(bno==lastBno) {
+           		if(nextBno==0) {
            		%>
-           		<a style="padding-right:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=bno+1%>">다음→</a>
+           		<a style="padding-right:30px;" class="prev-next-none" href="ViewDetail.jsp?bno=<%=nextBno%>">다음→</a>
            		<%
            		}else {
            		%>
-           		<a style="padding-right:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=bno+1%>">다음→</a>
+           		<a style="padding-right:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=nextBno%>">다음→</a>
            		<%
            		}
            		%>
