@@ -1892,7 +1892,7 @@ public class StatisticsDao {
 			return getChampionHighLine;
 		}
 	// 챔프 히스토리
-		public ArrayList<BoardDto> getBoardList(String champname){
+		public ArrayList<BoardDto> getBoardList(String champname,int startBno, int endBno){
 			ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -1902,12 +1902,15 @@ public class StatisticsDao {
 					"    from( " + 
 					"        select * " + 
 					"        from community " + 
-					"        where category = '빌드 연구소' " +
-					"		 and champname = ? " +
-					"        order by bno desc) b1)";
+					"        where champname = ? " +
+					"        order by bno desc) b1) "+
+					"where rnum>= ? "+
+					"and rnum<= ? ";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, champname);
+				pstmt.setInt(2, startBno);
+				pstmt.setInt(3, endBno);
 				rs = pstmt.executeQuery();
 				
 				while(rs.next()) {

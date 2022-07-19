@@ -19,6 +19,7 @@
 	}
 	String champion_rate = "pick";
 	String champion_rate2 = "win";
+	
 	// 챔프 게시판
 	int pageNum;
 	if(request.getParameter("page")==null) {
@@ -26,11 +27,11 @@
 	} else {
 		pageNum = Integer.parseInt(request.getParameter("page"));
 	}
-	int startBno = pageNum * 15 - 14;
-	int endBno = pageNum * 15;
-	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
-	list = sDao.getBoardList(champion_name);
+	int startBno = pageNum * 5 - 4;
+	int endBno = pageNum * 5;
 	int allList = sDao.getAllBoardList(champion_name);
+	int endPage = allList/5+1;
+	
 	//요약
 	//챔피언 해드 이미지, 이름
 	ChampionSummaryHeadDto championNameImage = sDao.championSummaryHead(champion_name);
@@ -175,6 +176,7 @@
 									</li>`;
 							$("#skillSeqList").append(write);
 						}
+						
 					},
 					error:function(r,s,e){
 						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
@@ -358,6 +360,7 @@
 					}
 				});
 		   	});
+		    
    		 });
     	/* 통계, 기본정보,패치히스토리, 커뮤니티 선택이벤트 핸들러 */
     	$(function(){
@@ -1497,51 +1500,50 @@
 		   	//커뮤니티
 		   	$("#champ-nav4").on("click", function() {
 		   		var champName = "<%=champion_name%>";
+		   		var write = `<div id="champ-community">
+				    <div class = "champ-community-community-container">
+				        <div class = "champ-community-first-row">
+				            <h2 class = "champ-community-champ-name">\${champName} 게시판</h2>
+				            <a class = "champ-community-board-btn" href="write.jsp?category=빌드 게시판">
+				                <span class = "icno-font">
+				                    <i class="fa-regular champ-community-fa-pen"></i>
+				                </span>
+				                <span>게시물 쓰기</span>
+				            </a>
+				        </div>
+				        <div class="title-build">
+			           		<span style="padding-left:8px;">챔피언</span>
+			           		<span style="padding-left:8px;">제목</span>
+			           		<span style="padding-left:700px;">작성자</span>
+			           		<span style="padding-left:15px;">날짜</span>
+			           		<span style="padding-left:40px;">조회</span>
+			           		<span style="padding-left:5px;">추천</span>
+		          	 	</div>
+				        <div class ="champ-community-board-list-container">
+				            <div class = "champ-community-board-list" id="champCommunity">
+				            </div>
+						</div>
+					</div>
+					<div class="bottom-btn2">
+				    </div>
+				    <div class = "champ-community-board-btn2" >
+				        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 게시판">
+				            <i class="fa-regular fa-pen"></i>
+				            <span>게시물 쓰기</span>
+				        </a>
+				    </div>
+			    </div>`;
+				$("#loadContents").html(write);
+		   		var startBno = <%=startBno %>;
+		   		var endBno = <%=endBno %>;
 			   $('.champ-nav').find('.champ-nav-active').removeClass('champ-nav-active');
 			   $('#champ-nav4').addClass('champ-nav-active');
 			   $.ajax({
 				   	type:"get",
 					url:"ChampCommunityServlet",
-					data:{"name":champName},
+					data:{"name":champName,"startBno":startBno,"endBno":endBno},
 					datatype:"json",
 					success:function(data){
-						var write = `<div id="champ-community">
-									    <div class = "champ-community-community-container">
-									        <div class = "champ-community-first-row">
-									            <h2 class = "champ-community-champ-name">\${champName} 게시판</h2>
-									            <a class = "champ-community-board-btn" href="write.jsp?category=빌드 게시판">
-									                <span class = "icno-font">
-									                    <i class="fa-regular champ-community-fa-pen"></i>
-									                </span>
-									                <span>게시물 쓰기</span>
-									            </a>
-									        </div>
-									        <div class="title-build">
-								           		<span style="padding-left:8px;">챔피언</span>
-								           		<span style="padding-left:8px;">제목</span>
-								           		<span style="padding-left:700px;">작성자</span>
-								           		<span style="padding-left:15px;">날짜</span>
-								           		<span style="padding-left:40px;">조회</span>
-								           		<span style="padding-left:5px;">추천</span>
-							          	 	</div>
-									        <div class ="champ-community-board-list-container">
-									            <div class = "champ-community-board-list" id="champCommunity">
-									            </div>
-											</div>
-										</div>
-										<div class="bottom-btn2">
-											<a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1" id="first"><<</a>
-									        <a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1">1</a>
-									        <a class="bottom-btn-in" href="community.jsp?category=빌드 연구소&page=1" id="end">>></a>
-									    </div>
-									    <div class = "champ-community-board-btn2" >
-									        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 게시판">
-									            <i class="fa-regular fa-pen"></i>
-									            <span>게시물 쓰기</span>
-									        </a>
-									    </div>
-								    </div>`;
-						$("#loadContents").html(write);
 						for(var i = 0;i < data.length;i++){
 							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
 										<span class="build">
@@ -1565,11 +1567,40 @@
 					                </a>`;
 							$("#champCommunity").append(write);
 						}
+						var clas = "bottom-btn-in";
+						for(var i=0;i<=<%=endPage%>+1;i++){
+							if(i==0){
+								if(<%=pageNum%>==1){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=1" id="first"><<</a>`;
+								$(".bottom-btn2").append(write);
+							}else if(i==<%=endPage%>+1){
+								if(<%=pageNum%>==<%=endPage%>){
+									clas = "bottom-btn-in-off";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=1" id="end">>></a>`;
+								$(".bottom-btn2").append(write);
+							}else{
+								if(i==<%=pageNum%>){
+									clas = "bottom-btn-in-active";
+								}else{
+									clas = "bottom-btn-in";
+								}
+								write = `<a class="\${clas}" href="community.jsp?category=빌드 연구소&page=\${i}">\${i}</a>`;
+								$(".bottom-btn2").append(write);
+							}
+						}
 					},
 					error: function(r,s,e){
 						alert("에러 \n code:"+r.s+"; \n"+"message:"+r.responseText+"; \n"+"error:"+e);
 					}
 			   });
+			   
 			});
     		
     		/*pick*/
