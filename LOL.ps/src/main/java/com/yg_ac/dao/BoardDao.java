@@ -68,8 +68,9 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
 			rs = pstmt.executeQuery();
-			rs.next();
-			cnt = rs.getInt("cnt");
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			};
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -230,14 +231,14 @@ public class BoardDao {
 				"        select * " + 
 				"        from community " + 
 				"        where category = ? " + 
-				"        and title = ? " + 
+				"        and title like ? " + 
 				"        order by bno desc) b1) " + 
 				"where rnum >= ? " + 
 				"and rnum <= ? ";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
-			pstmt.setString(2, name);
+			pstmt.setString(2,"%" + name + "%");
 			pstmt.setInt(3, startBno);
 			pstmt.setInt(4, endBno);
 			rs = pstmt.executeQuery();
@@ -270,11 +271,11 @@ public class BoardDao {
 		int cnt=0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select count(*) cnt from community where category = ? title = ?";
+		String sql = "select count(*) cnt from community where category = ? and title like ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, category);
-			pstmt.setString(2, name);
+			pstmt.setString(2,"%" + name + "%");
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				cnt = rs.getInt("cnt");
@@ -290,5 +291,101 @@ public class BoardDao {
 			}
 		}
 		return cnt;
+	}
+	public ArrayList<BoardDto> getBoardListWriter(String category, int name, int startBno, int endBno){
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * " + 
+				"from( " + 
+				"    select rownum rnum, b1.* " + 
+				"    from( " + 
+				"        select * " + 
+				"        from community " + 
+				"        where category = ? " + 
+				"        and memberkey = ? " + 
+				"        order by bno desc) b1) " + 
+				"where rnum >= ? " + 
+				"and rnum <= ? ";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, name);
+			pstmt.setInt(3, startBno);
+			pstmt.setInt(4, endBno);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int memberkey = rs.getInt("memberkey");
+				int bno = rs.getInt("bno");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String writedate = rs.getString("writedate");
+				int good = rs.getInt("good");
+				int bad = rs.getInt("bad");
+				int count = rs.getInt("count");
+				String champName = rs.getString("champname");
+				list.add(new BoardDto(memberkey,bno,title,content,writedate,good,bad,count,champName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	public int getAllBoardListWriter(String category, int name){
+		int cnt=0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) cnt from community where category = ? and memberkey = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			};
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return cnt;
+	}
+	public int getNicknameMemberkey(String nickname) {
+		int get = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from member where nickname like ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname + "%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				get = rs.getInt("memberkey");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
 	}
 }

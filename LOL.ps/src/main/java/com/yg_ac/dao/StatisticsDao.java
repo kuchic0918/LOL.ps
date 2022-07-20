@@ -1652,7 +1652,8 @@ public class StatisticsDao {
 						+ " and cr.pick5 = ri5.name "
 						+ " and cr.pick6 = ri6.name "
 						+ " and cr.name = ?"
-						+ " and cr.line = ?";
+						+ " and cr.line = ?"
+						+ " order by cr.pick_rate desc";
 			
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -1705,7 +1706,8 @@ public class StatisticsDao {
 						+ " and cr.line = ?"
 						+ " and cr.pick1 = r1.name "
 						+ " and cr.pick2 = r2.name "
-						+ " and cr.pick3 = r3.name";
+						+ " and cr.pick3 = r3.name"
+						+ " order by cr.pick_rate desc";
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {

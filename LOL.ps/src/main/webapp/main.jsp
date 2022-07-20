@@ -19,6 +19,11 @@
 		</script>
 <%
 	}
+	BoardDao bDao = new BoardDao();
+	ArrayList<BoardDto> buildList = new ArrayList<BoardDto>();
+	ArrayList<BoardDto> freeList = new ArrayList<BoardDto>();
+	buildList = bDao.getBoardList("빌드 연구소", 1, 10);
+	freeList = bDao.getBoardList("자유 게시판", 1, 10);
 %>
 <head>
     <meta charset="UTF-8">
@@ -199,176 +204,47 @@
     <div class="main-community-container">
         <div class="main-community">
             <h3 class="main-title">빌드 연구소</h3>
-            <ul class="main-community-list-container">
-                <li class="main-community-list" style="border-top: 1px solid #dbdde1;">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list" style="border-bottom: 1px solid #dbdde1;">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-
-
-            </ul>
+            <div class="main-community-list-container">
+            	<%
+            	for(BoardDto dto : buildList) {
+            		int like = dto.getGood() - dto.getBad();
+            		if(like<0) like = 0;
+            		%>
+            		<div class="main-community-list" style="border-top: 1px solid #dbdde1;">
+	                    <span class="main-post-name"><%=dto.getChampName() %></span>
+	                    <a class="main-post-link" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
+	                        <span class="main-post-title"><%=dto.getTitle() %></span>
+	                        <span class="main-post-comment">[0]</span>
+	                    </a>
+	                    <span class="main-post-like"><%=dto.getCount() %></span>
+               	 	</div>
+            		<%
+            	}
+            	%>
+            </div>
         </div>
 
         <div class="main-community">
-            <h3 class="main-title">빌드 연구소</h3>
-            <ul class="main-community-list-container">
-                <li class="main-community-list" style="border-top: 1px solid #dbdde1;">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-                <li class="main-community-list" style="border-bottom: 1px solid #dbdde1;">
-                    <span class="main-post-name">바루스</span>
-                    <a class="main-post-link" href="#">
-                        <span class="main-post-title">다이아1 승률 58%  AP 바루스</span>
-                        <span class="main-post-comment">[3]</span>
-                    </a>
-                    <span class="main-post-like">4</span>
-                </li>
-            </ul>
+            <h3 class="main-title">자유 게시판</h3>
+            <div class="main-community-list-container">
+            	<%
+            	for(BoardDto dto : freeList) {
+            		MemberDTO writer = bDao.getWriter(dto.getMemberkey());
+            		int like = dto.getGood() - dto.getBad();
+            		if(like<0) {like = 0;}
+            		%>
+            		<div class="main-community-list" style="border-top: 1px solid #dbdde1;">
+	                    <span class="main-post-name"><%=writer.getNickname() %></span>
+	                    <a class="main-post-link" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
+	                        <span class="main-post-title"><%=dto.getTitle() %></span>
+	                        <span class="main-post-comment">[0]</span>
+	                    </a>
+	                    <span class="main-post-like"><%=dto.getCount() %></span>
+               	 	</div>
+            		<%
+            	}
+            	%>
+            </div>
         </div>
     </div>
 

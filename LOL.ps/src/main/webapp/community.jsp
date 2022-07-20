@@ -12,12 +12,7 @@
 	}else{
 		pageNum = Integer.parseInt(request.getParameter("page"));
 	}
-	String category = null;
-	if((String) request.getAttribute("category")==null) {
-		category = request.getParameter("category");
-	} else {
-		category = (String) request.getAttribute("category");	
-	}
+	String category = request.getParameter("category");
 	int startBno = pageNum * 15 - 14;
 	int endBno = pageNum * 15;
 	
@@ -34,23 +29,25 @@
 	ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 	int allList = 0;
 	if("title".equals((String) request.getAttribute("titleWriter"))) {
-		String name = (String) request.getAttribute("titleWriter");
 		String search = (String) request.getAttribute("searchWrite");
 		list = bDao.getBoardListTitle(category, search, startBno, endBno);
 		allList = bDao.getAllBoardListTitle(category, search);
-		if(list==null) {
-			%>
-			<script>
-				alert('검색 결과가 없습니다.');
-				location.href = 'community.jsp?category=<%=category%>'; 
-			</script>
-			<%
-		}
 	}else if("writer".equals((String) request.getAttribute("search"))) {
-	
+		String search = (String) request.getAttribute("searchWrite");
+		int memberKey = bDao.getNicknameMemberkey(search);
+		list = bDao.getBoardListWriter(category, memberKey, startBno, endBno);
+		allList = bDao.getAllBoardListWriter(category, memberKey);
 	}else {
 		list = bDao.getBoardList(category, startBno, endBno);
 		allList = bDao.getAllBoardList(category);
+	}
+	if(list.size()==0) {
+		%>
+		<script>
+			alert('검색 결과가 없습니다.');
+			location.href = 'community.jsp?category=<%=category%>'; 
+		</script>
+		<%
 	}
 %>
 <head>
@@ -176,10 +173,10 @@
            			<%=dto.getWritedate() %>
            		</span>
            		<span class="build2" style="width:30px;">
-           			<%=like %>
+           			<%=dto.getCount() %>
            		</span>
            		<span class="build2" style="width:30px">
-           			<%=dto.getCount() %>
+           			<%=like %>
            		</span>
 			</a>
 			<%
