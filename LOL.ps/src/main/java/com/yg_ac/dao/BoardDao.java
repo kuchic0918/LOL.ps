@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.yg_ac.dto.BoardDto;
+import com.yg_ac.dto.CommentDto;
 import com.yg_ac.dto.MemberDTO;
 
 public class BoardDao {
@@ -382,6 +383,76 @@ public class BoardDao {
 			try {
 				rs.close();
 				pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
+	// 댓글 작성
+	public void insertComment(int memberkey, int bno, String content) {
+		String sql = "insert into community_comment values(?, ?, cno_seq.nextval, rno_seq.nextval, ?, sysdate)";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberkey);
+			pstmt.setInt(2, bno);
+			pstmt.setString(3, content);
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void insertReply(int memberkey, int bno, int cno, String content) {
+		String sql = "insert into community_comment values(?, ?, ?, rno_seq.nextval, ?, sysdate)";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberkey);
+			pstmt.setInt(2, bno);
+			pstmt.setInt(3, cno);
+			pstmt.setString(4, content);
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	// 댓글 보여주기
+	public ArrayList<CommentDto> getCommnet(int bno) {
+		ArrayList<CommentDto> get = new ArrayList<CommentDto>();
+		String sql = "select * from community_comment where bno = ? order by cno,rno";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				int memberkey = rs.getInt("memberkey");
+				int cno = rs.getInt("cno");
+				int rno = rs.getInt("rno");
+				String content = rs.getString("content");
+				String writedate = rs.getString("writedate");
+				get.add(new CommentDto(memberkey, bno, cno, rno, content, writedate));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}

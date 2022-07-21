@@ -53,7 +53,8 @@
             			<form action= "my-page.jsp" >
             				<input class="signin" type="submit" value="마이페이지"/>
             			</form>
-		                <form action = "login.jsp" >
+		                <form action = "Controller" >
+		                	<input type="hidden" name="command" value="login"/>
 		                	<input class="login" type="submit" value="로그아웃"/>
 	                	</form>    
             	<%

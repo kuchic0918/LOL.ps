@@ -30,6 +30,8 @@
 			}
 		}
 	}
+	ArrayList<CommentDto> cDto = bDao.getCommnet(bno);
+	ArrayList<MemberDTO> commentWriter = new ArrayList<MemberDTO>();
 %>
 <html>
 <head>
@@ -40,6 +42,14 @@
 	<link rel="stylesheet" href="Css/all.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
+    <script>
+    	$(function() {
+    		$('.replybtn').click(function() {
+				var form = $(this).parent().parent().parent().parent().find('.reply');
+    			$(form).toggle();
+    		});
+    	});
+    </script>
 </head>
 <body class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -67,7 +77,8 @@
             			<form action= "my-page.jsp" >
             				<input class="signin" type="submit" value="마이페이지"/>
             			</form>
-		                <form action = "login.jsp" >
+		                <form action = "Controller" >
+		                	<input type="hidden" name="command" value="login"/>
 		                	<input class="login" type="submit" value="로그아웃"/>
 	                	</form>  
             	<%
@@ -166,54 +177,77 @@
         </div>
       	<div style="height:40px;"></div>
       	<!-- 댓글 -->
-      	<div class="comments">
-      		<img class="comments-img" src="../Images/anne1.jpg"/>
-      		<div style="padding-left: 20px;">
-      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b>인베당한 녹턴</b></div>
-      			<div style="font-size:14px;">
-      			이게 왜 좋아보이냐?
-      			</div>
-      			<div style="padding-top:5px">
-      				<span style="font-size: 14px; color:gray;">2022년 3월 5일 2:53 오후</span>
-      				<button class="write-comment">↳댓글</button>
-      			</div>
-      		</div>
-      	</div>
-      	<!-- 대댓글 -->
-      	<div class="comments-comment">
-      		<img class="comments-img" src="../Images/anne1.jpg"/>
-      		<div style="padding-left: 20px;">
-      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b>인베당한 녹턴</b></div>
-      			<div style="font-size:14px;">
-      			이게 왜 좋아보이냐?
-      			</div>
-      			<div style="padding-top:5px">
-      				<span style="font-size: 14px; color:gray;">2022년 3월 5일 2:53 오후</span>
-      				<button class="write-comment">↳댓글</button>
-      			</div>
-      		</div>
-      	</div>
-      	<!-- 댓글 -->
-      	<div class="comments">
-      		<img class="comments-img" src="../Images/anne1.jpg"/>
-      		<div style="padding-left: 20px;">
-      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b>인베당한 녹턴</b></div>
-      			<div style="font-size:14px;">
-      			이게 왜 좋아보이냐?
-      			</div>
-      			<div style="padding-top:5px">
-      				<span style="font-size: 14px; color:gray;">2022년 3월 5일 2:53 오후</span>
-      				<button class="write-comment">↳댓글</button>
-      			</div>
-      		</div>
-      	</div>
+      	<%
+      	for(int i=0; i<cDto.size(); i++){
+      		commentWriter.add(i, bDao.getWriter(cDto.get(i).getMemberkey()));
+      		String comments = "comments";
+      		%>
+	   		<div>
+				<div class="<%=comments%>">
+		      		<img class="comments-img" src="Images/profile/<%=commentWriter.get(i).getImage()%>"/>
+		      		<div style="padding-left: 20px;">
+		      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b><%=commentWriter.get(i).getNickname()%></b></div>
+		      			<div style="font-size:14px;">
+		      			<%=cDto.get(i).getContent()%>
+		      			</div>
+		      			<div style="padding-top:5px">
+		      				<span style="font-size: 14px; color:gray;"><%=cDto.get(i).getWritedate()%></span>
+	      					<button class="write-comment replybtn">↳댓글</button>
+		      			</div>
+		      		</div>
+	      		</div> 
+      		<%	
+      		if((MemberDTO) session.getAttribute("memberInfo")!=null){
+        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+        		int memberkey = member.getMemberkey();
+       		%>
+	        	<form action="Controller" method="POST" style="display:none;" class="reply">
+	            	<div class="comment">
+	               		<div class="comment-name">댓글쓰기</div>
+	               		<textarea class="comment-space" name="content"></textarea>
+	               		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	               		<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
+	               		<button class="comment-regist" type="submit" name="command" value="reply">등록</button>
+	               	</div>
+	            </form>
+	        </div>
+       		<%
+        	}
+      		if(i>cDto.size()-1){
+	      		if(cDto.get(i).getCno()==cDto.get(i+1).getCno()) {
+	   				comments = "comments-comment";
+	      		} else {
+	      			comments = "comments";
+	      		}
+      		} else {
+      			if(cDto.get(cDto.size()-1).getCno()==cDto.get(cDto.size()-2).getCno()) {
+      				comments = "comments-comment";
+      			} else {
+      				comments = "comments";
+      			}
+      		}
+      	}
+    	%>
 		<!-- 댓글쓰기 -->
         <div class="bottom-comment">
-        	<div class="comment">
-           		<div class="comment-name">댓글쓰기</div>
-           		<textarea class="comment-space"></textarea>
-           		<button class="comment-regist" type="button">등록</button>
-           	</div>
+        	<%
+        	if((MemberDTO) session.getAttribute("memberInfo")!=null){
+        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+        		int memberkey = member.getMemberkey();
+        		%>
+        	<form action="Controller" method="POST">
+	        	<div class="comment">
+	           		<div class="comment-name">댓글쓰기</div>
+	           		<textarea class="comment-space" name="content"></textarea>
+	           		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	           		<input type="hidden" name="bno" value="<%=bno%>"/>
+	           		<button class="comment-regist" type="submit" name="command" value="comment">등록</button>
+	           	</div>
+            </form>
+        		<%
+        	}
+        	%>
+            
            	<div class="list-under-div">
            		<a style="border-radius:6%;" class="list-under" href="write.jsp?category=<%=dto.getCategory()%>">게시물 쓰기</a>
            		<a style="border-radius:10%;" class="list-under" href="community.jsp?category=<%=dto.getCategory()%>">목록</a>
