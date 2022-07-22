@@ -1,10 +1,16 @@
 package com.yg_ac.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.yg_ac.dto.BoardDto;
 import com.yg_ac.dto.CommentDto;
@@ -481,25 +487,206 @@ public class BoardDao {
 			}
 		}
 	}
-	public void boardGood(int bno , int memberkey) {
+	//좋아요 눌렀을 때
+	public void communityGood(HttpServletRequest request, HttpServletResponse response, int bno , int memberkey) throws  ServletException, IOException, SQLException {
 		PreparedStatement pstmt = null;
-		try {
-			String sql = "update community set good = (good+1)" +
-					" where bno = ? ";
+		response.setCharacterEncoding("UTF-8");
+		if(badCount(bno) > 0) {
+			
+		}
+
+		try {			
+			String sql = " insert into community_like values( ? , ? ) ";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
 			pstmt.executeUpdate();
+//			request.setAttribute("like", likeCount(bno));
+//			request.getRequestDispatcher("ViewDetail.jsp?bno="+bno).forward(request, response);
+//			response.sendRedirect("ViewDetail.jsp?bno="+bno);
+			response.getWriter().print(likeCount(bno));
 			pstmt.close();
-			
-			String sql2 = "insert into community_like values( ? , ? ) ";
 		}
-		catch(SQLException e) {
+		//중복 한사람이 2번 눌렀을 경우
+		catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			String sql = "select count(*) cnt from community_like where bno = ? and memberkey = ? ";			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if(cnt == 1 ) {
+				response.sendError(HttpServletResponse.SC_CREATED);
+				response.getWriter().print(likeCount(bno));
+//				response.sendRedirect("ViewDetail.jsp?bno="+bno);
 			}
+				
+				
+				
+				
+		}
+		
+}
+	public int communityGoodDupleCheck(int bno , int memberkey) {
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		try {
+			String sql = "select count(*) cnt from community_like where bno = ? and memberkey = ? ";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			cnt = rs.getInt("cnt");
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return cnt;
 	}
+	//좋아요 총 개수
+	public int likeCount(int bno) {
+		PreparedStatement pstmt = null;
+		int like = 0;
+		try {
+			String sql = "select count(*) count from community_like where bno = ? ";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			like = rs.getInt("count");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return like;
+	}
+	//비추천 총 개수
+	public int badCount(int bno) {
+		PreparedStatement pstmt = null;
+		int like = 0;
+		try {
+			String sql = "select count(*) count from community_bad where bno = ? ";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			like = rs.getInt("count");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return like;
+	}
+	//싫어요를 누를 때 좋아요를 눌렀는지
+	public boolean likeCheck(int memberkey , int bno) {
+		PreparedStatement pstmt = null;
+		String sql = " select count(*) cnt from community_like where bno = ? and memberkey = ? ";
+		try {
+			pstmt =  conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if(cnt == 1)
+				return false;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	//좋아요를 누를 때 싫어요를 눌렀는지
+	public boolean badCheck(int bno , int memberkey) {
+		PreparedStatement pstmt = null;
+		String sql = " select count(*) cnt from community_like where bno = ? and memberkey = ? ";
+		try {
+			pstmt =  conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if(cnt == 1)
+				return false;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	//좋아요 삭제
+	public void likeDelete(int bno , int memberkey) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from community_like where bno = ? and memberkey =  ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void badDelete(int bno , int memberkey) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from community_bad where bno = ? and memberkey =  ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+//	public int badCount(int bno) {
+//		PreparedStatement pstmt = null;
+//		String sql = "select "
+//	}
+	public void communityBad(HttpServletRequest request, HttpServletResponse response, int bno , int memberkey) throws  ServletException, IOException, SQLException {
+		PreparedStatement pstmt = null;
+		response.setCharacterEncoding("UTF-8");
+		
+
+		try {			
+			String sql = " insert into community_bad values( ? , ? ) ";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			pstmt.executeUpdate();
+//			request.setAttribute("like", likeCount(bno));
+//			request.getRequestDispatcher("ViewDetail.jsp?bno="+bno).forward(request, response);
+//			response.sendRedirect("ViewDetail.jsp?bno="+bno);
+			response.getWriter().print(likeCount(bno));
+			pstmt.close();
+		}
+		//중복 한사람이 2번 눌렀을 경우
+		catch (SQLException e) {
+			e.printStackTrace();
+			String sql = "select count(*) cnt from community_like where bno = ? and memberkey = ? ";			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.setInt(2, memberkey);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if(cnt == 1 ) {
+				response.sendError(HttpServletResponse.SC_CREATED);
+				response.getWriter().print(likeCount(bno));
+//				response.sendRedirect("ViewDetail.jsp?bno="+bno);
+			}
+				
+				
+				
+				
+		
+		}
+		}
 }

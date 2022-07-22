@@ -55,6 +55,13 @@ public class ActionFactory {
 		case "reply" :
 			action = new ReplyAction();
 			break;
+		case "like" :
+			action = new LikeAction();
+			break;
+		case "bad" :
+			action = new BadAction();
+			break;
+				
 		}
 		return action;
 	}

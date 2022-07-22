@@ -7,6 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public interface Action {
-	void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException , SQLException;
+public class BadAction implements Action {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		
+	}
+
 }

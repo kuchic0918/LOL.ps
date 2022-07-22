@@ -10,6 +10,8 @@
 	BoardDto dto = bDao.getDetail(bno);
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
@@ -49,6 +51,52 @@
     			$(form).toggle();
     		});
     		const url = new URL($(location).attr("href"));
+//     		$('.recommend').click(function(){
+<%--     			location.href = " Controller?command=like&bno=<%=bno%>&memberkey=<%=memberkey%> " ; --%>
+//     		});
+    		
+    		$('#good_btn').click(function(){
+    			$.ajax ({
+    				type : 'get',
+    				url : 'Controller',
+    				data : {
+    					command : 'like' ,
+    					bno : '<%=bno%>' ,
+    					memberkey : '<%=memberkey%>',
+    				},
+    				success : function(data,x,status){
+    					if(status.status == 201) { 
+    						alert("중복");
+    					}else {
+	   						$('#good').text(data);
+    					}
+    				},
+    				error(){
+//     					alert("중복");
+    					console.log('error');
+    				}
+    			});
+    		});
+    		$('#bad_btn').click(function(){
+    			$.ajax ({
+    				type : 'get',
+    				url : 'Controller',
+    				data : {
+    					command : 'bad',
+    					bno : '<%=bno%>' ,
+    					memberkey : '<%=memberkey%>',
+    				},
+    				success : function(data,x,status) {
+    					if(status.status == 201 ) {
+    						alert("중복");
+    					}else {
+    						$('#bad').text(data);
+    					}
+    				},
+    				
+    					
+    			});
+    		});
     	});
     </script>
 </head>
@@ -157,9 +205,12 @@
            		}
            		%>
            		
+           		<%
+           		
+           		%>
            		<div class="justify-content-start">
-           			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&uarr;    </span>0</button>
-           			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&darr;    </span>0</button>
+           			<button style="white-space:pre;" id = "good_btn" class="recommend" type="button"><span class="pre">&uarr;    </span ><span id = "good"><%=bDao.likeCount(bno)%></span></button>
+           			<button style="white-space:pre;" id = "bad_btn" class="recommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><0</span></button>
            		</div>
            		
            		<%
@@ -207,8 +258,6 @@
 	      		</div> 
       		<%	
       		if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
        		%>
 	        	<form action="Controller" method="POST" style="display:none;" class="reply">
 	            	<div class="comment">
@@ -229,8 +278,6 @@
         <div class="bottom-comment">
         	<%
         	if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
         		%>
         	<form action="Controller" method="POST">
 	        	<div class="comment">
