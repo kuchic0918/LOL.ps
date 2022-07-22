@@ -140,6 +140,7 @@
         	for(BoardDto dto:list){
         		String image = bDao.getImage(dto.getChampName());
         		MemberDTO writer = bDao.getWriter(dto.getMemberkey());
+        		ArrayList<CommentDto> cDto = bDao.getCommnet(dto.getBno());
         		int like = dto.getGood()-dto.getBad();
         		if(like < 0){
         			like = 0;
@@ -162,7 +163,7 @@
           			<img class="champion-head" src="Images/champion/head/<%=image%>"/>
           		</span>
           		<span class="build1">
-          			 <b>[<%=dto.getChampName()%>]<%=dto.getTitle() %></b> <b style="color:blue;"> [0]</b>
+          			 <b>[<%=dto.getChampName()%>]<%=dto.getTitle() %></b> <b style="color:blue;"> [<%=cDto.size() %>]</b>
           		</span>
 	           	<%
            		}

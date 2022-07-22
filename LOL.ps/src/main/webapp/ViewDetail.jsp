@@ -138,7 +138,7 @@
       			</div>
       			
       			<div class="writer-bot">
-      				<span>댓글 100 |</span>
+      				<span>댓글 <%=cDto.size() %> |</span>
       				<span> 조회수 <%=dto.getCount() %></span>
       			</div>
       		</div>
@@ -179,9 +179,17 @@
       	<div style="height:40px;"></div>
       	<!-- 댓글 -->
       	<%
-   		String comments = "comments";
       	for(int i=0; i<cDto.size(); i++){
       		commentWriter.add(i, bDao.getWriter(cDto.get(i).getMemberkey()));
+      		String comments = "comments";
+      		commentWriter.add(i, bDao.getWriter(cDto.get(i).getMemberkey()));
+      		if(i==0){
+      			comments = "comments";
+      		}else if(cDto.get(i).getCno()==cDto.get(i-1).getCno()){
+      			comments = "comments-comment";
+      		}else{
+      			comments = "comments";
+      		}
       		%>
 	   		<div>
 				<div class="<%=comments%>">
