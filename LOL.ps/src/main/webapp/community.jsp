@@ -206,6 +206,9 @@
 		<%
     	
 		int end = allList/15+1;
+		if(allList%15==0){
+			end = allList/15;
+		}
 		String act = "bottom-btn-in";
 		for(int i=1;i<=end;i++){
 			if(i==pageNum){
