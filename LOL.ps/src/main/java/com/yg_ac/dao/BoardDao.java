@@ -459,4 +459,24 @@ public class BoardDao {
 		}
 		return get;
 	}
+	// 조회수
+	public void insertViews(int bno) {
+		String sql = "update community set count = count+1 where bno = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -145,7 +145,7 @@
         			like = 0;
         		}
         	%>
-	        <a class="contents-item" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
+	        <a class="contents-item" href="ViewDetailServlet?bno=<%=dto.getBno()%>">
            		<%
          		if(category.equals("자유 게시판")){
           		%>

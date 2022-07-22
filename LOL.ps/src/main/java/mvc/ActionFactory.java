@@ -52,6 +52,9 @@ public class ActionFactory {
 		case "comment" :
 			action = new CommentAction();
 			break;
+		case "reply" :
+			action = new ReplyAction();
+			break;
 		}
 		return action;
 	}
