@@ -41,6 +41,13 @@
 				alert("회원가입이 완료되었습니다. 로그인 해주세요.");
 			</script>
 <% 	
+	} else if("email".equals((String) request.getAttribute("member"))) {
+		String userEmail = request.getParameter("email");
+		%>
+<script>
+				alert("<%=userEmail%>에 메일을 보냈습니다. 메일확인 후 회원가입 완료 해주세요.");
+			</script>
+<% 	
 	}
 %>
 <head>

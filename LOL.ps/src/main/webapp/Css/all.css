@@ -1911,8 +1911,7 @@ p {
 	height: auto;
 	padding: 15px 0px;
 	border-top: 1px solid rgb(171, 174, 186);
-	margin: 0px 47px;
-	float: right;
+	margin-left : 93px;
 }
 
 .comments-img {
@@ -2889,6 +2888,11 @@ p {
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
+.error {
+	color: red;
+	font-size:12px;
+	font-weight:600;
+}
 
 .member-body {
     margin: 0;
