@@ -1774,10 +1774,10 @@
 				                   			\${data[i].writedate}
 				                   		</span>
 				                   		<span class="build2" style="width:30px;">
-				                   			\${data[i].like}
+				                   			\${data[i].count}
 				                   		</span>
 				                   		<span class="build2" style="width:30px">
-				                   			\${data[i].count}
+				                   			\${data[i].like}
 				                   		</span>
 					                </a>`;
 							$("#champCommunity").append(write);

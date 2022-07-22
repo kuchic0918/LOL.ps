@@ -48,6 +48,7 @@
 				var form = $(this).parent().parent().parent().parent().find('.reply');
     			$(form).toggle();
     		});
+    		const url = new URL($(location).attr("href"));
     	});
     </script>
 </head>
@@ -91,7 +92,7 @@
     <div class="all-main">
         <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
-        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>">✎게시물 쓰기</a>
+        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url=" + ${url}>✎게시물 쓰기</a>
         	<form action="Controller" method="get" id="search_form" autocomplete="off">
 				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 				<button style="opacity:0;" type="submit" name="command" value="search"></button>
@@ -179,6 +180,7 @@
       	<!-- 댓글 -->
       	<%
       	for(int i=0; i<cDto.size(); i++){
+      		commentWriter.add(i, bDao.getWriter(cDto.get(i).getMemberkey()));
       		String comments = "comments";
       		commentWriter.add(i, bDao.getWriter(cDto.get(i).getMemberkey()));
       		if(i==0){
@@ -213,6 +215,7 @@
 	               		<div class="comment-name">댓글쓰기</div>
 	               		<textarea class="comment-space" name="content"></textarea>
 	               		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	               		<input type="hidden" name="bno" value="<%=bno%>"/>
 	               		<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
 	               		<button class="comment-regist" type="submit" name="command" value="reply">등록</button>
 	               	</div>
@@ -220,19 +223,6 @@
 	        </div>
        		<%
         	}
-      		if(i>cDto.size()-1){
-	      		if(cDto.get(i).getCno()==cDto.get(i+1).getCno()) {
-	   				comments = "comments-comment";
-	      		} else {
-	      			comments = "comments";
-	      		}
-      		} else {
-      			if(cDto.get(cDto.size()-1).getCno()==cDto.get(cDto.size()-2).getCno()) {
-      				comments = "comments-comment";
-      			} else {
-      				comments = "comments";
-      			}
-      		}
       	}
     	%>
 		<!-- 댓글쓰기 -->

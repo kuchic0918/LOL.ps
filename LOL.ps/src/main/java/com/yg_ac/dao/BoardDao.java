@@ -459,6 +459,28 @@ public class BoardDao {
 		}
 		return get;
 	}
+	//좋아요
+
+	// 조회수
+	public void insertViews(int bno) {
+		String sql = "update community set count = count+1 where bno = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			rs = pstmt.executeQuery();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	public void boardGood(int bno , int memberkey) {
 		PreparedStatement pstmt = null;
 		try {
@@ -469,7 +491,7 @@ public class BoardDao {
 			pstmt.executeUpdate();
 			pstmt.close();
 			
-			String sql = "insert into community_like values( ? , ? ) ";
+			String sql2 = "insert into community_like values( ? , ? ) ";
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -480,5 +502,4 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 	}
-}
 }
