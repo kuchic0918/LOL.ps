@@ -459,4 +459,26 @@ public class BoardDao {
 		}
 		return get;
 	}
+	public void boardGood(int bno , int memberkey) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "update community set good = (good+1)" +
+					" where bno = ? ";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+			pstmt.close();
+			
+			String sql = "insert into community_like values( ? , ? ) ";
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+}
 }
