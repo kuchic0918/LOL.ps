@@ -66,7 +66,7 @@
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
-            	<a class="nav-items" href="../notice/notice.html">공지사항</a>
+            	<a class="nav-items" href="community.jsp?category=공지사항">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
                 <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
@@ -97,6 +97,13 @@
     </header>
 
     <div class="all-main">
+    	<%
+    	if(category.equals("공지사항")){
+    		%>
+    		<div class="first-title"><%=category %></div>
+    		<%
+    	}else{
+    	%>
         <div class="first-title"><%=category %></div>
         <div class="second-title">
         	<a class="main-button" href="write.jsp?category=<%=category%>">✎게시물 쓰기</a>
@@ -106,8 +113,39 @@
 			</form>
         </div>
         <div style="clear: both;"></div>
+        <%
+    	}
+        %>
     </div>
-	
+	<%
+	if(category.equals("공지사항")){
+		%>
+		<main class="notice-main">
+	        <div class="notice-contents">
+	           	<div class="notice-whiteDiv"></div>
+	           	<%
+	        	for(BoardDto dto:list){
+	        	%>
+	           	<a class="notice-contents-item" href="notice-post.html">
+	           		<span class="notice1" >
+	           			<%=dto.getBno() %>
+	           		</span>
+	           		<span class="notice2">
+	           			<%=dto.getContent() %>
+	           		</span>
+	           		<span class="notice3">
+	           			<span class="notice4"><%=dto.getWritedate() %></span><br/>
+	           			<span class="notice4">조회 <%=dto.getCount() %></span>
+	           		</span>
+	           	</a>
+	           	<%
+	        	}
+	           	%>
+	        </div>
+	    </main>
+		<%
+	}else{
+	%>
     <main class="community-main">
         <div class="contents">
            	<div class="whiteDiv"></div>
@@ -185,9 +223,7 @@
         	}
 			%>
         </div>
-		
     </main>
-    
     <div class="bottom-btn">
     	<%
     	String firstPage = "bottom-btn-in";
@@ -235,6 +271,9 @@
 		</span>
 		
 	</div>
+    <%
+	}
+    %>
 	
 	<div class="top-button">
         <span style="color: #6c757d;">UP</span>
