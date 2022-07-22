@@ -19,6 +19,9 @@ public class ActionFactory {
 		case "signin" :
 			action = new SigninAction();
 			break;
+		case "signinCheck" :
+			action = new SigninCheckAction();
+			break;
 		case "kakaoLogin" :
 			action = new KakaoLoginAction();
 			break;
