@@ -77,26 +77,29 @@
     				}
     			});
     		});
-    		$('#bad_btn').click(function(){
-    			$.ajax ({
-    				type : 'get',
-    				url : 'Controller',
-    				data : {
-    					command : 'bad',
-    					bno : '<%=bno%>' ,
-    					memberkey : '<%=memberkey%>',
-    				},
-    				success : function(data,x,status) {
-    					if(status.status == 201 ) {
-    						alert("중복");
-    					}else {
-    						$('#bad').text(data);
-    					}
-    				},
+//     		$('#bad_btn').click(function(){
+//     			$.ajax ({
+//     				type : 'get',
+//     				url : 'Controller',
+//     				data : {
+//     					command : 'bad',
+<%--     					bno : '<%=bno%>' , --%>
+<%--     					memberkey : '<%=memberkey%>', --%>
+//     				},
+//     				success : function(data,x,status) {
+//     					if(status.status == 201 ) {
+//     						alert("중복");
+//     					}else {
+//     						$('#bad').text(data);
+//     					}
+//     				},
+//     				error(){
+//     					console.log('error');
+//     				}
     				
     					
-    			});
-    		});
+//     			});
+//     		});
     	});
     </script>
 </head>
@@ -210,7 +213,7 @@
            		%>
            		<div class="justify-content-start">
            			<button style="white-space:pre;" id = "good_btn" class="recommend" type="button"><span class="pre">&uarr;    </span ><span id = "good"><%=bDao.likeCount(bno)%></span></button>
-           			<button style="white-space:pre;" id = "bad_btn" class="recommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><0</span></button>
+           			<button style="white-space:pre;" id = "bad_btn" class="recommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><%=bDao.badCount(bno)%></span></button>
            		</div>
            		
            		<%

@@ -491,9 +491,7 @@ public class BoardDao {
 	public void communityGood(HttpServletRequest request, HttpServletResponse response, int bno , int memberkey) throws  ServletException, IOException, SQLException {
 		PreparedStatement pstmt = null;
 		response.setCharacterEncoding("UTF-8");
-		if(badCount(bno) > 0) {
-			
-		}
+		
 
 		try {			
 			String sql = " insert into community_like values( ? , ? ) ";
@@ -521,6 +519,7 @@ public class BoardDao {
 				response.sendError(HttpServletResponse.SC_CREATED);
 				response.getWriter().print(likeCount(bno));
 //				response.sendRedirect("ViewDetail.jsp?bno="+bno);
+				pstmt.close();
 			}
 				
 				
@@ -529,24 +528,6 @@ public class BoardDao {
 		}
 		
 }
-	public int communityGoodDupleCheck(int bno , int memberkey) {
-		PreparedStatement pstmt = null;
-		int cnt = 0;
-		try {
-			String sql = "select count(*) cnt from community_like where bno = ? and memberkey = ? ";
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setInt(1, bno);
-			pstmt.setInt(2, memberkey);
-			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			cnt = rs.getInt("cnt");
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return cnt;
-	}
 	//좋아요 총 개수
 	public int likeCount(int bno) {
 		PreparedStatement pstmt = null;
@@ -623,7 +604,7 @@ public class BoardDao {
 	public void likeDelete(int bno , int memberkey) {
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "delete from community_like where bno = ? and memberkey =  ? ";
+			String sql = " delete from community_like where bno = ? and memberkey =  ? " ;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
@@ -636,7 +617,7 @@ public class BoardDao {
 	public void badDelete(int bno , int memberkey) {
 		PreparedStatement pstmt = null;
 		try {
-			String sql = "delete from community_bad where bno = ? and memberkey =  ? ";
+			String sql = " delete from community_bad where bno = ? and memberkey =  ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
@@ -646,10 +627,7 @@ public class BoardDao {
 			e.printStackTrace();
 		}
 	}
-//	public int badCount(int bno) {
-//		PreparedStatement pstmt = null;
-//		String sql = "select "
-//	}
+	
 	public void communityBad(HttpServletRequest request, HttpServletResponse response, int bno , int memberkey) throws  ServletException, IOException, SQLException {
 		PreparedStatement pstmt = null;
 		response.setCharacterEncoding("UTF-8");
@@ -670,7 +648,7 @@ public class BoardDao {
 		//중복 한사람이 2번 눌렀을 경우
 		catch (SQLException e) {
 			e.printStackTrace();
-			String sql = "select count(*) cnt from community_like where bno = ? and memberkey = ? ";			
+			String sql = "select count(*) cnt from community_bad where bno = ? and memberkey = ? ";			
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
@@ -681,6 +659,7 @@ public class BoardDao {
 				response.sendError(HttpServletResponse.SC_CREATED);
 				response.getWriter().print(likeCount(bno));
 //				response.sendRedirect("ViewDetail.jsp?bno="+bno);
+				
 			}
 				
 				
