@@ -64,6 +64,12 @@ public class ActionFactory {
 		case "bad" :
 			action = new BadAction();
 			break;
+		case "updateBoard" :
+			action = new updateBoardAction();
+			break;
+		case "deleteBoard" :
+			action = new deleteBoardAction();
+			break;
 				
 		}
 		return action;

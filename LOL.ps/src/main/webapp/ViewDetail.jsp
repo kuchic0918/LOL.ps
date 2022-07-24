@@ -5,12 +5,13 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <%
+	response.setCharacterEncoding("UTF-8");
 	int bno = Integer.parseInt(request.getParameter("bno"));
 	BoardDao bDao = new BoardDao();
 	BoardDto dto = bDao.getDetail(bno);
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
-	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");	
 	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
@@ -42,8 +43,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><%=dto.getCategory() %></title>
 	<link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>    
     <script>
     	$(function() {
     		$('.replybtn').click(function() {
@@ -65,10 +68,14 @@
     					memberkey : '<%=memberkey%>',
     				},
     				success : function(data,x,status){
+    					console.log(data);
     					if(status.status == 201) { 
-    						alert("중복");
+    						alert("이미 추천한 게시글 입니다.");
     					}else {
+							$('.recommend').addClass('recommend-on');    							
+	  						$('.unrecommend').removeClass('recommend-on');
 	   						$('#good').text(data);
+	   						$('#bad').text(<%=bDao.likeCount(bno)%>);
     					}
     				},
     				error(){
@@ -77,29 +84,58 @@
     				}
     			});
     		});
-//     		$('#bad_btn').click(function(){
-//     			$.ajax ({
-//     				type : 'get',
-//     				url : 'Controller',
-//     				data : {
-//     					command : 'bad',
-<%--     					bno : '<%=bno%>' , --%>
-<%--     					memberkey : '<%=memberkey%>', --%>
-//     				},
-//     				success : function(data,x,status) {
-//     					if(status.status == 201 ) {
-//     						alert("중복");
-//     					}else {
-//     						$('#bad').text(data);
-//     					}
-//     				},
-//     				error(){
-//     					console.log('error');
-//     				}
+    		$('#bad_btn').click(function(){
+    			$.ajax ({
+    				type : 'get',
+    				url : 'Controller',
+    				data : {
+    					command : 'bad' ,
+    					bno : '<%=bno%>' ,
+    					memberkey : '<%=memberkey%>',
+    				},
+    				success : function(data,x,status){
+    					if(status.status == 201) { 
+    						alert("이미 비추천한 게시글입니다.");
+    					}else {
+							$('.unrecommend').addClass('recommend-on');
+	    					$('.recommend').removeClass('recommend-on');
+	   						$('#bad').text(data);
+	   						$('#good').text(<%=bDao.likeCount(bno)%>);
+    					}
+    				},
+    				error(){
+//     					alert("중복");
+    					console.log('error');
+    				}
+    			});
+    		});
+    		$('#board_delete').click(function(){
+    			if(confirm('정말 삭제하시겠습니까 ?') == true) {
+    				$.ajax({
+    					type : 'POST',
+    					url : 'Controller' , 
+    					data : {
+    						command : 'deleteBoard' ,
+    						bno : '<%=bno%>',
+    					},
+    					success : function() {
+    						alert("삭제 완료");
+    						location.href = "community.jsp?category=<%=dto.getCategory()%>";
+    					}
+    				});
     				
-    					
-//     			});
-//     		});
+    			}  			
+    		});
+    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
+    			$('.recommend').addClass('recommend-on');
+    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
+    			$('.unrecommend').addClass('recommend-on');
+    		else
+    			return;
+    		$('#board_update').click(function(){
+    			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
+					
+    		})
     	});
     </script>
 </head>
@@ -143,7 +179,7 @@
     <div class="all-main">
         <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
-        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url=" + ${url}>✎게시물 쓰기</a>
+        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url="+ ${url}>✎게시물 쓰기</a>
         	<form action="Controller" method="get" id="search_form" autocomplete="off">
 				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 				<button style="opacity:0;" type="submit" name="command" value="search"></button>
@@ -159,17 +195,23 @@
       	<div class="community-post-post-detail">
       		<!-- 포스트제목 -->
       		<div class="title">
-      			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
+      			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
+      			<% 
+      				if(member.getMemberkey() == dto.getMemberkey()) {      			
+      			%>
+      					<button class = "updateDelete_btn" id ="board_delete" style = "float :right;">게시물 삭제</button>
+      					<button class = "updateDelete_btn" id = "board_update" style = "float :right; margin-right:3px;">게시물 수정</button>
       			<%
-      			if(dto.getCategory().equals("자유 게시판")) {
+      				}
+      				if(dto.getCategory().equals("자유 게시판")) {
       			%>
-      			<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
+      					<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
       			<%	
-      			} else {
+      				} else {
       			%>
-     			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+     					<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
       			<%	
-      			}
+      				}
       			%>
       		</div>
       		<!-- 포스트내용 -->
@@ -213,7 +255,7 @@
            		%>
            		<div class="justify-content-start">
            			<button style="white-space:pre;" id = "good_btn" class="recommend" type="button"><span class="pre">&uarr;    </span ><span id = "good"><%=bDao.likeCount(bno)%></span></button>
-           			<button style="white-space:pre;" id = "bad_btn" class="recommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><%=bDao.badCount(bno)%></span></button>
+           			<button style="white-space:pre;" id = "bad_btn" class="unrecommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><%=bDao.badCount(bno)%></span></button>
            		</div>
            		
            		<%

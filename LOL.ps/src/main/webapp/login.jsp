@@ -207,6 +207,18 @@
 								            console.log("Email: " + responsePayload.email);
 								            var googleEmail = responsePayload.email;
 								            var googleNickname = responsePayload.name;
+// 								            $.ajax({
+// 								            	type : 'POST' ,
+// 								            	url : 'Controller',
+// 								            	data : {
+// 								            		command : 'googleLogin',
+// 								            		googleEmail : googleEmail,
+// 								            		googleNickname : googleNickname,
+// 								            	},
+// 								            	success : function () {
+// 								            		alert("환영");
+// 								            	}
+// 								            });
 								            location.href = "Controller?command=googleLogin&googleEmail="+googleEmail+"&googleNickName="+googleNickname;
 								            
 								        }
@@ -253,7 +265,7 @@
 		<div class="footer-left">
 			<span class="footer-left-item">공지사항</span> <span
 				class="footer-left-item">버그리포팅</span> <span class="footer-left-item">파트너
-				신청</span></br>
+				신청</span><br/>
 			<div style="margin-bottom: 10px;"></div>
 			<span class="footer-left-item">이용약관</span> <span
 				class="footer-left-item">개인정보처리방침</span>

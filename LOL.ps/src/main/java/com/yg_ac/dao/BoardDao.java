@@ -202,7 +202,36 @@ public class BoardDao {
 			}
 		}
 	}
-	public ArrayList<Integer> getFirstLastBno(String category) {
+	//게시글 수정
+	public void updateBoard(int bno , String title , String content) {
+		String sql = "update community set title = ? , content = ? " +
+					" where bno = ? ";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, bno);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//게시글 삭제
+	public void deleteBoard(int bno) {
+		String sql = " delete from community where bno = ?  ";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+		public ArrayList<Integer> getFirstLastBno(String category) {
 		ArrayList<Integer> get = new ArrayList<Integer>();
 		String sql = "select * from community where category = ? order by bno desc";
 		PreparedStatement pstmt = null;
@@ -563,8 +592,9 @@ public class BoardDao {
 		return like;
 	}
 	//싫어요를 누를 때 좋아요를 눌렀는지
-	public boolean likeCheck(int memberkey , int bno) {
+	public int likeCheck(int memberkey , int bno) {
 		PreparedStatement pstmt = null;
+		int cnt = 0;
 		String sql = " select count(*) cnt from community_like where bno = ? and memberkey = ? ";
 		try {
 			pstmt =  conn.prepareStatement(sql);
@@ -572,33 +602,32 @@ public class BoardDao {
 			pstmt.setInt(2, memberkey);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
-			int cnt = rs.getInt("cnt");
-			if(cnt == 1)
-				return false;
+			cnt = rs.getInt("cnt");
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return true;
+		return cnt;
 	}
 	//좋아요를 누를 때 싫어요를 눌렀는지
-	public boolean badCheck(int bno , int memberkey) {
+	public int badCheck(int memberkey , int bno) {
 		PreparedStatement pstmt = null;
-		String sql = " select count(*) cnt from community_like where bno = ? and memberkey = ? ";
+		int cnt = 0;
+		String sql = " select count(*) cnt from community_bad where bno = ? and memberkey = ? ";
 		try {
 			pstmt =  conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
-			int cnt = rs.getInt("cnt");
-			if(cnt == 1)
-				return false;
+			cnt = rs.getInt("cnt");
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		return true;
+		return cnt;
 	}
 	//좋아요 삭제
 	public void likeDelete(int bno , int memberkey) {
@@ -642,7 +671,7 @@ public class BoardDao {
 //			request.setAttribute("like", likeCount(bno));
 //			request.getRequestDispatcher("ViewDetail.jsp?bno="+bno).forward(request, response);
 //			response.sendRedirect("ViewDetail.jsp?bno="+bno);
-			response.getWriter().print(likeCount(bno));
+			response.getWriter().print(badCount(bno));
 			pstmt.close();
 		}
 		//중복 한사람이 2번 눌렀을 경우
@@ -657,7 +686,7 @@ public class BoardDao {
 			int cnt = rs.getInt("cnt");
 			if(cnt == 1 ) {
 				response.sendError(HttpServletResponse.SC_CREATED);
-				response.getWriter().print(likeCount(bno));
+				response.getWriter().print(badCount(bno));
 //				response.sendRedirect("ViewDetail.jsp?bno="+bno);
 				
 			}
