@@ -1719,7 +1719,7 @@
 				    <div class = "champ-community-community-container">
 				        <div class = "champ-community-first-row">
 				            <h2 class = "champ-community-champ-name">\${champName} 게시판</h2>
-				            <a class = "champ-community-board-btn" href="write.jsp?category=빌드 게시판">
+				            <a class = "champ-community-board-btn" href="write.jsp?category=빌드 연구소">
 				                <span class = "icno-font">
 				                    <i class="fa-regular champ-community-fa-pen"></i>
 				                </span>
@@ -1742,7 +1742,7 @@
 					<div class="bottom-btn2">
 				    </div>
 				    <div class = "champ-community-board-btn2" >
-				        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 게시판">
+				        <a class = "champ-community-btn-write" href="write.jsp?category=빌드 연구소">
 				            <i class="fa-regular fa-pen"></i>
 				            <span>게시물 쓰기</span>
 				        </a>
