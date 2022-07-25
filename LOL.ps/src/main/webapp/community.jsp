@@ -120,7 +120,7 @@
 	<%
 	if(category.equals("공지사항")){
 		%>
-		<main class="notice-main">
+		<main class="community-main">
 	        <div class="notice-contents">
 	           	<div class="notice-whiteDiv"></div>
 	           	<%
