@@ -1002,6 +1002,7 @@ p {
     border: 1px solid #7e9bff;
     border-bottom: 1px solid white;
     border-radius: 4px 4px 0px 0px;
+    pointer-events:none;
 }
 
 .statistics-what-level:hover {
