@@ -1760,7 +1760,7 @@
 					datatype:"json",
 					success:function(data){
 						for(var i = 0;i < data.length;i++){
-							write = `<a class="contents-item" href="ViewDetail.jsp?bno=\${data[i].bno}">
+							write = `<a class="contents-item" href="ViewDetailServlet?bno=\${data[i].bno}">
 										<span class="build">
 			          					<img class="champion-head" src="Images/champion/head/\${data[i].image}"/>
 			          					</span>
