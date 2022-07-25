@@ -26,16 +26,16 @@ public class LikeAction implements Action {
 		//싫어요에 정보가 있으면 
 		//그거 삭제 후 좋아요 
 		//내가 글 싫어요를 누른상태면 
-		int badCount = bDao.badCheck(memberkey, bno);
+		int bad = bDao.badCheck(memberkey, bno);
 		//그거 삭제 후 싫어요 
-		if(badCount == 1) {
+		if(bad == 1) {
 			System.out.print("여기들어옴!");
 			bDao.mybadDelete(bno,memberkey);
 			bDao.communityGood(request, response, bno, memberkey);
 		}
 		//내가 싫어요 혹은 좋아요 눌르지 않았다면 . . .
 		//원래 갯수 확인 .
-		else if (badCount == 0) {
+		else if (bad == 0) {
 			if(bDao.badCount(bno) > 0) {
 				bDao.badDelete(bno);
 			}

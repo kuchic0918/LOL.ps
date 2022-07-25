@@ -85,6 +85,7 @@
     				},
     				error:function(){
 //     					alert("중복");
+						alert("이미 추천한 게시글 입니다.");
     					console.log('error');
     				}
     			});
@@ -131,17 +132,40 @@
     				
     			}  			
     		});
-    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
+    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1) {
     			$('.recommend').addClass('recommend-on');
-    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
+    		}
+    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1) {
     			$('.unrecommend').addClass('recommend-on');
-    		else
+    		}
+    		else {
     			return;
+    		}
     		
     		$('#board_update').click(function(){
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
-    		})
+    		});
+    		
+    		$('#commentDelete').click(function(){
+    			$.ajax({
+    				type : 'POST',
+    				url : 'Controller' , 
+    				data : {
+    					command : 'DeleteComment' , 
+    					cno : <%=cDto.get(1).getCno()%>,
+    				},
+    				success : function() {
+    					location.href = "ViewDetail.jsp?bno=<%=dto.getBno()%>"; 
+    				},
+    				error:function(){
+    					alert('easdf');
+    				}
+    			});
+    		});
+    		$('#commentEdit').click(function(){
+    			
+    		});
     		<%
     		}
     		%>
@@ -343,14 +367,33 @@
 	   		<div>
 				<div class="<%=comments%>">
 		      		<img class="comments-img" src="Images/profile/<%=commentWriter.get(i).getImage()%>"/>
-		      		<div style="padding-left: 20px;">
-		      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b><%=commentWriter.get(i).getNickname()%></b></div>
+		      		<div style="padding-left: 20px; width : 100%;">
+		      			<%if (member != null) {
+		      				if(cDto.get(0).getMemberkey() == dto.getMemberkey()) {
+		      			%>
+		      			<span class = "comments-owner" style = "float:left;">글쓴이</span>
+		      			<% 		
+		      				}
+	      				}
+		      			%>
+		      			<div style="padding-bottom: 5px; color:rgb(69, 76, 107); font-size:14px;"><b><%=commentWriter.get(i).getNickname()%></b></div>		      			
 		      			<div style="font-size:14px;">
 		      			<%=cDto.get(i).getContent()%>
 		      			</div>
 		      			<div style="padding-top:5px">
 		      				<span style="font-size: 14px; color:gray;"><%=cDto.get(i).getWritedate()%></span>
 	      					<button class="write-comment replybtn">↳댓글</button>
+	      					<%if (member != null) {
+		      					if(cDto.get(0).getMemberkey() == member.getMemberkey()) {
+		      				%>
+		      						<span style = "margin-left : 455px;">
+		      							<button class = "updateDelete_btn" id = "commentEdit" >내 댓글 수정</button>
+		      							<button class = "updateDelete_btn" id = "commentDelete">삭제</button>
+		      						</span>
+		      				<% 		
+		      					}
+	      					}
+		      				%>
 		      			</div>
 		      		</div>
 	      		</div> 

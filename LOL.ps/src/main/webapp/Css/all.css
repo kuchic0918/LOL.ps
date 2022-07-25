@@ -1952,6 +1952,17 @@ p {
 	border-top: 1px solid rgb(171, 174, 186);
 	margin-left : 93px;
 }
+/* 게시판 주인 */ 
+.comments-owner{
+	border : 1px solid #3d69ff;
+	color : #3d69ff;
+	border-radius : 4px;
+	padding : 0 1px 1px 3px;
+	position : relative;
+	font-size : 12px;
+	margin-right : 4px;
+	font-weight : 700;
+}
 
 .comments-img {
 	width: 60px;

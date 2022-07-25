@@ -70,6 +70,9 @@ public class ActionFactory {
 		case "deleteBoard" :
 			action = new deleteBoardAction();
 			break;
+		case "DeleteComment" :
+			action = new DeleteComment();
+			break;
 				
 		}
 		return action;

@@ -494,7 +494,19 @@ public class BoardDao {
 		}
 		return get;
 	}
-	//좋아요
+	//댓글 삭제하기
+	public void DeleteComment (int cno) {
+		String sql = " DELETE FROM COMMUNITY_COMMENT WHERE cno = ? " ;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cno);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// 조회수
 	public void insertViews(int bno) {
@@ -624,14 +636,26 @@ public class BoardDao {
 		}
 		return cnt;
 	}
-	//좋아요 삭제
-	public void likeDelete(int bno , int memberkey) {
+	//내가 누른 좋아요 삭제
+	public void mylikeDelete(int bno , int memberkey) {
 		PreparedStatement pstmt = null;
 		try {
 			String sql = " delete from community_like where bno = ? and memberkey =  ? " ;
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void likeDelete(int bno ) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = " delete from community_like where bno = ? and ROWNUM =  1 " ;
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
 			pstmt.executeUpdate();
 		}
 		catch(Exception e) {
