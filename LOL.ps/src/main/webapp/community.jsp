@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.net.URLDecoder" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
@@ -126,7 +126,7 @@
 	           	<%
 	        	for(BoardDto dto:list){
 	        	%>
-	           	<a class="notice-contents-item" href="notice-post.html">
+	           	<a class="notice-contents-item" href="ViewDetailServlet?bno=<%=dto.getBno()%>">
 	           		<span class="notice1" >
 	           			<%=dto.getBno() %>
 	           		</span>
