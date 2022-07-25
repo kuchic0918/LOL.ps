@@ -53,7 +53,83 @@
 				var form = $(this).parent().parent().parent().parent().find('.reply');
     			$(form).toggle();
     		});
-    		const url = new URL($(location).attr("href"));
+    		const url = new URL($(location).attr("href"));    		
+    		$('#good_btn').click(function(){
+    			$.ajax ({
+    				type : 'get',
+    				url : 'Controller',
+    				data : {
+    					command : 'like' ,
+    					bno : '<%=bno%>' ,
+    					memberkey : '<%=memberkey%>',
+    				},
+    				success : function(data,x,status){
+    					console.log(data);
+    					if(status.status == 201) { 
+    						alert("이미 추천한 게시글 입니다.");
+    					}else {
+							$('.recommend').addClass('recommend-on');    							
+	  						$('.unrecommend').removeClass('recommend-on');
+	   						$('#good').text(data);
+	   						$('#bad').text(<%=bDao.badCount(bno)%>);
+    					}
+    				},
+    				error(){
+    					console.log('error');
+    				}
+    			});
+    		});
+    		$('#bad_btn').click(function(){
+    			$.ajax ({
+    				type : 'get',
+    				url : 'Controller',
+    				data : {
+    					command : 'bad' ,
+    					bno : '<%=bno%>' ,
+    					memberkey : '<%=memberkey%>',
+    				},
+    				success : function(data,x,status){
+    					if(status.status == 201) { 
+    						alert("이미 비추천한 게시글입니다.");
+    					}else {
+							$('.unrecommend').addClass('recommend-on');
+	    					$('.recommend').removeClass('recommend-on');
+	   						$('#bad').text(data);
+	   						$('#good').text(<%=bDao.likeCount(bno)%>);
+    					}
+    				},
+    				error(){
+    					console.log('error');
+    				}
+    			});
+    		});
+    		$('#board_delete').click(function(){
+    			if(confirm('정말 삭제하시겠습니까 ?') == true) {
+    				$.ajax({
+    					type : 'POST',
+    					url : 'Controller' , 
+    					data : {
+    						command : 'deleteBoard' ,
+    						bno : '<%=bno%>',
+    					},
+    					success : function() {
+    						alert("삭제 완료");
+    						location.href = "community.jsp?category=<%=dto.getCategory()%>";
+    					}
+    				});
+    				
+    			}  			
+    		});
+    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
+    			$('.recommend').addClass('recommend-on');
+    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
+    			$('.unrecommend').addClass('recommend-on');
+    		else
+    			return;
+    		$('#board_update').click(function(){
+    			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
+					
+    		})
     	});
     </script>
 </head>
