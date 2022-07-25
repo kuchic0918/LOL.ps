@@ -57,6 +57,8 @@
     		$('#good_btn').click(function(){
     			$.ajax ({
     				type : 'get',
+    				dataType : 'JSON',
+    				contentType : 'application/json',
     				url : 'Controller',
     				data : {
     					command : 'like' ,
@@ -126,6 +128,7 @@
     			$('.unrecommend').addClass('recommend-on');
     		else
     			return;
+    		
     		$('#board_update').click(function(){
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					

@@ -549,13 +549,8 @@ public class BoardDao {
 				response.getWriter().print(likeCount(bno));
 //				response.sendRedirect("ViewDetail.jsp?bno="+bno);
 				pstmt.close();
-			}
-				
-				
-				
-				
-		}
-		
+			}				
+		}		
 }
 	//좋아요 총 개수
 	public int likeCount(int bno) {
@@ -643,13 +638,25 @@ public class BoardDao {
 			e.printStackTrace();
 		}
 	}
-	public void badDelete(int bno , int memberkey) {
+	public void mybadDelete(int bno ,int memberkey) {
 		PreparedStatement pstmt = null;
 		try {
 			String sql = " delete from community_bad where bno = ? and memberkey =  ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			pstmt.setInt(2, memberkey);
+			pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void badDelete(int bno) {
+		PreparedStatement pstmt = null;
+		try {
+			String sql = " delete from community_bad where bno = ? and ROWNUM =  1 ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bno);
 			pstmt.executeUpdate();
 		}
 		catch(Exception e) {
