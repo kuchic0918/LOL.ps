@@ -12,7 +12,6 @@
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");	
-	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
@@ -54,6 +53,7 @@
     			$(form).toggle();
     		});
     		const url = new URL($(location).attr("href"));
+<<<<<<< HEAD
 //     		$('.recommend').click(function(){
 <%--     			location.href = " Controller?command=like&bno=<%=bno%>&memberkey=<%=memberkey%> " ; --%>
 //     		});
@@ -136,6 +136,8 @@
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
     		})
+=======
+>>>>>>> branch 'main' of https://github.com/kuchic0918/LOL.ps.git
     	});
     </script>
 </head>
@@ -197,12 +199,14 @@
       		<div class="title">
       			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
       			<% 
+      			if(member != null){
       				if(member.getMemberkey() == dto.getMemberkey()) {      			
       			%>
       					<button class = "updateDelete_btn" id ="board_delete" style = "float :right;">게시물 삭제</button>
       					<button class = "updateDelete_btn" id = "board_update" style = "float :right; margin-right:3px;">게시물 수정</button>
       			<%
       				}
+      			}
       				if(dto.getCategory().equals("자유 게시판")) {
       			%>
       					<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
@@ -308,7 +312,7 @@
 	            	<div class="comment">
 	               		<div class="comment-name">댓글쓰기</div>
 	               		<textarea class="comment-space" name="content"></textarea>
-	               		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	               		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	               		<input type="hidden" name="bno" value="<%=bno%>"/>
 	               		<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
 	               		<button class="comment-regist" type="submit" name="command" value="reply">등록</button>
@@ -328,7 +332,7 @@
 	        	<div class="comment">
 	           		<div class="comment-name">댓글쓰기</div>
 	           		<textarea class="comment-space" name="content"></textarea>
-	           		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	           		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	           		<input type="hidden" name="bno" value="<%=bno%>"/>
 	           		<button class="comment-regist" type="submit" name="command" value="comment">등록</button>
 	           	</div>

@@ -131,7 +131,7 @@
 	           			<%=dto.getBno() %>
 	           		</span>
 	           		<span class="notice2">
-	           			<%=dto.getContent() %>
+	           			<%=dto.getTitle() %>
 	           		</span>
 	           		<span class="notice3">
 	           			<span class="notice4"><%=dto.getWritedate() %></span><br/>
