@@ -77,7 +77,13 @@ public class ActionFactory {
 			action = new FindPwAction();
 			break;
 		case "deleteComment" :
-			action = new DeleteComment();
+			action = new DeleteCommentAction();
+			break;
+		case "updateComment" :
+			action = new UpdateCommentAction();
+			break;
+		case "deleteCommentComments" :
+			action = new DeleteCommentCommentsAction();
 			break;
 				
 		}

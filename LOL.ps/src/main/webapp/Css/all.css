@@ -2002,10 +2002,11 @@ p {
 .comment-name {
 	color: #88a3ff;
 	font-size: 15px;
+	margin-left: 55px;
 }
 
 .comment-space {
-	width: 80%;
+	width: 70%;
 	height: 80px;
 	padding: 5px;
 	border-radius: 0.25%;

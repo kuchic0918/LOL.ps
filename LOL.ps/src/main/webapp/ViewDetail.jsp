@@ -53,7 +53,11 @@
     	$(function() {
     		$('.replybtn').click(function() {
 				var form = $(this).parent().parent().parent().parent().find('.reply');
-    			$(form).toggle();
+    			$(form).toggle("normal");
+    		});
+    		$('.comment-update-btn').click(function() {
+    			var form = $(this).parent().parent().parent().find('.comment-update');
+    			$(form).toggle("normal");
     		});
     		const url = new URL($(location).attr("href"));
     		<%
@@ -373,14 +377,43 @@
 	      					<%if (member != null) {
 		      					if(cDto.get(i).getMemberkey() == member.getMemberkey()) {
 		      				%>
-		      						<form action="Controller" method="POST">
+		      					<div>
+		      					<%
+		      					if("comments-comment".equals(comments)) {
+		      					%>
+		      					<form action="Controller" method="POST">
+		      							<input type="hidden" name="rno" value="<%=cDto.get(i).getRno()%>"/>
+		      							<input type="hidden" name="bno" value="<%=cDto.get(i).getBno()%>"/>
+		      							<span style = "float:right;">
+			      							<button type="button" class = "updateDelete_btn comment-update-btn" >내 댓글 수정</button>
+			      							<button type="submit" name="command" value="deleteCommentComments" class = "updateDelete_btn" >삭제</button>
+		      							</span>
+      							</form>
+		      					<%
+		      					} else {
+		      					%>
+		      					<form action="Controller" method="POST">
 		      							<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
 		      							<input type="hidden" name="bno" value="<%=cDto.get(i).getBno()%>"/>
 		      							<span style = "float:right;">
-		      							<button type="submit" name="command" value="updateComment" class = "updateDelete_btn" id = "commentEdit" >내 댓글 수정</button>
-		      							<button type="submit" name="command" value="deleteComment" class = "updateDelete_btn" id = "commentDelete">삭제</button>
+			      							<button type="button" class = "updateDelete_btn comment-update-btn" >내 댓글 수정</button>
+			      							<button type="submit" name="command" value="deleteComment" class = "updateDelete_btn" >삭제</button>
 		      							</span>
-	      							</form>
+      							</form>
+		      					<% 	
+		      					}
+		      					%>
+		      						
+	      							<form action="Controller" method="POST" style="display:none;" class="comment-update">
+						            	<div class="comment" style = "border-top : none; ">
+						               		<div class="comment-name">댓글수정</div>
+						               		<input type="hidden" name="rno" value="<%=cDto.get(i).getRno()%>"/>
+		      								<input type="hidden" name="bno" value="<%=cDto.get(i).getBno()%>"/>
+						               		<textarea class="comment-space" name="content"><%=cDto.get(i).getContent() %></textarea>
+						               		<button class="comment-regist" type="submit" name="command" value="updateComment">수정</button>
+						               	</div>
+						            </form>
+					            </div>
 		      				<% 		
 		      					}
 	      					}

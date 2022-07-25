@@ -502,6 +502,35 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, cno);
 			pstmt.executeUpdate();
+			pstmt.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//대댓글 삭제
+	public void DeleteCommentComments (int rno) {
+		String sql = " DELETE FROM COMMUNITY_COMMENT WHERE rno = ? " ;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, rno);
+			pstmt.executeUpdate();
+			pstmt.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//댓글 수정
+	public void updateComment (String content,int rno ) {
+		String sql = " UPDATE COMMUNITY_COMMENT SET CONTENT = ? where rno = ? ";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, rno);
+			pstmt.executeUpdate();
+			pstmt.close();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
