@@ -11,13 +11,7 @@
 <!DOCTYPE html>
 <html>
 <%	
-	if("alright".equals((String)request.getAttribute("member"))) {
-		%>
-			<script>
-				alert('환영합니다 !');
-			</script>
-		<% 
-	} else if("passwordWrong".equals((String) request.getAttribute("mypage"))) {
+	if("passwordWrong".equals((String) request.getAttribute("mypage"))) {
 		%>
 			<script>
 				alert('현재 비밀번호가 맞지 않습니다.');

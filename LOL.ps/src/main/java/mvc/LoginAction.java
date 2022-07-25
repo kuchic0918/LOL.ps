@@ -24,7 +24,7 @@ public class LoginAction implements Action {
 			MemberDTO member = mDao.findByEmailPwMemberInfo(email, password);	 	
 			session.setAttribute("memberInfo", member);
 			request.setAttribute("member", "alright");
-			request.getRequestDispatcher("my-page.jsp").forward(request, response);
+			request.getRequestDispatcher("main.jsp").forward(request, response);
 		} else if (mDao.isVaildEmail(email) == false && mDao.isVaildPW(password) == false) { 
 			// 정보 x
 			request.setAttribute("member", "wrong");

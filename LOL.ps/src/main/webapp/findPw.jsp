@@ -8,14 +8,29 @@
 <link rel="stylesheet" href="Css/all.css">
 <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <script src="Js/jquery-3.6.0.min.js"></script>
-
+<%
+if("found".equals((String)request.getAttribute("find"))) {
+	%>
+	<script>
+		alert('해당 메일로 비밀번호를 전송했습니다.');
+	</script>
+	<%
+}else if("notfound".equals((String)request.getAttribute("find"))) {
+	%>
+	<script>
+		alert('회원정보가 없는 아이디 입니다. 아이디먼저 찾아주세요.');
+		location.href = 'findId.jsp';
+	</script>
+	<%
+}
+%>
 </head>
 <body class = "member-body">
 <header class="header-mainnav">
 	<div class="header-container">
 		<a href="main.jsp"> <img src="Images/header-logo.webp"alt="LOL.PS"></a>
 			<div class="nav-item-container">
-				<a class="nav-items" href="../notice/notice.html">공지사항</a> 
+				<a class="nav-items" href="community.jsp?category=공지사항">공지사항</a> 
 				<a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a> 
 				<a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a> 
 				<a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
@@ -31,33 +46,31 @@
 			<section class="member-ad"></section>
 		</div>
 		<div class="member-contents">
-			<div class=" member-row-sign" >
-				<div class="member-col-12" >
-					<h2 class="member-page-title" >비밀번호 초기화</h2>
+			<div class=" member-row-sign">
+				<div class="member-col-12">
+					<h2 class="member-page-title">비밀번호 초기화</h2>
 				</div>
 				<div class="member-row">
-					<div class="member-email_login_box" style = "margin-top : 130px;">
-						<h3 class="member-h3" style = "margin-left : 23px;">비밀번호 초기화</h3>
-						<form class="member-form" method="post" action="Controller"
-							novalidate="novalidate">
-							<input type="hidden" name="csrfmiddlewaretoken"
-								value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
+					<div class="member-email_login_box" style="margin-top: 130px;">
+						<h3 class="member-h3" style="margin-left: 23px;">비밀번호 초기화</h3>
+						
+						<form class="member-form" method="post" action="Controller" novalidate="novalidate">
+							<input type="hidden" name="csrfmiddlewaretoken" value="7HxOd1EHsTRdbB8LGU9AhEcjiPyXKw6HMAlOdG0UPnD8b8s0Ys2BKaMtsP9rRRLa">
 							<div class="member-form-group">
-								<label class="member-label" for="id_email">이메일 주소</label> <input
-									required type="email" name="email" class="member-form-control"
-									placeholder="gamer@lol.ps" id="id_email">
-							</div>							
-							<button type="submit" class="member-btn-theme member-btn-big"
-								style = "margin-left : 31px;"name="command" value="login">비밀번호 초기화</button>
-							
+								<label class="member-label" for="id_email">이메일 주소</label> 
+								<input required type="email" name="email" class="member-form-control" placeholder="gamer@lol.ps" id="id_email">
+							</div>
+							<button type="submit" class="member-btn-theme member-btn-big" style="margin-left: 31px;" name="command" value="findPw">
+							비밀번호 초기화</button>
 						</form>
-						</div>
-						</div>
-						</div>
-						</div>
-						</main>
+						
 					</div>
-						<footer class="footer">
+				</div>
+			</div>
+		</div>
+		</main>
+	</div>
+	<footer class="footer">
 
 		<div class="footer-left">
 			<span class="footer-left-item">공지사항</span> <span

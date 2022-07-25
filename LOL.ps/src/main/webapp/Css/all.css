@@ -1002,6 +1002,7 @@ p {
     border: 1px solid #7e9bff;
     border-bottom: 1px solid white;
     border-radius: 4px 4px 0px 0px;
+    pointer-events:none;
 }
 
 .statistics-what-level:hover {
@@ -1258,7 +1259,7 @@ p {
 /*champ-community 커뮤니티*//*champ-community 커뮤니티*//*champ-community 커뮤니티*//*champ-community 커뮤니티*//*champ-community 커뮤니티*//*champ-community 커뮤니티*/
 
 .champ-community-community-container {
-    width: 100%;
+    width: 987px;
     margin: auto;
     height: auto;
     border: 1px solid;

@@ -70,6 +70,12 @@ public class ActionFactory {
 		case "deleteBoard" :
 			action = new deleteBoardAction();
 			break;
+		case "findId" :
+			action = new FindIdAction();
+			break;
+		case "findPw" :
+			action = new FindPwAction();
+			break;
 		case "DeleteComment" :
 			action = new DeleteComment();
 			break;
