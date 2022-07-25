@@ -56,6 +56,10 @@
     			$(form).toggle();
     		});
     		const url = new URL($(location).attr("href"));
+    		<%
+    		if((MemberDTO) session.getAttribute("memberInfo")!=null) {
+    			int memberkey = member.getMemberkey();
+   			%>
     		
     		$('#good_btn').click(function(){
     			$.ajax ({
@@ -64,7 +68,7 @@
     				data : {
     					command : 'like' ,
     					bno : '<%=bno%>' ,
-    					memberkey : '<%=member.getMemberkey()%>',
+    					memberkey : '<%=memberkey%>',
     				},
     				success : function(data,x,status){
     					console.log(data);
@@ -90,7 +94,7 @@
     				data : {
     					command : 'bad' ,
     					bno : '<%=bno%>' ,
-    					memberkey : '<%=member.getMemberkey()%>',
+    					memberkey : '<%=memberkey%>',
     				},
     				success : function(data,x,status){
     					if(status.status == 201) { 
@@ -125,16 +129,20 @@
     				
     			}  			
     		});
-    		if(<%=bDao.likeCheck(member.getMemberkey(), bno)%> == 1)
+    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
     			$('.recommend').addClass('recommend-on');
-    		else if(<%=bDao.badCheck(member.getMemberkey(), bno)%> == 1)
-    			$('.unrecommend').addClass('recommend-on');
-    		else
+    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
+    			$('.unrecommend').addClass('recommend-on');a
+    		else{
     			return;
+    		}
     		$('#board_update').click(function(){
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
     		})
+    		<%
+    		}
+    		%>
     	});
     </script>
     <%
@@ -205,9 +213,20 @@
     <main class="community-main">
 		<div class="whiteDiv"></div>
       	<!-- 포스트 -->  	
-      	<div class="community-post-post-detail">
+      	<%
+         String titleCss = "title";
+         String shadow = "";
+         if(dto.getCategory().equals("공지사항")){
+            titleCss = "notice-post-title";
+            shadow = "style='box-shadow:none'";
+         }else{
+            titleCss = "title";
+            shadow = "";
+         }
+         %>
+      	<div class="community-post-post-detail" <%=shadow %>>
       		<!-- 포스트제목 -->
-      		<div class="title">
+      		<div class="<%=titleCss%>">
       			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
       			<% 
       			if(member != null){
@@ -267,6 +286,9 @@
       				<span> 조회수 <%=dto.getCount() %></span>
       			</div>
       		</div>
+      		<%
+        	}
+        	%>
       		
       		<!-- 포스트하단 -->
            	<div class="content-function">
@@ -332,8 +354,7 @@
 	      		</div> 
       		<%	
       		if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
+        		
        		%>
 	        	<form action="Controller" method="POST" style="display:none;" class="reply">
 	            	<div class="comment">
@@ -354,8 +375,7 @@
         <div class="bottom-comment">
         	<%
         	if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
+        		
         	%>
         	<form action="Controller" method="POST">
 	        	<div class="comment">
@@ -374,6 +394,7 @@
            		<a style="border-radius:6%;" class="list-under" href="write.jsp?category=<%=dto.getCategory()%>">게시물 쓰기</a>
            		<a style="border-radius:10%;" class="list-under" href="community.jsp?category=<%=dto.getCategory()%>">목록</a>
      		</div>
+     		
      	</div>
     </main>
 	
