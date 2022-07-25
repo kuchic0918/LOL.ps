@@ -126,7 +126,7 @@
 	           	<%
 	        	for(BoardDto dto:list){
 	        	%>
-	           	<a class="notice-contents-item" href="notice-post.html">
+	           	<a class="notice-contents-item" href="ViewDetailServlet?bno=<%=dto.getBno()%>">
 	           		<span class="notice1" >
 	           			<%=dto.getBno() %>
 	           		</span>
