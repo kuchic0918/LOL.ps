@@ -75,7 +75,7 @@
 							$('.recommend').addClass('recommend-on');    							
 	  						$('.unrecommend').removeClass('recommend-on');
 	   						$('#good').text(data);
-	   						$('#bad').text(<%=bDao.likeCount(bno)%>);
+	   						$('#bad').text(<%=bDao.badCount(bno)%>);
     					}
     				},
     				error(){

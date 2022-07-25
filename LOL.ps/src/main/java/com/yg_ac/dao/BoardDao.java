@@ -562,7 +562,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		int like = 0;
 		try {
-			String sql = "select count(*) count from community_like where bno = ? ";
+			String sql = " select count(*) count from community_like where bno = ? ";
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			ResultSet rs = pstmt.executeQuery();
