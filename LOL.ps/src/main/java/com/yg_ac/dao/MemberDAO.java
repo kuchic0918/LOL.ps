@@ -413,4 +413,54 @@ public class MemberDAO {
 		}
 		return get;
 	}
+	//id 찾기
+	public int getFindEmail(String email) {
+		int get = 0;
+		String sql = "SELECT count(*) count FROM member WHERE email = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				get = rs.getInt("count");
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				rs.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return get;
+	}
+	//pw 찾기
+		public String getFindPassword(String email) {
+			String get = null;
+			String sql = "SELECT * FROM member WHERE email = ?";
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, email);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					get = rs.getString("pw");
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					pstmt.close();
+					rs.close();
+				} catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return get;
+		}
 }

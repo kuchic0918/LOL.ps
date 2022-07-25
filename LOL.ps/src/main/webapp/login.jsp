@@ -145,9 +145,8 @@
 							<button type="submit" class="member-btn-theme member-btn-big"
 								name="command" value="login">이메일 계정 로그인</button>
 							<div class="member-text-center">
-								<a href="#" class="member-btn-light-theme member-btn-small">이메일
-									찾기</a> <a href="#" class="member-btn-light-theme member-btn-small">비밀번호
-									찾기</a>
+								<a href="findId.jsp" class="member-btn-light-theme member-btn-small">이메일 찾기</a> 
+								<a href="findPw.jsp" class="member-btn-light-theme member-btn-small">비밀번호 찾기</a>
 							</div>
 						</form>
 					</div>
