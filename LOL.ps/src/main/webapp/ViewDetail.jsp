@@ -12,7 +12,6 @@
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");	
-	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
@@ -47,13 +46,21 @@
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>    
+    <%
+    if(member != null){
+    %>
     <script>
     	$(function() {
     		$('.replybtn').click(function() {
 				var form = $(this).parent().parent().parent().parent().find('.reply');
     			$(form).toggle();
     		});
-    		const url = new URL($(location).attr("href"));    		
+    		const url = new URL($(location).attr("href"));
+    		<%
+    		if((MemberDTO) session.getAttribute("memberInfo")!=null) {
+    			int memberkey = member.getMemberkey();
+   			%>
+    		
     		$('#good_btn').click(function(){
     			$.ajax ({
     				type : 'get',
@@ -73,10 +80,11 @@
 							$('.recommend').addClass('recommend-on');    							
 	  						$('.unrecommend').removeClass('recommend-on');
 	   						$('#good').text(data);
-	   						$('#bad').text(<%=bDao.badCount(bno)%>);
+	   						$('#bad').text(<%=bDao.likeCount(bno)%>);
     					}
     				},
-    				error(){
+    				error:function(){
+//     					alert("중복");
     					console.log('error');
     				}
     			});
@@ -100,7 +108,8 @@
 	   						$('#good').text(<%=bDao.likeCount(bno)%>);
     					}
     				},
-    				error(){
+    				error:function(){
+//     					alert("중복");
     					console.log('error');
     				}
     			});
@@ -133,8 +142,14 @@
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
     		})
+    		<%
+    		}
+    		%>
     	});
     </script>
+    <%
+    }
+    %>
 </head>
 <body class="community-body">
 	<header class="all-header-mainnav header-mainnav">
@@ -156,8 +171,7 @@
 		                <a class="signin" href="signin.jsp">회원가입</a>
 		                <a class="login" href="login.jsp">로그인</a>           	 		
            	 	<% 
-            		}
-            		else {
+            		}else {
             	%>
             			<form action= "my-page.jsp" >
             				<input class="signin" type="submit" value="마이페이지"/>
@@ -201,28 +215,30 @@
     <main class="community-main">
 		<div class="whiteDiv"></div>
       	<!-- 포스트 -->  	
-      		<%
-      		String titleCss = "title";
-      		String shadow = "";
-      		if(dto.getCategory().equals("공지사항")){
-      			titleCss = "notice-post-title";
-      			shadow = " style='box-shadow:none;'";
-      		}else{
-      			titleCss = "title";
-      			shadow = "";
-      		}
-      		%>
+      	<%
+         String titleCss = "title";
+         String shadow = "";
+         if(dto.getCategory().equals("공지사항")){
+            titleCss = "notice-post-title";
+            shadow = "style='box-shadow:none'";
+         }else{
+            titleCss = "title";
+            shadow = "";
+         }
+         %>
       	<div class="community-post-post-detail" <%=shadow %>>
       		<!-- 포스트제목 -->
       		<div class="<%=titleCss%>">
       			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
       			<% 
+      			if(member != null){
       				if(member.getMemberkey() == dto.getMemberkey()) {      			
       			%>
       					<button class = "updateDelete_btn" id ="board_delete" style = "float :right;">게시물 삭제</button>
       					<button class = "updateDelete_btn" id = "board_update" style = "float :right; margin-right:3px;">게시물 수정</button>
       			<%
       				}
+      			}
       				if(dto.getCategory().equals("자유 게시판")) {
       			%>
       					<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
@@ -273,8 +289,9 @@
       			</div>
       		</div>
       		<%
-      		}
-      		%>
+        	}
+        	%>
+      		
       		<!-- 포스트하단 -->
            	<div class="content-function">
            		<%
@@ -287,10 +304,6 @@
            		<a style="padding-left:30px;" class="prev-next" href="ViewDetail.jsp?bno=<%=beforeBno%>">←이전</a>
            		<%
            		}
-           		%>
-           		
-           		<%
-           		
            		%>
            		<div class="justify-content-start">
            			<button style="white-space:pre;" id = "good_btn" class="recommend" type="button"><span class="pre">&uarr;    </span ><span id = "good"><%=bDao.likeCount(bno)%></span></button>
@@ -343,12 +356,13 @@
 	      		</div> 
       		<%	
       		if((MemberDTO) session.getAttribute("memberInfo")!=null){
+        		
        		%>
 	        	<form action="Controller" method="POST" style="display:none;" class="reply">
 	            	<div class="comment">
 	               		<div class="comment-name">댓글쓰기</div>
 	               		<textarea class="comment-space" name="content"></textarea>
-	               		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	               		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	               		<input type="hidden" name="bno" value="<%=bno%>"/>
 	               		<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
 	               		<button class="comment-regist" type="submit" name="command" value="reply">등록</button>
@@ -363,24 +377,30 @@
         <div class="bottom-comment">
         	<%
         	if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		%>
+        		
+        	%>
         	<form action="Controller" method="POST">
 	        	<div class="comment">
 	           		<div class="comment-name">댓글쓰기</div>
 	           		<textarea class="comment-space" name="content"></textarea>
-	           		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	           		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	           		<input type="hidden" name="bno" value="<%=bno%>"/>
 	           		<button class="comment-regist" type="submit" name="command" value="comment">등록</button>
 	           	</div>
             </form>
-        		<%
+        	<%
         	}
+        	if(dto.getCategory().equals("공지사항")){
+        		
+        	}else {
         	%>
-            
            	<div class="list-under-div">
            		<a style="border-radius:6%;" class="list-under" href="write.jsp?category=<%=dto.getCategory()%>">게시물 쓰기</a>
            		<a style="border-radius:10%;" class="list-under" href="community.jsp?category=<%=dto.getCategory()%>">목록</a>
      		</div>
+			<%	
+        	}
+        	%>
      	</div>
     </main>
 	

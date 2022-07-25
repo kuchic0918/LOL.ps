@@ -21,7 +21,6 @@ public class updateBoardAction implements Action {
 		String content = request.getParameter("editordata");
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String category = request.getParameter("category");
-		System.out.println(category);
 		bDao.updateBoard(bno, title, content);
 		response.sendRedirect("community.jsp?category="+URLEncoder.encode(category, "UTF-8"));
 		

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.net.URLDecoder" %>
+<%@ page import = "java.net.URLDecoder" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.yg_ac.dao.*" %>
 <%@ page import="com.yg_ac.dto.*" %>
@@ -120,7 +120,7 @@
 	<%
 	if(category.equals("공지사항")){
 		%>
-		<main class="notice-main">
+		<main class="community-main">
 	        <div class="notice-contents">
 	           	<div class="notice-whiteDiv"></div>
 	           	<%
@@ -131,7 +131,7 @@
 	           			<%=dto.getBno() %>
 	           		</span>
 	           		<span class="notice2">
-	           			<%=dto.getContent() %>
+	           			<%=dto.getTitle() %>
 	           		</span>
 	           		<span class="notice3">
 	           			<span class="notice4"><%=dto.getWritedate() %></span><br/>
