@@ -213,7 +213,7 @@
             		%>
             		<div class="main-community-list" style="border-top: 1px solid #dbdde1;">
 	                    <span class="main-post-name"><%=dto.getChampName() %></span>
-	                    <a class="main-post-link" href="ViewDetail.jsp?bno=<%=dto.getBno()%>">
+	                    <a class="main-post-link" href="ViewDetailServlet?bno=<%=dto.getBno()%>">
 	                        <span class="main-post-title"><%=dto.getTitle() %></span>
 	                        <span class="main-post-comment">[0]</span>
 	                    </a>

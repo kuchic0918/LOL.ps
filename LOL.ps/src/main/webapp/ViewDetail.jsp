@@ -151,27 +151,8 @@
     		$('#board_update').click(function(){
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
-    		});
-    		
-    		$('#commentDelete').click(function(){
-    			$.ajax({
-    				type : 'POST',
-    				url : 'Controller' , 
-    				data : {
-    					command : 'DeleteComment' , 
-    					cno : ''
-    				},
-    				success : function() {
-    					location.href = "ViewDetail.jsp?bno=<%=dto.getBno()%>"; 
-    				},
-    				error:function(){
-    					alert('easdf');
-    				}
-    			});
-    		});
-    		$('#commentEdit').click(function(){
-    			
-    		});
+    		});    		
+
     		<%
     		}
     		%>
@@ -392,10 +373,14 @@
 	      					<%if (member != null) {
 		      					if(cDto.get(i).getMemberkey() == member.getMemberkey()) {
 		      				%>
-		      						<span style = "margin-left : 455px;">
-		      							<button class = "updateDelete_btn" id = "commentEdit" >내 댓글 수정</button>
-		      							<button class = "updateDelete_btn" id = "commentDelete">삭제</button>
-		      						</span>
+		      						<form action="Controller" method="POST">
+		      							<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
+		      							<input type="hidden" name="bno" value="<%=cDto.get(i).getBno()%>"/>
+		      							<span style = "float:right;">
+		      							<button type="submit" name="command" value="updateComment" class = "updateDelete_btn" id = "commentEdit" >내 댓글 수정</button>
+		      							<button type="submit" name="command" value="deleteComment" class = "updateDelete_btn" id = "commentDelete">삭제</button>
+		      							</span>
+	      							</form>
 		      				<% 		
 		      					}
 	      					}
