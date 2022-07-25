@@ -12,7 +12,6 @@
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
 	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");	
-	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
@@ -53,83 +52,7 @@
 				var form = $(this).parent().parent().parent().parent().find('.reply');
     			$(form).toggle();
     		});
-    		const url = new URL($(location).attr("href"));    		
-    		$('#good_btn').click(function(){
-    			$.ajax ({
-    				type : 'get',
-    				url : 'Controller',
-    				data : {
-    					command : 'like' ,
-    					bno : '<%=bno%>' ,
-    					memberkey : '<%=memberkey%>',
-    				},
-    				success : function(data,x,status){
-    					console.log(data);
-    					if(status.status == 201) { 
-    						alert("이미 추천한 게시글 입니다.");
-    					}else {
-							$('.recommend').addClass('recommend-on');    							
-	  						$('.unrecommend').removeClass('recommend-on');
-	   						$('#good').text(data);
-	   						$('#bad').text(<%=bDao.badCount(bno)%>);
-    					}
-    				},
-    				error(){
-    					console.log('error');
-    				}
-    			});
-    		});
-    		$('#bad_btn').click(function(){
-    			$.ajax ({
-    				type : 'get',
-    				url : 'Controller',
-    				data : {
-    					command : 'bad' ,
-    					bno : '<%=bno%>' ,
-    					memberkey : '<%=memberkey%>',
-    				},
-    				success : function(data,x,status){
-    					if(status.status == 201) { 
-    						alert("이미 비추천한 게시글입니다.");
-    					}else {
-							$('.unrecommend').addClass('recommend-on');
-	    					$('.recommend').removeClass('recommend-on');
-	   						$('#bad').text(data);
-	   						$('#good').text(<%=bDao.likeCount(bno)%>);
-    					}
-    				},
-    				error(){
-    					console.log('error');
-    				}
-    			});
-    		});
-    		$('#board_delete').click(function(){
-    			if(confirm('정말 삭제하시겠습니까 ?') == true) {
-    				$.ajax({
-    					type : 'POST',
-    					url : 'Controller' , 
-    					data : {
-    						command : 'deleteBoard' ,
-    						bno : '<%=bno%>',
-    					},
-    					success : function() {
-    						alert("삭제 완료");
-    						location.href = "community.jsp?category=<%=dto.getCategory()%>";
-    					}
-    				});
-    				
-    			}  			
-    		});
-    		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
-    			$('.recommend').addClass('recommend-on');
-    		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
-    			$('.unrecommend').addClass('recommend-on');
-    		else
-    			return;
-    		$('#board_update').click(function(){
-    			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
-					
-    		})
+    		const url = new URL($(location).attr("href"));
     	});
     </script>
 </head>
@@ -214,12 +137,14 @@
       		<div class="<%=titleCss%>">
       			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
       			<% 
+      			if(member != null){
       				if(member.getMemberkey() == dto.getMemberkey()) {      			
       			%>
       					<button class = "updateDelete_btn" id ="board_delete" style = "float :right;">게시물 삭제</button>
       					<button class = "updateDelete_btn" id = "board_update" style = "float :right; margin-right:3px;">게시물 수정</button>
       			<%
       				}
+      			}
       				if(dto.getCategory().equals("자유 게시판")) {
       			%>
       					<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
@@ -345,7 +270,7 @@
 	            	<div class="comment">
 	               		<div class="comment-name">댓글쓰기</div>
 	               		<textarea class="comment-space" name="content"></textarea>
-	               		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	               		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	               		<input type="hidden" name="bno" value="<%=bno%>"/>
 	               		<input type="hidden" name="cno" value="<%=cDto.get(i).getCno()%>"/>
 	               		<button class="comment-regist" type="submit" name="command" value="reply">등록</button>
@@ -365,7 +290,7 @@
 	        	<div class="comment">
 	           		<div class="comment-name">댓글쓰기</div>
 	           		<textarea class="comment-space" name="content"></textarea>
-	           		<input type="hidden" name="memberkey" value="<%=memberkey%>"/>
+	           		<input type="hidden" name="memberkey" value="<%=member.getMemberkey()%>"/>
 	           		<input type="hidden" name="bno" value="<%=bno%>"/>
 	           		<button class="comment-regist" type="submit" name="command" value="comment">등록</button>
 	           	</div>
