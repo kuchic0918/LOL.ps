@@ -115,6 +115,9 @@
     				}
     			});
     		});
+    		<%
+    			if(cDto != null) {
+    		%>    		
     		$('#board_delete').click(function(){
     			if(confirm('정말 삭제하시겠습니까 ?') == true) {
     				$.ajax({
@@ -132,6 +135,9 @@
     				
     			}  			
     		});
+    		<%
+    			}
+    		%>
     		if(<%=bDao.likeCheck(memberkey, bno)%> == 1) {
     			$('.recommend').addClass('recommend-on');
     		}
@@ -153,7 +159,7 @@
     				url : 'Controller' , 
     				data : {
     					command : 'DeleteComment' , 
-    					cno : <%=cDto.get(1).getCno()%>,
+    					cno : ''
     				},
     				success : function() {
     					location.href = "ViewDetail.jsp?bno=<%=dto.getBno()%>"; 
@@ -369,7 +375,7 @@
 		      		<img class="comments-img" src="Images/profile/<%=commentWriter.get(i).getImage()%>"/>
 		      		<div style="padding-left: 20px; width : 100%;">
 		      			<%if (member != null) {
-		      				if(cDto.get(0).getMemberkey() == dto.getMemberkey()) {
+		      				if(cDto.get(i).getMemberkey() == dto.getMemberkey()) {
 		      			%>
 		      			<span class = "comments-owner" style = "float:left;">글쓴이</span>
 		      			<% 		
@@ -384,7 +390,7 @@
 		      				<span style="font-size: 14px; color:gray;"><%=cDto.get(i).getWritedate()%></span>
 	      					<button class="write-comment replybtn">↳댓글</button>
 	      					<%if (member != null) {
-		      					if(cDto.get(0).getMemberkey() == member.getMemberkey()) {
+		      					if(cDto.get(i).getMemberkey() == member.getMemberkey()) {
 		      				%>
 		      						<span style = "margin-left : 455px;">
 		      							<button class = "updateDelete_btn" id = "commentEdit" >내 댓글 수정</button>
