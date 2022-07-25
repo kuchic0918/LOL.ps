@@ -192,7 +192,7 @@
           			<img class="champion-head" src="Images/profile/<%=writer.getImage()%>"/>
           		</span>
           		<span class="build1">
-          			 <b><%=dto.getTitle() %></b> <b style="color:blue;"> [0]</b>
+          			 <b><%=dto.getTitle() %></b> <b style="color:blue;"> [<%=cDto.size() %>]</b>
           		</span>
           		<%
           		} else {
