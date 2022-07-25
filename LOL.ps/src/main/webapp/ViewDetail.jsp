@@ -90,6 +90,15 @@
     </header>
 
     <div class="all-main">
+    	<%
+    	if(dto.getCategory().equals("공지사항")){
+    		%>
+    		<div class="notice-first-title">공지사항
+	       	<a class="nav-items notice-post-list-up" href="community.jsp?category=공지사항">목록</a>
+	        </div>
+    		<%
+    	}else{
+    	%>
         <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
         	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url=" + ${url}>✎게시물 쓰기</a>
@@ -99,29 +108,60 @@
 			</form>
         </div>
         <div style="clear: both;"></div>
+        <%
+    	}
+        %>
     </div>
 	
 	<!-- 중단 -->
     <main class="community-main">
 		<div class="whiteDiv"></div>
       	<!-- 포스트 -->  	
-      	<div class="community-post-post-detail">
+      		<%
+      		String titleCss = "title";
+      		String shadow = "";
+      		if(dto.getCategory().equals("공지사항")){
+      			titleCss = "notice-post-title";
+      			shadow = " style='box-shadow:none;'";
+      		}else{
+      			titleCss = "title";
+      			shadow = "";
+      		}
+      		%>
+      	<div class="community-post-post-detail" <%=shadow %>>
       		<!-- 포스트제목 -->
-      		<div class="title">
+      		<div class="<%=titleCss%>">
       			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
       			<%
       			if(dto.getCategory().equals("자유 게시판")) {
       			%>
       			<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
       			<%	
-      			} else {
+      			} else if(dto.getCategory().equals("빌드 연구소")){
       			%>
      			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
       			<%	
+      			}else{
+      			%>
+      			<%=dto.getTitle() %>
+       			<div class="notice-post-title2">
+       				<span>조회 <%=dto.getCount() %></span>
+       				<span class="notice-post-pre">     |     <%=dto.getWritedate() %></span>
+       			</div>
+      			<%
       			}
       			%>
       		</div>
       		<!-- 포스트내용 -->
+      		<%
+      		if(dto.getCategory().equals("공지사항")){
+      			%>
+      			<div class="notice-post-content">
+           		<%=dto.getContent() %>
+           		</div>
+      			<%
+      		}else{
+      		%>
       		<div class="write">
 			<%=dto.getContent() %>
 			</div>
@@ -142,7 +182,9 @@
       				<span> 조회수 <%=dto.getCount() %></span>
       			</div>
       		</div>
-      		
+      		<%
+      		}
+      		%>
       		<!-- 포스트하단 -->
            	<div class="content-function">
            		<%
@@ -177,6 +219,7 @@
            	</div>
         </div>
       	<div style="height:40px;"></div>
+      	
       	<!-- 댓글 -->
       	<%
       	for(int i=0; i<cDto.size(); i++){
