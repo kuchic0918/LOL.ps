@@ -5,11 +5,14 @@
 <%@ page import="com.yg_ac.dto.*" %>
 <!DOCTYPE html>
 <%
+	response.setCharacterEncoding("UTF-8");
 	int bno = Integer.parseInt(request.getParameter("bno"));
 	BoardDao bDao = new BoardDao();
 	BoardDto dto = bDao.getDetail(bno);
 	MemberDTO writer = bDao.getWriter(dto.getMemberkey());
 	String introduce = writer.getIntroduce();
+	MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");	
+	int memberkey = member.getMemberkey();
 	if(writer.getIntroduce()==null){
 		introduce = "";
 	}
@@ -40,8 +43,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><%=dto.getCategory() %></title>
 	<link rel="stylesheet" href="Css/all.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <script src="Js/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>    
     <script>
     	$(function() {
     		$('.replybtn').click(function() {
@@ -59,7 +64,7 @@
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
-            	<a class="nav-items" href="community.jsp?category=공지사항">공지사항</a>
+            	<a class="nav-items" href="../notice/notice.html">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
                 <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
@@ -90,78 +95,45 @@
     </header>
 
     <div class="all-main">
-    	<%
-    	if(dto.getCategory().equals("공지사항")){
-    		%>
-    		<div class="notice-first-title">공지사항
-	       	<a class="nav-items notice-post-list-up" href="community.jsp?category=공지사항">목록</a>
-	        </div>
-    		<%
-    	}else{
-    	%>
         <div class="first-title"><%=dto.getCategory() %></div>
         <div class="second-title">
-        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url=" + ${url}>✎게시물 쓰기</a>
+        	<a class="main-button" href="write.jsp?category=<%=dto.getCategory()%>&url="+ ${url}>✎게시물 쓰기</a>
         	<form action="Controller" method="get" id="search_form" autocomplete="off">
 				<input class="main-input" type="text" name="name" placeholder="챔피언 이름을 입력하세요">
 				<button style="opacity:0;" type="submit" name="command" value="search"></button>
 			</form>
         </div>
         <div style="clear: both;"></div>
-        <%
-    	}
-        %>
     </div>
 	
 	<!-- 중단 -->
     <main class="community-main">
 		<div class="whiteDiv"></div>
       	<!-- 포스트 -->  	
-      		<%
-      		String titleCss = "title";
-      		String shadow = "";
-      		if(dto.getCategory().equals("공지사항")){
-      			titleCss = "notice-post-title";
-      			shadow = " style='box-shadow:none;'";
-      		}else{
-      			titleCss = "title";
-      			shadow = "";
-      		}
-      		%>
-      	<div class="community-post-post-detail" <%=shadow %>>
+      	<div class="community-post-post-detail">
       		<!-- 포스트제목 -->
-      		<div class="<%=titleCss%>">
-      			<div style="font-size:15px; color:#7e9bff;"><b><%=dto.getCategory() %></b></div>
-      			<%
-      			if(dto.getCategory().equals("자유 게시판")) {
+      		<div class="title">
+      			<div style="font-size:15px; color:#7e9bff; float:left "><b><%=dto.getCategory() %></b></div>
+      			<% 
+      				if(member.getMemberkey() == dto.getMemberkey()) {      			
       			%>
-      			<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
+      					<button class = "updateDelete_btn" id ="board_delete" style = "float :right;">게시물 삭제</button>
+      					<button class = "updateDelete_btn" id = "board_update" style = "float :right; margin-right:3px;">게시물 수정</button>
+      			<%
+      				}
+      				if(dto.getCategory().equals("자유 게시판")) {
+      			%>
+      					<h3 style="padding-top: 15px;"><%=dto.getTitle() %></h3>
       			<%	
       			} else if(dto.getCategory().equals("빌드 연구소")){
+      				} else {
       			%>
-     			<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
+     					<h3 style="padding-top: 15px;">[<%=dto.getChampName() %>] <%=dto.getTitle() %></h3>
       			<%	
-      			}else{
-      			%>
-      			<%=dto.getTitle() %>
-       			<div class="notice-post-title2">
-       				<span>조회 <%=dto.getCount() %></span>
-       				<span class="notice-post-pre">     |     <%=dto.getWritedate() %></span>
-       			</div>
-      			<%
-      			}
+      				}
       			%>
       		</div>
       		<!-- 포스트내용 -->
-      		<%
-      		if(dto.getCategory().equals("공지사항")){
-      			%>
-      			<div class="notice-post-content">
-           		<%=dto.getContent() %>
-           		</div>
-      			<%
-      		}else{
-      		%>
       		<div class="write">
 			<%=dto.getContent() %>
 			</div>
@@ -182,9 +154,7 @@
       				<span> 조회수 <%=dto.getCount() %></span>
       			</div>
       		</div>
-      		<%
-      		}
-      		%>
+      		
       		<!-- 포스트하단 -->
            	<div class="content-function">
            		<%
@@ -199,9 +169,12 @@
            		}
            		%>
            		
+           		<%
+           		
+           		%>
            		<div class="justify-content-start">
-           			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&uarr;    </span>0</button>
-           			<button style="white-space:pre;" class="recommend" type="button"><span class="pre">&darr;    </span>0</button>
+           			<button style="white-space:pre;" id = "good_btn" class="recommend" type="button"><span class="pre">&uarr;    </span ><span id = "good"><%=bDao.likeCount(bno)%></span></button>
+           			<button style="white-space:pre;" id = "bad_btn" class="unrecommend" type="button"><span class="pre">&darr;    </span><span id = "bad"><%=bDao.badCount(bno)%></span></button>
            		</div>
            		
            		<%
@@ -219,7 +192,6 @@
            	</div>
         </div>
       	<div style="height:40px;"></div>
-      	
       	<!-- 댓글 -->
       	<%
       	for(int i=0; i<cDto.size(); i++){
@@ -250,8 +222,6 @@
 	      		</div> 
       		<%	
       		if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
        		%>
 	        	<form action="Controller" method="POST" style="display:none;" class="reply">
 	            	<div class="comment">
@@ -272,8 +242,6 @@
         <div class="bottom-comment">
         	<%
         	if((MemberDTO) session.getAttribute("memberInfo")!=null){
-        		MemberDTO member = (MemberDTO) session.getAttribute("memberInfo");
-        		int memberkey = member.getMemberkey();
         		%>
         	<form action="Controller" method="POST">
 	        	<div class="comment">

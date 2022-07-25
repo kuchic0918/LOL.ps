@@ -19,6 +19,9 @@ public class ActionFactory {
 		case "signin" :
 			action = new SigninAction();
 			break;
+		case "signinCheck" :
+			action = new SigninCheckAction();
+			break;
 		case "kakaoLogin" :
 			action = new KakaoLoginAction();
 			break;
@@ -55,6 +58,19 @@ public class ActionFactory {
 		case "reply" :
 			action = new ReplyAction();
 			break;
+		case "like" :
+			action = new LikeAction();
+			break;
+		case "bad" :
+			action = new BadAction();
+			break;
+		case "updateBoard" :
+			action = new updateBoardAction();
+			break;
+		case "deleteBoard" :
+			action = new deleteBoardAction();
+			break;
+				
 		}
 		return action;
 	}

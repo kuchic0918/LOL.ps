@@ -41,6 +41,13 @@
 				alert("회원가입이 완료되었습니다. 로그인 해주세요.");
 			</script>
 <% 	
+	} else if("email".equals((String) request.getAttribute("member"))) {
+		String userEmail = request.getParameter("email");
+		%>
+<script>
+				alert("<%=userEmail%>에 메일을 보냈습니다. 메일확인 후 회원가입 완료 해주세요.");
+			</script>
+<% 	
 	}
 %>
 <head>
@@ -200,6 +207,18 @@
 								            console.log("Email: " + responsePayload.email);
 								            var googleEmail = responsePayload.email;
 								            var googleNickname = responsePayload.name;
+// 								            $.ajax({
+// 								            	type : 'POST' ,
+// 								            	url : 'Controller',
+// 								            	data : {
+// 								            		command : 'googleLogin',
+// 								            		googleEmail : googleEmail,
+// 								            		googleNickname : googleNickname,
+// 								            	},
+// 								            	success : function () {
+// 								            		alert("환영");
+// 								            	}
+// 								            });
 								            location.href = "Controller?command=googleLogin&googleEmail="+googleEmail+"&googleNickName="+googleNickname;
 								            
 								        }
@@ -246,7 +265,7 @@
 		<div class="footer-left">
 			<span class="footer-left-item">공지사항</span> <span
 				class="footer-left-item">버그리포팅</span> <span class="footer-left-item">파트너
-				신청</span></br>
+				신청</span><br/>
 			<div style="margin-bottom: 10px;"></div>
 			<span class="footer-left-item">이용약관</span> <span
 				class="footer-left-item">개인정보처리방침</span>

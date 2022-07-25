@@ -1886,6 +1886,26 @@ p {
 	background-color: white;
 	transition: all 300ms;
 }
+.unrecommend {
+	border: 0.5px solid #ccd7fe;
+	height: 40px;
+	color: #a0a7be;
+	padding: 8px 10px;
+	cursor: pointer;
+	float: left;
+	font-size: 15px;
+	border-radius: 10%;
+	background-color: white;
+	transition: all 300ms;
+}
+.unrecommend:hover{
+	color:white;
+	background:rgb(61, 105, 225);
+}
+.recommend-on {
+	background-color:rgb(61, 105, 225);
+    color:white;
+}
 
 .recommend:hover{
 	color:white;
@@ -1895,6 +1915,25 @@ p {
 .recommend {
 	margin-right:10px;
 }
+.updateDelete_btn{
+	height: 24px;
+    border: 1px solid rgba(47,62,78,.18);
+    background: rgba(0,0,0,0);
+    color: rgba(47,62,78,.28);
+    line-height: .8;
+    font-size: 12px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.updateDelete_btn:hover {
+	background: rgba(126,155,255,.12);
+    color: #3254ce;
+    border: 1px solid rgba(126,155,255,.12);
+}
+
 /*댓글들*/
 .comments {
 	display: flex;
@@ -1911,8 +1950,7 @@ p {
 	height: auto;
 	padding: 15px 0px;
 	border-top: 1px solid rgb(171, 174, 186);
-	margin: 0px 47px;
-	float: right;
+	margin-left : 93px;
 }
 
 .comments-img {
@@ -2889,6 +2927,11 @@ p {
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
 /*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*//*로그인 회원가입 member*/
+.error {
+	color: red;
+	font-size:12px;
+	font-weight:600;
+}
 
 .member-body {
     margin: 0;

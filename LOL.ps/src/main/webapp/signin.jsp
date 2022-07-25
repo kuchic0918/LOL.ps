@@ -58,6 +58,9 @@ $(function() {
 				required : true ,
 				minlength  : 3
 			},
+			information : {
+				required : true
+			}
 		},
 		messages: {
 			email : {
@@ -76,12 +79,13 @@ $(function() {
 			nickname : {
 				required : "암호를 입력하세요.",
 				minlength  : "최소 3자이상 입력하세요"
+			},
+			information : {
+				required : "동의 해주세요"
 			}
 		},
 			
-			
 	});
-
 	
 });
 </script>	
@@ -124,7 +128,6 @@ $(function() {
 	                            <div class = "member-form-group">
 	                                <label class="member-laber">이메일 주소</label>
 	                                <input type="email" name="email" class="member-form-control" placeholder="gamer@lol.ps" >
-	                                <small id = "email-validate" style = "display:none" class = form-error>이미 존재하는 email 입니다.</small>
 	                                <p id="email-p"></p>
 	                            </div>
 	                            <div class = "member-form-group">
@@ -135,15 +138,17 @@ $(function() {
 	                            <div class = "member-form-group">
 	                                <label class="member-laber">비밀번호 확인</label>
 	                                <input type="password" name="password_confirm" class="member-form-control" placeholder="비밀번호 확인" >
-	                                <small id = "pw-validate"style = "display:none" class = "form-error">비밀번호를 다시 확인하세요.</small>
 	                                <p id="password-confirm-p"></p>
 	                            </div>
 	                            <div class = "member-form-group">
 	                                <label class="member-laber">닉네임</label>
-           	                        <small id = "nickname-validate" style = "display:none" class = form-error>이미 존재하는 닉네임 입니다.</small>                         
 	                                <input type="text" name="nickname" class="member-form-control" id="nickname-input" placeholder="닉네임" >
 	                            </div>
-	                            <button name="command" value="signin" class="member-btn-theme member-btn-big" id="submit-button">이메일 주소로 가입</button>
+	                            <div style="margin-top:10px; margin-left:20px;">
+	                            	이용약관 및 개인정보 수집∙이용에 동의합니다.
+		                            <input type="checkbox" name="information"/>
+	                            </div>
+	                            <button name="command" value="signinCheck" class="member-btn-theme member-btn-big" id="submit-button">이메일 주소로 가입</button>
 	                        </form>
 	                    </div>
 	
