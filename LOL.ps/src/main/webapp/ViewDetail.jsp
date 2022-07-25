@@ -132,10 +132,10 @@
     		if(<%=bDao.likeCheck(memberkey, bno)%> == 1)
     			$('.recommend').addClass('recommend-on');
     		else if(<%=bDao.badCheck(memberkey, bno)%> == 1)
-    			$('.unrecommend').addClass('recommend-on');a
-    		else{
+    			$('.unrecommend').addClass('recommend-on');
+    		else
     			return;
-    		}
+    		
     		$('#board_update').click(function(){
     			location.href = "writeUpdate.jsp?category=<%=dto.getCategory()%>&bno=<%=bno%>";
 					
@@ -390,15 +390,15 @@
         	}
         	if(dto.getCategory().equals("공지사항")){
         		
-        	}else{
+        	}else {
         	%>
            	<div class="list-under-div">
            		<a style="border-radius:6%;" class="list-under" href="write.jsp?category=<%=dto.getCategory()%>">게시물 쓰기</a>
            		<a style="border-radius:10%;" class="list-under" href="community.jsp?category=<%=dto.getCategory()%>">목록</a>
      		</div>
-     		<%
+			<%	
         	}
-     		%>
+        	%>
      	</div>
     </main>
 	
