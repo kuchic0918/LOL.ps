@@ -12,12 +12,11 @@ import com.yg_ac.dao.BoardDao;
 public class DeleteComment implements Action {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		BoardDao bDao = new BoardDao();	
 		int cno = Integer.parseInt(request.getParameter("cno"));
-		System.out.println(cno);
+		int bno = Integer.parseInt(request.getParameter("bno"));
 		bDao.DeleteComment(cno);
+		response.sendRedirect("ViewDetailServlet?bno="+bno);
 	}
-
 }

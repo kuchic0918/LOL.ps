@@ -76,7 +76,7 @@ public class ActionFactory {
 		case "findPw" :
 			action = new FindPwAction();
 			break;
-		case "DeleteComment" :
+		case "deleteComment" :
 			action = new DeleteComment();
 			break;
 				
