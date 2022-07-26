@@ -22,7 +22,6 @@ public class BadAction implements Action {
 		int like = bDao.likeCheck(memberkey, bno);
 		//그거 삭제 후 싫어요 
 		if(like == 1) {
-			System.out.print("여기들어옴!");
 			bDao.mylikeDelete(bno, memberkey);
 			bDao.communityBad(request, response, bno, memberkey);
 		}
@@ -32,7 +31,6 @@ public class BadAction implements Action {
 			if(bDao.likeCount(bno) > 0) {
 				bDao.likeDelete(bno);
 			}
-			System.out.print("else 여기들어옴!");
 			bDao.communityBad(request, response, bno, memberkey);
 		}
 		
