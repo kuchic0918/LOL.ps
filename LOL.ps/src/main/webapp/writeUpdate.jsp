@@ -41,11 +41,11 @@
 	<!-- 위에 navbar 부분입니다 -->
     <header class="all-header-mainnav header-mainnav">
         <div class="header-container">
-            <a href="main/main.html">
+            <a href="main.jsp">
                 <img src="Images/header-logo.webp" alt="LOL.PS">
             </a>
             <div class = "nav-item-container">
-            	<a class="nav-items" href="../notice/notice.html">공지사항</a>
+            	<a class="nav-items" href="community.jsp?category=공지사항">공지사항</a>
                 <a class="nav-items" href="ChampRank.jsp">챔피언 랭킹</a>
                 <a class="nav-items" href="community.jsp?category=빌드 연구소">빌드 연구소</a>
                 <a class="nav-items" href="community.jsp?category=자유 게시판">자유 게시판</a>
