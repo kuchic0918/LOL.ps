@@ -276,15 +276,25 @@
       		<!-- 포스트내용 -->
       		<%
       		if(dto.getCategory().equals("공지사항")){
+      			String notice = dto.getContent();
+      			if(dto.getContent()==null){
+      				notice = "";
+      			}
       			%>
       			<div class="notice-post-content">
-           		<%=dto.getContent() %>
+           		<%=notice %>
            		</div>
       			<%
       		}else{
       		%>
       		<div class="write">
-			<%=dto.getContent() %>
+      		<%
+      		String content = dto.getContent();
+      		if(dto.getContent()==null){
+      			content = "";
+      		}
+      		%>
+			<%=content %>
 			</div>
       		<!-- 포스트글쓴이 -->
       		<div class="writer">
