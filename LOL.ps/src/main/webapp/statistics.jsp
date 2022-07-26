@@ -626,7 +626,7 @@
 		   		var isGray = "";
 		   		var write = `<div id="statistics">
 		   					<div class="statistics-champ-match-container" id="counter">
-					            <div class="statistics-title">가렌 상대 챔피언</div>
+					            <div class="statistics-title">\${champName} 상대 챔피언</div>
 					            <div class="statistics-champ-match">
 						            <div id="match-hard" class="statistics-match-list">
 			                    	 	<h4>상대하기 어려움</h4>
@@ -861,7 +861,7 @@
 							} else {
 								isGray = "";
 							}
-							write = `<a class="statistics-hard-list \${isGray}" href="#"> 
+							write = `<a class="statistics-hard-list \${isGray}" href="statistics.jsp?name=\${data[i].name}&line=\${data[i].line}"> 
 										<span style="width: 10%;"> 
 											<img src="Images/champion/head/\${data[i].image}" alt="img">
 										</span> 
@@ -3060,7 +3060,7 @@
 
 			<div id="statistics">
 				<div class="statistics-champ-match-container">
-					<div class="statistics-title">가렌 상대 챔피언</div>
+					<div class="statistics-title"><%=champion_name %> 상대 챔피언</div>
 					<div class="statistics-champ-match">
 						<div id="match-hard" class="statistics-match-list">
 							<h4>상대하기 어려움</h4>
