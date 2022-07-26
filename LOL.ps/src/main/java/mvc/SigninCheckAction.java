@@ -41,7 +41,7 @@ public class SigninCheckAction implements Action {
 		        "<div style = 'text-align : center; width : 100%; height : 200px; padding : 30px;'>",
 			        "<h2 style = 'color : black;'>안녕하세요" + email + " 님,</h2>",
 			        "<h4 style = 'color : black;'>email에 대한 사용자 활성화를 위하여 아래 링크를 클릭하시고, 로그인하세요.</h4>",
-			        "<form action='http://localhost:9095/LOL.ps/Controller' class='member-form' name='signInForm' method = 'POST' novalidate> ",
+			        "<form action='http://localhost:9090/LOL.ps/Controller' class='member-form' name='signInForm' method = 'POST' novalidate> ",
 				        "<input type='hidden' name='email' value='" + email + "' />",
 				        "<input type='hidden' name='password' value='" + password + "' />",
 				        "<input type='hidden' name='nickname' value='" + nickname + "' />",
